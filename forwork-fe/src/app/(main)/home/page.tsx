@@ -1,6 +1,12 @@
 const HomePage = () => {
     return (
-        <div className={""}>홈</div>
+        <div>
+            <main>
+                <NavBar/>
+
+                <Footer />
+            </main>
+        </div>
     );
 }
 export default HomePage;
