@@ -38,6 +38,27 @@ const HomePage = () => {
                     </div>
                 </section>
 
+                {/* 일반 상단공고 */}
+                <section className={"flex flex-col gap-y-4 px-[264px] pt-[96.86px]"}>
+                    <div className={"flex justify-between items-center"}>
+                        <div className={"flex items-start gap-x-1"}>
+                            <LOGOIcon width={110} height={29}/>
+                            <div className={"title-lg"}>추천 공고</div>
+                        </div>
+                        <Button className={"text-gray5 button-md"}>더보기</Button>
+                    </div>
+                    <div className={"grid grid-cols-4 gap-6"}>
+                        <GeneralCard/>
+                        <GeneralCard/>
+                        <GeneralCard/>
+                        <GeneralCard/>
+                        <GeneralCard/>
+                        <GeneralCard/>
+                        <GeneralCard/>
+                        <GeneralCard/>
+                    </div>
+                </section>
+
 
                 <Footer />
             </main>
