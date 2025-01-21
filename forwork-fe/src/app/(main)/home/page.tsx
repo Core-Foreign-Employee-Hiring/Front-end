@@ -17,6 +17,27 @@ const HomePage = () => {
                         배너
                     </div>
                 </section>
+                {/* 프리미엄 공고 */}
+                <section className={"flex flex-col gap-y-4 bg-gray1 px-[264px] pt-[56px] pb-[63px]"}>
+                    <div className={"flex justify-between items-center"}>
+                        <div className={"flex items-center gap-x-1"}>
+                            <div className={"flex w-[28px] h-[28px] items-center"}>
+                                <StarIcon/>
+                            </div>
+                            <div className={"title-lg"}>프리미엄 공고</div>
+                        </div>
+                        <Button className={"text-gray5 button-md"}>더보기</Button>
+                    </div>
+                    <div className={"grid grid-cols-3 gap-6"}>
+                        <PremiumCard/>
+                        <PremiumCard/>
+                        <PremiumCard/>
+                        <PremiumCard/>
+                        <PremiumCard/>
+                        <PremiumCard/>
+                    </div>
+                </section>
+
 
                 <Footer />
             </main>
