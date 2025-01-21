@@ -1,3 +1,16 @@
+"use client";
+
+import NavBar from "@/src/components/common/NavBar";
+import Image from "next/image";
+import ArrowForwardIcon from "@/src/assets/common/ArrowForwardIcon";
+import StarIcon from "@/src/assets/home/StarIcon";
+import Button from "@/src/components/common/Button";
+import PremiumCard from "@/src/components/home/PremiumCard";
+import LOGOIcon from "@/src/assets/common/LOGOIcon";
+import GeneralCard from "@/src/components/home/GeneralCard";
+import ReviewCard from "@/src/components/home/ReviewCard";
+import Footer from "@/src/components/common/Footer";
+
 const HomePage = () => {
     return (
         <div>
@@ -59,6 +72,19 @@ const HomePage = () => {
                     </div>
                 </section>
 
+                {/* 알바 후기 */}
+                <section className={"flex flex-col gap-y-4 px-[264px] pt-[96.86px] pb-[74.28px]"}>
+                    <div className={"flex justify-between items-center"}>
+                        <div className={"title-lg"}>알바 리뷰</div>
+                        <Button className={"text-gray5 button-md"}>더보기</Button>
+                    </div>
+                    <div className={"grid grid-cols-4 gap-6"}>
+                        <ReviewCard/>
+                        <ReviewCard/>
+                        <ReviewCard/>
+                        <ReviewCard/>
+                    </div>
+                </section>
 
                 <Footer />
             </main>
