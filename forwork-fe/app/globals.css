@@ -1,3 +1,5 @@
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -18,4 +20,41 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+@layer components {
+  /* 온보딩, 게시판 선택시 사용되는 컴포넌트 스타일 */
+  .title-lg {
+    @apply text-h1 leading-[1.5] tracking-[-0.015em] font-bold font-pretendard
+  }
+  .title-md {
+    @apply text-h2 leading-[1.5] tracking-[-0.015em] font-bold font-pretendard
+  }
+  .subtitle-lg {
+    @apply text-h3 leading-[1.5] tracking-[-0.015em] font-semibold font-pretendard
+  }
+  .subtitle-md {
+    @apply text-h4 leading-[1.5] tracking-[-0.015em] font-semibold font-pretendard
+  }
+  .subtitle-sm {
+    @apply text-h5 leading-[1.5] tracking-[-0.015em] font-semibold font-pretendard
+  }
+  .body-md {
+    @apply text-h4 leading-[1.5] tracking-[-0.015em] font-normal font-pretendard
+  }
+  .body-sm {
+    @apply text-h5 leading-[1.5] tracking-[-0.015em] font-normal font-pretendard
+  }
+  .button-md {
+    @apply text-h5 leading-[1.5] tracking-[-0.015em] font-medium font-pretendard
+  }
+  .small {
+    @apply text-h6 leading-[1.5] tracking-[-0.015em] font-normal font-pretendard
+  }
+  .badge-lg {
+    @apply text-h5 leading-[1.5] tracking-[-0.015em] font-semibold font-pretendard
+  }
+  .badge-sm {
+    @apply text-h6 leading-[1.5] tracking-[-0.015em] font-medium font-pretendard
+  }
 }
