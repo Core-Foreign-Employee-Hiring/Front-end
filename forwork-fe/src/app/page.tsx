@@ -1,6 +1,6 @@
 export default function MainPage() {
   return (
-    <div>
+    <div className={"text-opacity-85"}>
       힘
     </div>
   );
