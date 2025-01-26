@@ -16,7 +16,7 @@ const JobCategory = (props: Props) => {
             <div className={"grid grid-cols-7 gap-3"}>
                 {jobCategoryList.map((jobCategory) => {
                     return (
-                        <JobCategoryItem>{jobCategory}</JobCategoryItem>
+                        <Button className={"bg-main-button flex justify-center"}>{jobCategory}</Button>
                     )
                 })}
             </div>
