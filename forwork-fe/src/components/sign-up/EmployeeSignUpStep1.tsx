@@ -1,5 +1,5 @@
 import {Dispatch, SetStateAction, useEffect, useState} from "react";
-import {useAtom} from "jotai";
+import {useSetAtom} from "jotai/index";
 
 import Button from "@/src/components/common/Button";
 import Input from "@/src/components/common/Input";
@@ -34,7 +34,7 @@ const EmployeeSignUpStep1 = (props: Props) => {
     const [isPasswordAvailability, setIsPasswordAvailability] = useState<undefined | boolean>(undefined);
     const [isPasswordMatch, setIsPasswordMatch] = useState<undefined | boolean>(undefined);
     {/* 백엔드에 전달할 Data*/}
-    const [signUpInfo, setSignUpInfo] = useAtom(signUpInfoAtom);
+    const setSignUpInfo = useSetAtom(signUpInfoAtom);
 
     {/* 국적 데아터 가져오기 */}
     useEffect(() => {
