@@ -32,6 +32,11 @@ const EmployeeSignUpStep2 = () => {
     const [zipcode, setZipcode] = useAtom(zipcodeAtom);
     const [address1, setAddress1] = useAtom(address1Atom);
     const [address2, setAddress2] = useAtom(address2Atom);
+    const termsOfServiceAgreement = useAtomValue(termsOfServiceAgreementAtom);
+    const personalInfoAgreement = useAtomValue(personalInfoAgreementAtom);
+    const over15 = useAtomValue(over15Atom);
+    const adInfoAgreementSnsMms = useAtomValue(adInfoAgreementSnsMmsAtom);
+    const adInfoAgreementEmail = useAtomValue(adInfoAgreementEmailAtom);
     {/* 주소찾기 모달창 관리 state */}
     const setOpenAddrModal = useSetAtom(openAddrModalAtom);
     {/* Availability */}
@@ -41,6 +46,8 @@ const EmployeeSignUpStep2 = () => {
     const [isPhoneNumberCodeAvailability, setIsPhoneNumberCodeAvailability] = useState<undefined | boolean>(undefined);
     {/* 회원가입 api 전송 데이터 */}
     const [signUpInfo, setSignUpInfo] = useAtom(signUpInfoAtom);
+    {/* 데이터 api 전송시 비동기 처리에 필요한 trigger */}
+    const [isTrigger, setIsTrigger] = useState(false);
 
     /**
      * 이메일 인증번호 발송 후 이메일 인증 / 문구 띄우기 함수
@@ -77,6 +84,53 @@ const EmployeeSignUpStep2 = () => {
             }
         }
     };
+
+
+    const handleSubmit = () => {
+        setSignUpInfo((prev) => ({...prev,
+            email: email,
+            phoneNumber: phoneNumber,
+            zipcode: zipcode,
+            address1: address1,
+            address2: address2,
+            termsOfServiceAgreement: termsOfServiceAgreement,
+            personalInfoAgreement: personalInfoAgreement,
+            adInfoAgreementSnsMms: adInfoAgreementSnsMms,
+            adInfoAgreementEmail: adInfoAgreementEmail,
+            over15: over15,
+            birthDate:"2001-04-07",//TODO: 디자인 나오면 추가
+            male: true,//TODO: 디자인 나오면 추가
+        }))
+        setIsTrigger(true);
+    }
+
+    useEffect(() => {
+        if (isTrigger && signUpInfo.email !== "") {
+            employeeRegister(signUpInfo).then((res) => {
+                setIsTrigger(false);
+                setSignUpInfo((prev) => ({...prev,
+                    userId: "",
+                    email: "",
+                    password: "",
+                    name: "",
+                    phoneNumber: "",
+                    zipcode: "",
+                    address1: "",
+                    address2: "",
+                    birthDate: "",
+                    nationality: "",
+                    education: "",
+                    visa: "",
+                    termsOfServiceAgreement: false,
+                    personalInfoAgreement: false,
+                    adInfoAgreementSnsMms: false,
+                    adInfoAgreementEmail: false,
+                    male: false,
+                    over15: false,
+                }))
+            })
+        }
+    }, [isTrigger, signUpInfo]);
 
     return (
         <section className={"flex flex-col gap-y-[40px]"}>
@@ -232,6 +286,20 @@ const EmployeeSignUpStep2 = () => {
                     inputValue={address2}/>
             </div>
 
+            {/* 약관 동의 */}
+            <TermsAgreement />
+            {/* 제출 버튼 */}
+            <Button
+                disabled={email === "" || phoneNumber === "" || zipcode === "" || address1 === "" || address2 === "" || !termsOfServiceAgreement || !personalInfoAgreement || !over15}
+                onClick={() => {
+                    handleSubmit();
+                }}
+                className={email === "" || phoneNumber === "" || zipcode === "" || address1 === "" || address2 === "" || !termsOfServiceAgreement || !personalInfoAgreement || !over15
+                    ? "flex justify-center items-center title-md bg-gray2-button w-[520px]"
+                    : "flex justify-center items-center title-md bg-main-button w-[520px]"}>
+                다음
+            </Button>
+        </section>
     )
 }
 export default EmployeeSignUpStep2;
