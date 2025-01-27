@@ -4,11 +4,12 @@ import {useSetAtom} from "jotai/index";
 import Button from "@/src/components/common/Button";
 import Input from "@/src/components/common/Input";
 import SelectedFilterContent from "@/src/components/common/SelectedFilterContent";
-import {checkUserIdAvailability, nationalityInfoData} from "@/src/lib/api/sign-up";
+import { nationalityInfoData} from "@/src/lib/api/sign-up";
 import Filter from "@/src/components/common/Filter";
 import {CountryType} from "@/src/types/sign-up";
 import {educationList, visaList} from "@/src/utils/common";
-import {signUpInfoAtom} from "@/src/store/sign-up/atom";
+import {employeeSignUpInfoAtom} from "@/src/store/sign-up/atom";
+import {handleUserIdVerification} from "@/src/utils/sign-up";
 
 interface Props {
     setStep: Dispatch<SetStateAction<"First" | "Second">>;
@@ -34,7 +35,7 @@ const EmployeeSignUpStep1 = (props: Props) => {
     const [isPasswordAvailability, setIsPasswordAvailability] = useState<undefined | boolean>(undefined);
     const [isPasswordMatch, setIsPasswordMatch] = useState<undefined | boolean>(undefined);
     {/* 백엔드에 전달할 Data*/}
-    const setSignUpInfo = useSetAtom(signUpInfoAtom);
+    const setEmployeeSignUpInfo = useSetAtom(employeeSignUpInfoAtom);
 
     {/* 국적 데아터 가져오기 */}
     useEffect(() => {
@@ -136,7 +137,7 @@ const EmployeeSignUpStep1 = (props: Props) => {
     }, [confirmPassword]);
 
     const handleSubmit = () => {
-        setSignUpInfo((prev) => ({...prev,
+        setEmployeeSignUpInfo((prev) => ({...prev,
             userId: userId,
             name: name,
             password: password,
@@ -161,11 +162,7 @@ const EmployeeSignUpStep1 = (props: Props) => {
                         className={"w-[350px]"}
                         maxLength={15}/>
                     <Button
-                        onClick={() => checkUserIdAvailability(userId).then((response) => {
-                            if (response.status === 200) {
-                                setIsUserIdAvailability(true);
-                            }
-                        })}
+                        onClick={() => handleUserIdVerification(userId, setIsUserIdAvailability)}
                         className={"bg-gray2-button"}
                         secondClassName={"flex items-center w-[157px] justify-center"}>중복확인</Button>
                 </div>
