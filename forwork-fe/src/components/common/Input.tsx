@@ -3,7 +3,7 @@ import {JSX, useState} from "react";
 import {twMerge} from "tailwind-merge";
 
 interface Props {
-    type?: "text" | "password" | "email" | "password_confirmation";
+    type?: "text" | "password" | "email" | "password_confirmation" | "number";
     leftElement?: () => JSX.Element;
     placeholder?: string;
     inputValue: string;

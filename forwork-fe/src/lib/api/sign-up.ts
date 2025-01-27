@@ -45,3 +45,29 @@ export const verifyEmail = async (code: string) => {
     console.log(response.data);
     return response.data;
 };
+
+/**
+ * 전화번호 인증번호 전송
+ * @param phoneNumber 사용하고자 하는 전화번호
+ */
+export const sendPhoneNumberCode = async (phoneNumber: string) => {
+    const response = await client.post(`/api/v1/member/verify-phone`,
+        {
+            phoneNumber: phoneNumber
+        });
+    console.log(response.data);
+    return response.data;
+};
+
+/**
+ * 전화번호 인증
+ * @param code 이메일 인증 번호
+ */
+export const verifyPhoneNumber = async (code: string) => {
+    const response = await client.post(`/api/v1/member/verification-phone-code`,
+        {
+            code: code
+        });
+    console.log(response.data);
+    return response.data;
+};
