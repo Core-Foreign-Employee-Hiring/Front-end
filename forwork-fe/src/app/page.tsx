@@ -1,11 +1,13 @@
 "use client";
 
 import * as React from "react";
-import {SVGProps, useState} from "react";
+import {useState} from "react";
+
 import LOGOIcon from "@/src/assets/common/LOGOIcon";
 import {useRouter} from "next/navigation";
 import Button from "@/src/components/common/Button";
 import Input from "../components/common/Input";
+import CheckIcon from "@/src/assets/common/CheckIcon";
 
 export default function MainPage() {
   const router = useRouter();
@@ -64,21 +66,3 @@ export default function MainPage() {
       </div>
   );
 }
-
-const CheckIcon = (props: SVGProps<SVGSVGElement>) => (
-    <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width={14}
-        height={10}
-        fill="none"
-        {...props}
-    >
-        <path
-            stroke="#C5C6CD"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={1.6}
-            d="m1 4 4.5 4.5L13 1"
-        />
-    </svg>
-);
