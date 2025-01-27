@@ -1,4 +1,4 @@
-export interface SignUpInfoType {
+export interface EmployeeSignUpInfoType {
     userId: string;
     email: string;
     password: string;
@@ -19,6 +19,27 @@ export interface SignUpInfoType {
     over15: boolean;
 }
 
+export interface EmployerSignUpInfoType {
+    userId: string;
+    email: string;
+    password: string;
+    name: string;
+    phoneNumber: string;
+    birthDate: string;
+    zipcode: string;
+    address1: string;
+    address2: string;
+    businessRegistrationNumber: string;
+    companyName: string;
+    establishedDate: string;
+    businessField: string;
+    termsOfServiceAgreement: boolean;
+    personalInfoAgreement: boolean;
+    adInfoAgreementSnsMms: boolean;
+    adInfoAgreementEmail: boolean;
+    male: boolean;
+    over15: boolean;
+}
 
 export type CountryType = {
     name: {

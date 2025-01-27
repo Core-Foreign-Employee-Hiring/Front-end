@@ -1,7 +1,7 @@
 import { atom } from "jotai";
-import {SignUpInfoType} from "@/src/types/sign-up";
+import {EmployeeSignUpInfoType, EmployerSignUpInfoType} from "@/src/types/sign-up";
 
-export const signUpInfoAtom = atom<SignUpInfoType>({
+export const employeeSignUpInfoAtom = atom<EmployeeSignUpInfoType>({
     userId: "",
     email: "",
     password: "",
@@ -14,6 +14,29 @@ export const signUpInfoAtom = atom<SignUpInfoType>({
     nationality: "",
     education: "",
     visa: "",
+    termsOfServiceAgreement: false,
+    personalInfoAgreement: false,
+    adInfoAgreementSnsMms: false,
+    adInfoAgreementEmail: false,
+    male: false,
+    over15: false,
+});
+
+
+export const employerSignUpInfoAtom = atom<EmployerSignUpInfoType>({
+    userId: "",
+    email: "",
+    password: "",
+    name: "",
+    phoneNumber: "",
+    birthDate: "",
+    zipcode: "",
+    address1: "",
+    address2: "",
+    businessRegistrationNumber: "",
+    companyName: "",
+    establishedDate: "",
+    businessField: "",
     termsOfServiceAgreement: false,
     personalInfoAgreement: false,
     adInfoAgreementSnsMms: false,
