@@ -1,21 +1,46 @@
+import * as React from "react";
+import {useEffect, useState} from "react";
+import {useAtom, useAtomValue, useSetAtom} from "jotai";
+import {AxiosError} from "axios";
+
 import Input from "@/src/components/common/Input";
 import Button from "@/src/components/common/Button";
-import {sendEmailCode, sendPhoneNumberCode, verifyEmail, verifyPhoneNumber} from "@/src/lib/api/sign-up";
-import {useState} from "react";
-import {ResponseType} from "@/src/types/common";
-import {AxiosError} from "axios";
+import {
+    employeeRegister,
+    sendEmailCode,
+    sendPhoneNumberCode,
+    verifyEmail,
+    verifyPhoneNumber
+} from "@/src/lib/api/sign-up";
+import TermsAgreement from "@/src/components/sign-up/TermsAgreement";
 import SelectedFilterContent from "@/src/components/common/SelectedFilterContent";
+import {
+    address1Atom,
+    address2Atom, adInfoAgreementEmailAtom, adInfoAgreementSnsMmsAtom,
+    openAddrModalAtom, over15Atom, personalInfoAgreementAtom, signUpInfoAtom,
+    termsOfServiceAgreementAtom,
+    zipcodeAtom
+} from "@/src/store/sign-up/atom";
+import {ResponseType} from "@/src/types/common";
 
 const EmployeeSignUpStep2 = () => {
+    {/* 데이터 필드 */}
     const [email, setEmail] = useState("");
     const [emailCode, setEmailCode] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
     const [phoneNumberCode, setPhoneNumberCode] = useState("");
+    const [zipcode, setZipcode] = useAtom(zipcodeAtom);
+    const [address1, setAddress1] = useAtom(address1Atom);
+    const [address2, setAddress2] = useAtom(address2Atom);
+    {/* 주소찾기 모달창 관리 state */}
+    const setOpenAddrModal = useSetAtom(openAddrModalAtom);
     {/* Availability */}
     const [isEmailAvailability, setIsEmailAvailability] = useState<undefined | boolean>(undefined);
     const [isEmailCodeAvailability, setIsEmailCodeAvailability] = useState<undefined | boolean>(undefined);
     const [isPhoneNumberAvailability, setIsPhoneNumberAvailability] = useState<undefined | boolean>(undefined);
     const [isPhoneNumberCodeAvailability, setIsPhoneNumberCodeAvailability] = useState<undefined | boolean>(undefined);
+    {/* 회원가입 api 전송 데이터 */}
+    const [signUpInfo, setSignUpInfo] = useAtom(signUpInfoAtom);
 
     /**
      * 이메일 인증번호 발송 후 이메일 인증 / 문구 띄우기 함수
@@ -118,7 +143,6 @@ const EmployeeSignUpStep2 = () => {
                     <div className={"title-md"}>연락처<span className={"text-main"}>*</span></div>
                     <SelectedFilterContent selectedContent={"South Korea +82"} disabled={true}/>
                     <div className={"flex gap-x-3"}>
-
                         <Input
                             type={"number"}
                             setIsAvailability={setIsPhoneNumberAvailability}
@@ -173,7 +197,40 @@ const EmployeeSignUpStep2 = () => {
                 ) : null}
             </div>
 
-        </section>
+            {/* 주소 인증 */}
+            <div className={"flex flex-col gap-y-3"}>
+                <section className={"flex flex-col gap-y-3"}>
+                    <div className={"title-md"}>주소<span className={"text-main"}>*</span></div>
+                    {/* 우편번호 */}
+                    <div className={"flex gap-x-3"}>
+                        <Input
+                            setIsAvailability={setIsEmailAvailability}
+                            setInputValue={setZipcode}
+                            inputValue={zipcode}
+                            placeholder={"우편번호 입력"}
+                            className={"w-[350px]"}/>
+                        {/* 주소찾기 버튼 */}
+                        <Button
+                            onClick={() => {setOpenAddrModal(true)}}
+                            className={"bg-gray2-button"}
+                            secondClassName={"flex items-center w-[157px] justify-center button"}>주소 찾기</Button>
+                    </div>
+                </section>
+
+                {/* 주소 */}
+                <Input
+                    setIsAvailability={setIsEmailCodeAvailability}
+                    setInputValue={setAddress1}
+                    placeholder={"주소"}
+                    inputValue={address1}/>
+
+                {/* 상세 주소 */}
+                <Input
+                    setIsAvailability={setIsEmailCodeAvailability}
+                    setInputValue={setAddress2}
+                    placeholder={"상세주소"}
+                    inputValue={address2}/>
+            </div>
 
     )
 }

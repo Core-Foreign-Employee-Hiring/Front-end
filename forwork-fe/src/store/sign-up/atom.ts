@@ -1,7 +1,6 @@
 import { atom } from "jotai";
 import {SignUpInfoType} from "@/src/types/sign-up";
 
-
 export const signUpInfoAtom = atom<SignUpInfoType>({
     userId: "",
     email: "",
@@ -22,3 +21,9 @@ export const signUpInfoAtom = atom<SignUpInfoType>({
     male: false,
     over15: false,
 });
+
+export const zipcodeAtom = atom ("")
+export const address1Atom = atom ("")
+export const address2Atom = atom ("")
+export const openAddrModalAtom = atom (false)
+
