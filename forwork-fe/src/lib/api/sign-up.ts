@@ -1,7 +1,7 @@
 import axios from "axios";
 import {client} from "@/src/lib/axios";
 
-import {SignUpInfoType} from "@/src/types/sign-up";
+import {EmployeeSignUpInfoType} from "@/src/types/sign-up";
 
 /**
  * 아이디 중복 체크
@@ -78,7 +78,7 @@ export const verifyPhoneNumber = async (code: string) => {
  *  회원가입
  * @param signUpInfo 회원가입 정보
  */
-export const employeeRegister = async (signUpInfo: SignUpInfoType) => {
+export const employeeRegister = async (signUpInfo: EmployeeSignUpInfoType) => {
     const response = await client.post(`/api/v1/member/employee-register`, signUpInfo);
     console.log(response.data);
     return response.data;
