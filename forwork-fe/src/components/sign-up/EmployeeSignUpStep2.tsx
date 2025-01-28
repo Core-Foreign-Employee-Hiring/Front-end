@@ -1,7 +1,6 @@
 import * as React from "react";
 import {useEffect, useState} from "react";
 import {useAtom, useAtomValue, useSetAtom} from "jotai";
-import {AxiosError} from "axios";
 
 import Input from "@/src/components/common/Input";
 import Button from "@/src/components/common/Button";
@@ -9,7 +8,6 @@ import {
     employeeRegister,
     sendEmailCode,
     sendPhoneNumberCode,
-    verifyPhoneNumber
 } from "@/src/lib/api/sign-up";
 import TermsAgreement from "@/src/components/sign-up/TermsAgreement";
 import SelectedFilterContent from "@/src/components/common/SelectedFilterContent";
@@ -20,7 +18,6 @@ import {
     termsOfServiceAgreementAtom,
     zipcodeAtom
 } from "@/src/store/sign-up/atom";
-import {ResponseType} from "@/src/types/common";
 import {handleEmailVerification, handlePhoneNumberVerification} from "@/src/utils/sign-up";
 
 const EmployeeSignUpStep2 = () => {
@@ -221,7 +218,6 @@ const EmployeeSignUpStep2 = () => {
                     {/* 우편번호 */}
                     <div className={"flex gap-x-3"}>
                         <Input
-                            setIsAvailability={setIsEmailAvailability}
                             setInputValue={setZipcode}
                             inputValue={zipcode}
                             placeholder={"우편번호 입력"}
@@ -236,14 +232,12 @@ const EmployeeSignUpStep2 = () => {
 
                 {/* 주소 */}
                 <Input
-                    setIsAvailability={setIsEmailCodeAvailability}
                     setInputValue={setAddress1}
                     placeholder={"주소"}
                     inputValue={address1}/>
 
                 {/* 상세 주소 */}
                 <Input
-                    setIsAvailability={setIsEmailCodeAvailability}
                     setInputValue={setAddress2}
                     placeholder={"상세주소"}
                     inputValue={address2}/>
