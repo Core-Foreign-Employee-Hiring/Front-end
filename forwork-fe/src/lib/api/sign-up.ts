@@ -1,7 +1,8 @@
 import axios from "axios";
 import {client} from "@/src/lib/axios";
 
-import {EmployeeSignUpInfoType} from "@/src/types/sign-up";
+import {EmployeeSignUpInfoType, EmployerSignUpInfoType} from "@/src/types/sign-up";
+import {handleBusinessRegistrationNumberIdVerification} from "@/src/utils/sign-up";
 
 /**
  * 아이디 중복 체크
@@ -74,12 +75,35 @@ export const verifyPhoneNumber = async (code: string) => {
     return response.data;
 };
 
+
 /**
- *  회원가입
+ * 사업자 등록 번호 인증
+ * @param businessNo 사업자등록 번호
+ * @param startDate 설립일
+ * @param representativeName 대표자명
+ */
+export const verifyBusinessRegistrationNumberId = async (businessNo: string, startDate: string, representativeName: string) => {
+    const response = await client.get(`/api/v1/member/employer/company-validate?businessNo=${businessNo}&startDate=${startDate}&representativeName=${representativeName}`);
+    console.log(response.data);
+    return response.data;
+};
+
+/**
+ * 피고용인 회원가입
  * @param signUpInfo 회원가입 정보
  */
 export const employeeRegister = async (signUpInfo: EmployeeSignUpInfoType) => {
     const response = await client.post(`/api/v1/member/employee-register`, signUpInfo);
+    console.log(response.data);
+    return response.data;
+};
+
+/**
+ * 고용인 회원가입
+ * @param signUpInfo 회원가입 정보
+ */
+export const employerRegister = async (signUpInfo: EmployerSignUpInfoType) => {
+    const response = await client.post(`/api/v1/member/employer-register`, signUpInfo);
     console.log(response.data);
     return response.data;
 };

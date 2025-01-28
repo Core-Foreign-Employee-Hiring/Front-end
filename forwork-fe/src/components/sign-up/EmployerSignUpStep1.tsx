@@ -1,12 +1,13 @@
+import * as React from "react";
 import {Dispatch, SetStateAction, useEffect, useState} from "react";
+import {useSetAtom} from "jotai";
+
 import Input from "@/src/components/common/Input";
 import Button from "@/src/components/common/Button";
 import {sendEmailCode, sendPhoneNumberCode} from "@/src/lib/api/sign-up";
 import {handleEmailVerification, handlePhoneNumberVerification, handleUserIdVerification} from "@/src/utils/sign-up";
 import SelectedFilterContent from "@/src/components/common/SelectedFilterContent";
-import * as React from "react";
-import {useSetAtom} from "jotai/index";
-import {employeeSignUpInfoAtom} from "@/src/store/sign-up/atom";
+import {employerSignUpInfoAtom} from "@/src/store/sign-up/atom";
 
 interface Props {
     setStep: Dispatch<SetStateAction<"First" | "Second">>
@@ -31,7 +32,7 @@ const EmployerSignUpStep1= (props: Props) => {
     const [isPhoneNumberAvailability, setIsPhoneNumberAvailability] = useState<undefined | boolean>(undefined);
     const [isPhoneNumberCodeAvailability, setIsPhoneNumberCodeAvailability] = useState<undefined | boolean>(undefined);
     {/* 백엔드에 전달할 Data*/}
-    const setEmployerSignUpInfo = useSetAtom(employeeSignUpInfoAtom);
+    const setEmployerSignUpInfo = useSetAtom(employerSignUpInfoAtom);
 
 
     {/* 비밀번호 문구 */}
@@ -70,7 +71,7 @@ const EmployerSignUpStep1= (props: Props) => {
             phoneNumber: phoneNumber,
             email: email,
         }))
-        setStep("Second");
+        setStep("Second")
     }
 
     return (

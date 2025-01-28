@@ -1,5 +1,10 @@
-import {Dispatch, SetStateAction, useEffect} from "react";
-import {checkUserIdAvailability, verifyEmail, verifyPhoneNumber} from "@/src/lib/api/sign-up";
+import {Dispatch, SetStateAction} from "react";
+import {
+    checkUserIdAvailability,
+    verifyBusinessRegistrationNumberId,
+    verifyEmail,
+    verifyPhoneNumber
+} from "@/src/lib/api/sign-up";
 import {ResponseType} from "@/src/types/common";
 import {AxiosError} from "axios";
 
@@ -62,3 +67,33 @@ export const handlePhoneNumberVerification = async (phoneNumberCode: string, set
     }
 };
 
+
+/**
+ * 사업자 등록번호 인증하기 이후 안내문구
+ * @param businessRegistrationNumberId 사업자등록번호
+ * @param establishedDate 설립일
+ * @param name 대표자명
+ * @param setIsBusinessRegistrationNumberIdAvailability 인증이 된 전화번호인지 안내하는 문구
+ */
+export const handleBusinessRegistrationNumberIdVerification = async (
+    businessRegistrationNumberId: string,
+    establishedDate: string,
+    name: string,
+    setIsBusinessRegistrationNumberIdAvailability: Dispatch<SetStateAction<boolean | undefined>>) => {
+    try {
+        const response: ResponseType = await verifyBusinessRegistrationNumberId(businessRegistrationNumberId, establishedDate, name)
+        if (response && response.status && response.status === 200) {
+            if (response.data) {
+                setIsBusinessRegistrationNumberIdAvailability(true);
+            } else {
+                setIsBusinessRegistrationNumberIdAvailability(false);
+            }
+
+        }
+    } catch (error: any) {
+        const axiosError = error as AxiosError<ResponseType>; // AxiosError로 캐스팅
+        if (axiosError.response?.status === 400) {
+            setIsBusinessRegistrationNumberIdAvailability(false);
+        }
+    }
+};

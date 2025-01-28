@@ -12,7 +12,7 @@ interface Props {
     setType: Dispatch<SetStateAction<"Employee" | "Employer">>
 }
 const EmployerSignUp = (props: Props) => {
-    const {} = props;
+    const {setType} = props;
     const [step, setStep] = useState<"First" | "Second">("First");
     const [openAddrModal, setOpenAddrModal] = useAtom(openAddrModalAtom);
     const setZipcode = useSetAtom(zipcodeAtom);
