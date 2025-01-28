@@ -2,17 +2,25 @@
 
 import * as React from "react";
 import {useState} from "react";
+import Cookies from "js-cookie";
+import {AxiosError} from "axios";
+import {useRouter} from "next/navigation";
 
 import LOGOIcon from "@/src/assets/common/LOGOIcon";
-import {useRouter} from "next/navigation";
 import Button from "@/src/components/common/Button";
 import Input from "../components/common/Input";
 import CheckIcon from "@/src/assets/common/CheckIcon";
+import {login} from "@/src/lib/api/login";
+import {LoginDataType} from "@/src/types/login";
+import {ResponseType} from "@/src/types/common";
+
 
 export default function MainPage() {
   const router = useRouter();
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
+  {/* 로그인 되지 않았을경우 나타나는 에러 문구 */}
+  const [errorContent, setErrorContent] = useState(false);
 
   const idElement = () => {
       return (
@@ -31,6 +39,23 @@ export default function MainPage() {
             </div>
         )
     }
+    
+    const handleLogin = async (id: string, password: string) => {
+        try {
+            const response: ResponseType<LoginDataType> = await login(id, password)
+            if (response && response.status && response.status === 200 && response.data) {
+                Cookies.set("accessToken", response.data.accessToken, { expires: Date.now() + 604800000 });
+                Cookies.set("refreshToken", response.data.refreshToken, { expires: Date.now() + 604800000 });
+                setErrorContent(false);
+                router.push("/home")
+            }
+        } catch (error: any) {
+            const axiosError = error as AxiosError<ResponseType>; // AxiosError로 캐스팅
+            if (axiosError.response?.status === 400) {
+                setErrorContent(true);
+            }
+        }
+    };
 
     return (
         <div className={"flex flex-col items-center justify-center min-h-screen gap-y-[80px]"}>
@@ -40,7 +65,7 @@ export default function MainPage() {
                   <div className={"flex flex-col gap-y-4"}>
                       <Input leftElement={idElement} inputValue={id} setInputValue={setId} />
                       <Input leftElement={passwordElement} inputValue={password} setInputValue={setPassword} />
-                      <div className={"body-md text-error"}>아이디 또는 비밀번호가 맞지 않아요</div>
+                      {errorContent && (<div className={"body-md text-error"}>아이디 또는 비밀번호가 맞지 않아요</div>)}
                   </div>
                   <div className={"flex subtitle-md text-gray5 gap-x-2"}>
                       <div
@@ -49,7 +74,10 @@ export default function MainPage() {
                       </div>
                       아이디 저장
                   </div>
-                  <Button className={"bg-main-button"} secondClassName={"flex items-center justify-center w-[520px] py-6 subtitle-md"}>로그인</Button>
+                  <Button
+                      onClick={() => handleLogin(id, password)}
+                      className={"bg-main-button"}
+                      secondClassName={"flex items-center justify-center w-[520px] py-6 subtitle-md"}>로그인</Button>
               </div>
               <div className={"flex gap-x-5 items-center"}>
                   <button className={"text-gray5 body-md"}>아이디 찾기</button>
