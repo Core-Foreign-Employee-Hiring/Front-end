@@ -1,7 +1,6 @@
 import * as React from "react";
 import {useEffect, useState} from "react";
 import {useAtom, useAtomValue, useSetAtom} from "jotai";
-import {AxiosError} from "axios";
 
 import Input from "@/src/components/common/Input";
 import Button from "@/src/components/common/Button";
@@ -9,19 +8,17 @@ import {
     employeeRegister,
     sendEmailCode,
     sendPhoneNumberCode,
-    verifyEmail,
-    verifyPhoneNumber
 } from "@/src/lib/api/sign-up";
 import TermsAgreement from "@/src/components/sign-up/TermsAgreement";
 import SelectedFilterContent from "@/src/components/common/SelectedFilterContent";
 import {
     address1Atom,
     address2Atom, adInfoAgreementEmailAtom, adInfoAgreementSnsMmsAtom,
-    openAddrModalAtom, over15Atom, personalInfoAgreementAtom, signUpInfoAtom,
+    openAddrModalAtom, over15Atom, personalInfoAgreementAtom, employeeSignUpInfoAtom,
     termsOfServiceAgreementAtom,
     zipcodeAtom
 } from "@/src/store/sign-up/atom";
-import {ResponseType} from "@/src/types/common";
+import {handleEmailVerification, handlePhoneNumberVerification} from "@/src/utils/sign-up";
 
 const EmployeeSignUpStep2 = () => {
     {/* 데이터 필드 */}
@@ -45,46 +42,9 @@ const EmployeeSignUpStep2 = () => {
     const [isPhoneNumberAvailability, setIsPhoneNumberAvailability] = useState<undefined | boolean>(undefined);
     const [isPhoneNumberCodeAvailability, setIsPhoneNumberCodeAvailability] = useState<undefined | boolean>(undefined);
     {/* 회원가입 api 전송 데이터 */}
-    const [signUpInfo, setSignUpInfo] = useAtom(signUpInfoAtom);
+    const [signUpInfo, setSignUpInfo] = useAtom(employeeSignUpInfoAtom);
     {/* 데이터 api 전송시 비동기 처리에 필요한 trigger */}
     const [isTrigger, setIsTrigger] = useState(false);
-
-    /**
-     * 이메일 인증번호 발송 후 이메일 인증 / 문구 띄우기 함수
-     * @param emailCode 이메일로 받은 인증 코드
-     */
-    const handleEmailVerification = async (emailCode: string ) => {
-        try {
-            const response: ResponseType = await verifyEmail(emailCode)
-            if (response && response.status && response.status === 200) {
-                setIsEmailCodeAvailability(true);
-            }
-        } catch (error: any) {
-            const axiosError = error as AxiosError<ResponseType>; // AxiosError로 캐스팅
-            if (axiosError.response?.status === 400) {
-                setIsEmailCodeAvailability(false);
-            }
-        }
-    };
-
-    /**
-     * 전화번호 인증번호 발송 후 이메일 인증 / 문구 띄우기 함수
-     * @param phoneNumberCode 전화번호로 받은 인증 코드
-     */
-    const handlePhoneNumberVerification = async (phoneNumberCode: string ) => {
-        try {
-            const response: ResponseType = await verifyPhoneNumber(phoneNumberCode)
-            if (response && response.status && response.status === 200) {
-                setIsPhoneNumberCodeAvailability(true);
-            }
-        } catch (error: any) {
-            const axiosError = error as AxiosError<ResponseType>; // AxiosError로 캐스팅
-            if (axiosError.response?.status === 400) {
-                setIsPhoneNumberCodeAvailability(false);
-            }
-        }
-    };
-
 
     const handleSubmit = () => {
         setSignUpInfo((prev) => ({...prev,
@@ -175,7 +135,7 @@ const EmployeeSignUpStep2 = () => {
                                 inputValue={emailCode}
                                 className={"w-[350px]"}/>
                             <Button
-                                onClick={() => handleEmailVerification(emailCode)}
+                                onClick={() => handleEmailVerification(emailCode, setIsEmailCodeAvailability)}
                                 className={"bg-gray2-button"}
                                 secondClassName={"flex items-center w-[157px] justify-center button"}>인증하기</Button>
                         </div>
@@ -235,7 +195,7 @@ const EmployeeSignUpStep2 = () => {
                                 inputValue={phoneNumberCode}
                                 className={"w-[350px]"}/>
                             <Button
-                                onClick={() => handlePhoneNumberVerification(phoneNumberCode)}
+                                onClick={() => handlePhoneNumberVerification(phoneNumberCode, setIsPhoneNumberCodeAvailability)}
                                 className={"bg-gray2-button"}
                                 secondClassName={"flex items-center w-[157px] justify-center button"}>인증하기</Button>
                         </div>
@@ -258,7 +218,6 @@ const EmployeeSignUpStep2 = () => {
                     {/* 우편번호 */}
                     <div className={"flex gap-x-3"}>
                         <Input
-                            setIsAvailability={setIsEmailAvailability}
                             setInputValue={setZipcode}
                             inputValue={zipcode}
                             placeholder={"우편번호 입력"}
@@ -273,14 +232,12 @@ const EmployeeSignUpStep2 = () => {
 
                 {/* 주소 */}
                 <Input
-                    setIsAvailability={setIsEmailCodeAvailability}
                     setInputValue={setAddress1}
                     placeholder={"주소"}
                     inputValue={address1}/>
 
                 {/* 상세 주소 */}
                 <Input
-                    setIsAvailability={setIsEmailCodeAvailability}
                     setInputValue={setAddress2}
                     placeholder={"상세주소"}
                     inputValue={address2}/>
