@@ -12,6 +12,7 @@ import ReviewCard from "@/src/components/home/ReviewCard";
 import Footer from "@/src/components/common/Footer";
 
 const HomePage = () => {
+
     return (
         <div>
             <main>

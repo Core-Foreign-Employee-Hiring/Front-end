@@ -39,7 +39,7 @@ export default function MainPage() {
             </div>
         )
     }
-    
+
     const handleLogin = async (id: string, password: string) => {
         try {
             const response: ResponseType<LoginDataType> = await login(id, password)

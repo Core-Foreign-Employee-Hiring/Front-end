@@ -2,7 +2,6 @@ import axios from "axios";
 import {client} from "@/src/lib/axios";
 
 import {EmployeeSignUpInfoType, EmployerSignUpInfoType} from "@/src/types/sign-up";
-import {handleBusinessRegistrationNumberIdVerification} from "@/src/utils/sign-up";
 
 /**
  * 아이디 중복 체크
@@ -74,7 +73,6 @@ export const verifyPhoneNumber = async (code: string) => {
     console.log(response.data);
     return response.data;
 };
-
 
 /**
  * 사업자 등록 번호 인증
