@@ -6,8 +6,7 @@ import Input from "../common/Input";
 import { useState } from "react";
 import ReviewPost from "./ReviewPost";
 import SortButton from "./SortButton";
-import ArrowForwardIcon from "@/src/assets/common/ArrowForwardIcon";
-import NavBar from "../common/NavBar";
+import PaginationButton from "./PaginationButton";
 
 const JobReviewBoard = () => {
   const [inputValue, setInputValue] = useState("");
@@ -75,37 +74,8 @@ const JobReviewBoard = () => {
         replies="100"
         relativeTimestamp="4분 전 작성"
       />
-      <ReviewPost
-        regionTag="충북 청주시"
-        jobTag="외식/음료"
-        title="이게 맞는 걸까요?"
-        content="오전 11시부터 오후 8시까지 종일알바를 하고있습니다! 지금 이틀째인데 하는 업무가 음식점에서 하는 알바라서 여러 일들을 하고 최저시급을 받고있어요.그런데 사장님이 쉬는시간도 주시지않고 틈틈이 알아서 쉬라네요.. 인기많은 가게라 사실 사람이 쉬지 않고 들어옵니다ㅠ 그래서 사실 틈을 내어 쉴 수 없습니다.. 이게 맞는걸까요?"
-        views="100"
-        likes="100"
-        replies="100"
-        relativeTimestamp="4분 전 작성"
-      />
-      <ReviewPost
-        regionTag="충북 청주시"
-        jobTag="외식/음료"
-        title="이게 맞는 걸까요?"
-        content="오전 11시부터 오후 8시까지 종일알바를 하고있습니다! 지금 이틀째인데 하는 업무가 음식점에서 하는 알바라서 여러 일들을 하고 최저시급을 받고있어요.그런데 사장님이 쉬는시간도 주시지않고 틈틈이 알아서 쉬라네요.. 인기많은 가게라 사실 사람이 쉬지 않고 들어옵니다ㅠ 그래서 사실 틈을 내어 쉴 수 없습니다.. 이게 맞는걸까요?"
-        views="100"
-        likes="100"
-        replies="100"
-        relativeTimestamp="4분 전 작성"
-      />
-      <div className="flex justify-center">
-        <div className="flex justify-center translate-y-0.5 w-[36px] h-[36px] px-[5px] py-[3px] self-start fill-gray3"><ArrowForwardIcon direction="right"/></div>
-        <div className="flex gap-[8px] justify-center items-center text-gray4 text-[18px]">
-        <div>1</div>
-        <div>2</div>
-        <div>3</div>
-        <div>4</div>
-        <div>5</div>
-        </div>
-        <div className="flex justify-center translate-y-1.5 w-[36px] h-[36px] px-[5px] py-[3px] fill-main"><ArrowForwardIcon/></div>
-      </div>
+      
+      <PaginationButton />
     </div>
   );
 };
