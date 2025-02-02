@@ -8,6 +8,7 @@ import ReviewPost from "./ReviewPost";
 import SortButton from "./SortButton";
 import PaginationButton from "./PaginationButton";
 
+
 const JobReviewBoard = () => {
   const [inputValue, setInputValue] = useState("");
 
@@ -26,13 +27,13 @@ const JobReviewBoard = () => {
       </div>
 
       <div className="flex justify-between h-[68px]">
-        {/* 총 게시물 수수*/}
+        {/* 총 게시물 수*/}
         <div className="subtitle-lg">
           총 <span className="text-main subtitle-lg">34,231</span> 건
         </div>
         <div className="flex gap-[8px]">
           {/* 정렬 버튼 */}
-          <SortButton sortBy="날짜 순순" />
+          <SortButton sortBy="날짜 순" />
           {/* 게시물 검색 */}
           <Input
             className="w-[288px] h-[40px] px-[16px] flex items-center subtitle-sm border-[1px] border-gray3"
@@ -74,7 +75,8 @@ const JobReviewBoard = () => {
         replies="100"
         relativeTimestamp="4분 전 작성"
       />
-      
+      <div className="h-[36px]" />
+      {/* 페이지네이션 버튼 */}
       <PaginationButton />
     </div>
   );
