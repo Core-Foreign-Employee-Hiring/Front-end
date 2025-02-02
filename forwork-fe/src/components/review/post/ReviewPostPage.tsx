@@ -4,6 +4,7 @@ import Input from "../../common/Input";
 import { useState } from "react";
 import Button from "../../common/Button";
 import Reply from "./Reply";
+import ReRply from "./ReRply";
 
 const ReviewPostPage = () => {
   const [inputValue, setInputValue] = useState("");
@@ -13,6 +14,7 @@ const ReviewPostPage = () => {
       <div className="h-[24px]" />
       <div className="flex flex-col w-full py-[40px] px-[80px] gap-[12px] border-[1px] border-gray2 rounded-[20px]">
         {/* 지역, 직종 태그 */}
+        <div>
         <div className="flex gap-[10px]">
           <Button className="bg-gray2 px-[8px] py-[4px] rounded-[12px] flex justify-center items-center text-gray5">
             충북 청주시
@@ -21,6 +23,7 @@ const ReviewPostPage = () => {
             외식/음료
           </Button>
         </div>
+        <div className="h-[16px]" />
         {/* 제목, 삭제 버튼 */}
         <div className="flex justify-between">
           <div className="title-md">이게 맞는 걸까요?</div>
@@ -30,6 +33,7 @@ const ReviewPostPage = () => {
           >
             삭제하기
           </Button>
+        </div>
         </div>
         {/* 닉네임, 작성 날짜, 조회수, 댓글 수 */}
         <div className="flex justify-between border-b-[1px] border-b-gray3">
@@ -87,7 +91,13 @@ const ReviewPostPage = () => {
           className="w-full px-[20px] py-[10px] relative"
         />
         {/* 댓글 */}
-        <Reply></Reply>
+        <div>
+          <Reply></Reply>
+          <ReRply></ReRply>
+          <Reply></Reply>
+          <Reply></Reply>
+          <ReRply></ReRply>
+        </div>
       </div>
 
       <div className="h-[36px]" />
