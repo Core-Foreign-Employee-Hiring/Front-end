@@ -1,12 +1,13 @@
 import { useState } from "react";
 import Input from "../common/Input";
 import SelectedFilterContent from "../common/SelectedFilterContent";
+import Button from "../common/Button";
 
 const ReviewForm = () => {
   const [titleValue, setTitleValue] = useState("");
   const [contentValue, setContentValue] = useState("");
   return (
-    <div className="px-60 ">
+    <div className="px-60">
       {/* 헤드라인 */}
       <div className="title-lg pb-[20px] border-b-[1px] border-b-gray5">
         알바 이야기
@@ -74,6 +75,10 @@ const ReviewForm = () => {
           {/* 글자 수 */}
           <div className="badge-md text-right text-gray5">0/5000</div>
         </div>
+      </div>
+      <div className="flex justify-center mt-[64px] gap-[24px]">
+        <Button type="submit" className="subtitle-md bg-gray2-button p-[24px] justify-center w-[180px] rounded-[8px] h-[24px]">취소</Button>
+        <Button type="submit" className="subtitle-md bg-main-button p-[24px] justify-center w-[180px] rounded-[8px] h-[24px]">작성</Button>
       </div>
     </div>
   );

@@ -6,8 +6,19 @@ import Button from "../common/Button";
 import Reply from "./Reply";
 import ReRply from "./ReRply";
 
-const ReviewPostPage = () => {
+interface ReviewPostPageProps {
+  title:string;
+  id:string;
+  date:string;
+  views:string;
+  replies:string;
+  content:string
+}
+
+const ReviewPostPage = ({...props}:ReviewPostPageProps) => {
+  const {title, id, date, views, replies, content } = props;
   const [inputValue, setInputValue] = useState("");
+
   return (
     <div className="px-60 flex flex-col items-center">
       <div className="title-lg self-start">알바 이야기</div>
@@ -26,7 +37,7 @@ const ReviewPostPage = () => {
           <div className="h-[16px]" />
           {/* 제목, 삭제 버튼 */}
           <div className="flex justify-between">
-            <div className="title-md">이게 맞는 걸까요?</div>
+            <div className="title-md">{title}</div>
             <Button
               type="submit"
               className="bg-gray2-button h-[36px] px-[16px]"
@@ -39,34 +50,27 @@ const ReviewPostPage = () => {
         {/* 닉네임, 작성 날짜, 조회수, 댓글 수 */}
         <div className="flex justify-between border-b-[1px] border-b-gray3 pb-[16px]">
           <div className="flex gap-[10px]">
-            <div className="text-main badge-sm">albanoye**</div>
-            <div className="text-gray4 badge-sm">2025.01.15</div>
+            <div className="text-main badge-sm">{id}</div>
+            <div className="text-gray4 badge-sm">{date}</div>
           </div>
           <div className="flex gap-[4px]">
             <div className="flex items-center">
               <ViewIcon className="w-[18px] h-[18px] m-[10px]" />
               <div className="badge-sm h-[32px] text-gray5 px-[4px] flex items-center">
-                100
+                {views}
               </div>
             </div>
             <div className="flex">
                 <ReplyIcon className="w-[18px] h-[18px] m-[10px]" />
               <div className="badge-sm text-gray5 px-[4px] flex items-center">
-                5
+                {replies}
               </div>
             </div>
           </div>
         </div>
         {/* 게시물 내용 */}
         <p className="py-[40px] body-md">
-          오전 11시부터 오후 8시까지 종일알바를 하고있습니다!지금 이틀째인데
-          하는 업무가 음식점에서 하는 알바라서 여러 일들을 하고 최저시급을
-          받고있는데 제가 하는 일에 비해 적당하게 받고 있는지 모르겠어서 글
-          남겨요ㅠㅠ <br></br>
-          우선 서빙, 상 치우기, 단무지/물 전달, 각 식탁에 숫가락 젓가락 개수
-          맞춰서 세팅, 설거지, 음식 고명하기, 화장실청소, 대걸레질, 청소기,
-          셀프바 음식 채우기, 음식 나갈때 주방에 들어가서 받기 입니다. <br></br>
-          이 일을 다 혼자 해요. 이 정도로 최저시급인 10030원 적당한 건가요?
+          {content}
         </p>
         {/* 댓글 수 */}
         <div className="flex">
@@ -75,7 +79,7 @@ const ReviewPostPage = () => {
           </div>
           <div className="flex items-center h-[32px] px-[4px] gap-[4px]">
             <div className="badge-sm text-gray5">댓글</div>
-            <div className="text-main badge-md translate-y-0.8">5</div>
+            <div className="text-main badge-md translate-y-0.8">{replies}</div>
             <div className="badge-sm text-gray5">개</div>
           </div>
         </div>
@@ -85,6 +89,7 @@ const ReviewPostPage = () => {
           setInputValue={setInputValue}
           leftElement={() => (
             <Button
+              type="submit"
               className="bg-main-button absolute right-5 h-[34px] px-[16px]"
               secondClassName="py-[12px] rounded-[12px]"
             >
@@ -96,17 +101,18 @@ const ReviewPostPage = () => {
         />
         {/* 댓글 */}
         <div>
-          <Reply></Reply>
-          <ReRply></ReRply>
-          <Reply></Reply>
-          <Reply></Reply>
-          <ReRply></ReRply>
+          <Reply id="albago**" date="2025.01.15" content="남의 돈 받는 일이라는게 쉬울 리가 없죠... 아쉽게도ㅠ"></Reply>
+          <ReRply id="albago**" date="2025.01.15" content="너 T야?"></ReRply>
+          <Reply id="albago**" date="2025.01.15" content="남의 돈 받는 일이라는게 쉬울 리가 없죠... 아쉽게도ㅠ"></Reply>
+          <Reply id="albago**" date="2025.01.15" content="남의 돈 받는 일이라는게 쉬울 리가 없죠... 아쉽게도ㅠ"></Reply>
+          <ReRply id="albago**" date="2025.01.15" content="너 T야?"></ReRply>
         </div>
       </div>
 
       <div className="h-[36px]" />
       {/* 글 목록 보는 버튼 */}
       <Button
+        type="submit"
         className="bg-main-button w-[120px] h-[40px] px-[16px] justify-center"
         secondClassName="py-[12px]"
       >
