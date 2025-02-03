@@ -20,7 +20,8 @@ const JobReviewBoard = () => {
         {/* 글쓰기 버튼 */}
         <Button
           type="submit"
-          className="h-9 bg-main text-white rounded-[12px] px-3 py-4"
+          secondClassName="py-[12px] rounded-[12px] text-h5 leading-[1.5] tracking-[-0.015em] font-medium"
+          className="h-[36px] px-[16px] bg-main-button"
         >
           글쓰기
         </Button>
@@ -40,7 +41,7 @@ const JobReviewBoard = () => {
             placeholder="본문 + 제목을 검색해주세요"
             inputValue={inputValue}
             setInputValue={() => setInputValue(inputValue)}
-            leftElement={() => <SearchIcon className="fill-main" />}
+            leftElement={() => <SearchIcon fill="#5551f5" />}
           />
         </div>
       </div>

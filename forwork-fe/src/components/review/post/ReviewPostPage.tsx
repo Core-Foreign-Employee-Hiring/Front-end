@@ -29,7 +29,7 @@ const ReviewPostPage = () => {
           <div className="title-md">이게 맞는 걸까요?</div>
           <Button
             type="submit"
-            className="bg-gray2 h-[36px] px-[16px] py-[8px] rounded-[12px] text-gray5"
+            className="bg-gray2-button h-[36px] px-[16px] py-[8px] rounded-[12px]   "
           >
             삭제하기
           </Button>
@@ -86,7 +86,7 @@ const ReviewPostPage = () => {
         <Input
           inputValue={inputValue}
           setInputValue={setInputValue}
-          leftElement={() => <Button className="absolute right-5 h-[34px] bg-main px-[16px] py-[12px] rounded-[12px] text-white">등록</Button>}
+          leftElement={() => <Button className="absolute right-5 h-[34px] px-[16px] py-12-main-button">등록</Button>}
           placeholder="댓글을 입력해주세요."
           className="w-full px-[20px] py-[10px] relative"
         />

@@ -13,12 +13,12 @@ const ReRply = () => {
           <div className="text-gray4 badge-sm translate-y-1 px-[4px]">2025.01.15</div>
         </div>
         {/* 삭제 버튼 */}
-        <Button className="h-[36px] px-[16px] py-[8px] rounded-[12px] bg-gray2 gray5 text-gray5">
+        <Button className="h-[36px] px-[16px] py-8-gray2-button">
           삭제하기
         </Button>
       </div>
       <p className="body-md mb-[20px]">너 T야?</p>
-      <Button className="px-[12px] py-[8px] border-[1px] border-gray5 rounded-[12px] text-gray5">답글쓰기</Button>
+      <Button className="px-[12px] border-gray5-button">답글쓰기</Button>
     </div>
   )
 }
