@@ -1,5 +1,5 @@
 import ReRplyIcon from "@/src/assets/review/ReRplyIcon"
-import Button from "../../common/Button"
+import Button from "../common/Button"
 
 const ReRply = () => {
   return(

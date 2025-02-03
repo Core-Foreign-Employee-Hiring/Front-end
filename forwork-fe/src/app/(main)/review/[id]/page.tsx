@@ -2,7 +2,7 @@
 
 import Footer from "@/src/components/common/Footer";
 import NavBar from "@/src/components/common/NavBar";
-import ReviewPostPage from "@/src/components/review/post/ReviewPostPage";
+import ReviewPostPage from "@/src/components/review/ReviewPostPage";
 
 const PostPage = () => {
   return (

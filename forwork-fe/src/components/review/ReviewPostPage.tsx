@@ -1,8 +1,8 @@
 import ReplyIcon from "@/src/assets/review/ReplyIcon";
 import ViewIcon from "@/src/assets/review/ViewIcon";
-import Input from "../../common/Input";
+import Input from "../common/Input";
 import { useState } from "react";
-import Button from "../../common/Button";
+import Button from "../common/Button";
 import Reply from "./Reply";
 import ReRply from "./ReRply";
 
@@ -15,46 +15,42 @@ const ReviewPostPage = () => {
       <div className="flex flex-col w-full py-[40px] px-[80px] gap-[12px] border-[1px] border-gray2 rounded-[20px]">
         {/* 지역, 직종 태그 */}
         <div>
-        <div className="flex gap-[10px]">
-          <Button className="bg-gray2 px-[8px] py-[4px] rounded-[12px] flex justify-center items-center text-gray5">
-            충북 청주시
-          </Button>
-          <Button className="px-[8px] py-[4px] rounded-[12px] border-[1px] border-gray3 flex justify-center items-center text-gray5">
-            외식/음료
-          </Button>
-        </div>
-        <div className="h-[16px]" />
-        {/* 제목, 삭제 버튼 */}
-        <div className="flex justify-between">
-          <div className="title-md">이게 맞는 걸까요?</div>
-          <Button
-            type="submit"
-            className="bg-gray2-button h-[36px] px-[16px]"
-            secondClassName="py-[8px] rounded-[12px]"
-          >
-            삭제하기
-          </Button>
-        </div>
+          <div className="flex gap-[10px]">
+            <Button className="bg-gray2 px-[8px] py-[4px] rounded-[12px] flex justify-center items-center text-gray5">
+              충북 청주시
+            </Button>
+            <Button className="px-[8px] py-[4px] rounded-[12px] border-[1px] border-gray3 flex justify-center items-center text-gray5">
+              외식/음료
+            </Button>
+          </div>
+          <div className="h-[16px]" />
+          {/* 제목, 삭제 버튼 */}
+          <div className="flex justify-between">
+            <div className="title-md">이게 맞는 걸까요?</div>
+            <Button
+              type="submit"
+              className="bg-gray2-button h-[36px] px-[16px]"
+              secondClassName="py-[8px] rounded-[12px]"
+            >
+              삭제하기
+            </Button>
+          </div>
         </div>
         {/* 닉네임, 작성 날짜, 조회수, 댓글 수 */}
-        <div className="flex justify-between border-b-[1px] border-b-gray3">
+        <div className="flex justify-between border-b-[1px] border-b-gray3 pb-[16px]">
           <div className="flex gap-[10px]">
             <div className="text-main badge-sm">albanoye**</div>
             <div className="text-gray4 badge-sm">2025.01.15</div>
           </div>
-          <div className="flex">
-            <div className="flex">
-              <div className="w-[32px] h-[32px] p-[10px]">
-                <ViewIcon className="w-[18px] h-[12px]" />
-              </div>
-              <div className="badge-sm text-gray5 px-[4px] flex items-center">
+          <div className="flex gap-[4px]">
+            <div className="flex items-center">
+              <ViewIcon className="w-[18px] h-[18px] m-[10px]" />
+              <div className="badge-sm h-[32px] text-gray5 px-[4px] flex items-center">
                 100
               </div>
             </div>
             <div className="flex">
-              <div className="w-[32px] h-[32px] p-[10px]">
-                <ReplyIcon className="w-[18px] h-[16px]" />
-              </div>
+                <ReplyIcon className="w-[18px] h-[18px] m-[10px]" />
               <div className="badge-sm text-gray5 px-[4px] flex items-center">
                 5
               </div>
@@ -75,11 +71,11 @@ const ReviewPostPage = () => {
         {/* 댓글 수 */}
         <div className="flex">
           <div className="w-[32px] h-[32px] p-[10px]">
-            <ReplyIcon className="w-[18px] h-[16px]" />
+            <ReplyIcon className="w-[18px] h-[18px] -translate-y-1" />
           </div>
           <div className="flex items-center h-[32px] px-[4px] gap-[4px]">
             <div className="badge-sm text-gray5">댓글</div>
-            <div className="text-main badge-md -translate-y-0.5">5</div>
+            <div className="text-main badge-md translate-y-0.8">5</div>
             <div className="badge-sm text-gray5">개</div>
           </div>
         </div>
@@ -87,7 +83,14 @@ const ReviewPostPage = () => {
         <Input
           inputValue={inputValue}
           setInputValue={setInputValue}
-          leftElement={() => <Button className="bg-main-button absolute right-5 h-[34px] px-[16px]" secondClassName="py-[12px] rounded-[12px]">등록</Button>}
+          leftElement={() => (
+            <Button
+              className="bg-main-button absolute right-5 h-[34px] px-[16px]"
+              secondClassName="py-[12px] rounded-[12px]"
+            >
+              등록
+            </Button>
+          )}
           placeholder="댓글을 입력해주세요."
           className="w-full px-[20px] py-[10px] relative"
         />
@@ -103,7 +106,12 @@ const ReviewPostPage = () => {
 
       <div className="h-[36px]" />
       {/* 글 목록 보는 버튼 */}
-      <Button className="bg-main-button w-[120px] h-[40px] px-[16px] justify-center" secondClassName="py-[12px]">목록보기</Button>
+      <Button
+        className="bg-main-button w-[120px] h-[40px] px-[16px] justify-center"
+        secondClassName="py-[12px]"
+      >
+        목록보기
+      </Button>
     </div>
   );
 };

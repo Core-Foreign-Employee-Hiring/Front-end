@@ -9,13 +9,12 @@ interface ReviewPostProps {
   title:string;
   content:string;
   views:string;
-  likes:string;
   replies:string;
   relativeTimestamp:string;
 }
 
 const ReviewPost = ({...props}:ReviewPostProps) => {
-  const {regionTag, jobTag, title, content, views, likes, replies, relativeTimestamp} = props
+  const {regionTag, jobTag, title, content, views, replies, relativeTimestamp} = props
   return (
     <div className="px-20 py-10 flex flex-col gap-3 rounded-[20px] border-[1px] border-gray2 my-2">
       <div className="flex gap-[10px] font-[12px]">
@@ -34,21 +33,15 @@ const ReviewPost = ({...props}:ReviewPostProps) => {
         <div className="flex font-[12px] gap-[10px]">
           <div className="flex items-center ">
             <div className="p-[10px]">
-              <ViewIcon className="w-[18px] h-[12px] fill-gray5" />
+              <ViewIcon className="w-[18px] h-[16px] fill-gray5" />
             </div>
             <div className="text-gray5 px-[4px]">{views}</div>
           </div>
           <div className="flex items-center">
             <div className="p-[10px]">
-              <LikesIcon className="w-[18px] h-[12px] fill-gray5" />
+              <ReplyIcon className="w-[18px] h-[18px] fill-gray5" />
             </div>
-            <div className="text-gray5 px-[4px]">{likes}</div>
-          </div>
-          <div className="flex items-center">
-            <div className="p-[10px]">
-              <ReplyIcon className="w-[18px] h-[12px] fill-gray5" />
-            </div>
-            <div className="text-gray5 px-[4px]">{replies}</div>
+            <div className="text-gray5 px-[4px] translate-y-0.5">{replies}</div>
           </div>
         </div>
         <div className="text-gray5 font-[12px]">{relativeTimestamp}</div>
