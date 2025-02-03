@@ -20,7 +20,7 @@ const JobReviewBoard = () => {
         {/* 글쓰기 버튼 */}
         <Button
           type="submit"
-          secondClassName="py-[12px] rounded-[12px] text-h5 leading-[1.5] tracking-[-0.015em] font-medium"
+          secondClassName="py-[12px] rounded-[12px]"
           className="h-[36px] px-[16px] bg-main-button"
         >
           글쓰기

@@ -13,7 +13,7 @@ const ReRply = () => {
           <div className="text-gray4 badge-sm translate-y-1 px-[4px]">2025.01.15</div>
         </div>
         {/* 삭제 버튼 */}
-        <Button className="h-[36px] px-[16px] py-8-gray2-button">
+        <Button className="bg-gray2-button h-[36px] px-[16px]" secondClassName="py-[8px] rounded-[12px]">
           삭제하기
         </Button>
       </div>

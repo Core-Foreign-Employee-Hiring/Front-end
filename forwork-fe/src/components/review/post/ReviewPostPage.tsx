@@ -29,7 +29,8 @@ const ReviewPostPage = () => {
           <div className="title-md">이게 맞는 걸까요?</div>
           <Button
             type="submit"
-            className="bg-gray2-button h-[36px] px-[16px] py-[8px] rounded-[12px]   "
+            className="bg-gray2-button h-[36px] px-[16px]"
+            secondClassName="py-[8px] rounded-[12px]"
           >
             삭제하기
           </Button>
@@ -86,7 +87,7 @@ const ReviewPostPage = () => {
         <Input
           inputValue={inputValue}
           setInputValue={setInputValue}
-          leftElement={() => <Button className="absolute right-5 h-[34px] px-[16px] py-12-main-button">등록</Button>}
+          leftElement={() => <Button className="bg-main-button absolute right-5 h-[34px] px-[16px]" secondClassName="py-[12px] rounded-[12px]">등록</Button>}
           placeholder="댓글을 입력해주세요."
           className="w-full px-[20px] py-[10px] relative"
         />
@@ -102,7 +103,7 @@ const ReviewPostPage = () => {
 
       <div className="h-[36px]" />
       {/* 글 목록 보는 버튼 */}
-      <Button className="bg-main text-white w-[120px] h-[40px] px-[16px] py-[12px] rounded-[16px] flex justify-center">목록보기</Button>
+      <Button className="bg-main-button w-[120px] h-[40px] px-[16px] justify-center" secondClassName="py-[12px]">목록보기</Button>
     </div>
   );
 };
