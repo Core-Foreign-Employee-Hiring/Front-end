@@ -79,8 +79,6 @@ const sendRequest = async (config: any) => {
 
                     if (newAccessToken && newRefreshToken) {
                         // 갱신된 토큰을 처리
-                        // localStorage.removeItem("refreshToken");
-                        // localStorage.removeItem("accessToken");
                         setAuthHeader(newAccessToken);
                         saveTokensToCookies(newAccessToken, newRefreshToken);
 

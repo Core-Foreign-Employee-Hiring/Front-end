@@ -11,7 +11,7 @@ import EmployerSignUpStep2 from "@/src/components/sign-up/EmployerSignUpStep2";
 interface Props {
     setType: Dispatch<SetStateAction<"Employee" | "Employer">>
 }
-const EmployerSignUp = (props: Props) => {
+const  EmployerSignUp = (props: Props) => {
     const {setType} = props;
     const [step, setStep] = useState<"First" | "Second">("First");
     const [openAddrModal, setOpenAddrModal] = useAtom(openAddrModalAtom);

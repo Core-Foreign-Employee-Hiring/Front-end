@@ -5,16 +5,17 @@ import {twMerge} from "tailwind-merge";
 interface Props {
     type?: "text" | "password" | "email" | "password_confirmation" | "number";
     leftElement?: () => JSX.Element;
+    rightElement?: () => JSX.Element;
     placeholder?: string;
     inputValue: string;
-    setInputValue: React.Dispatch<React.SetStateAction<string>>;
+    setInputValue: React.Dispatch<React.SetStateAction<string>>
     className?: string;
     maxLength?: number;
     setIsAvailability?: React.Dispatch<React.SetStateAction<undefined | boolean>>;
     disabled?: boolean;
 }
 const Input = (props: Props) => {
-    const { type="text", leftElement, placeholder, inputValue, setInputValue, className, maxLength, setIsAvailability, disabled = false } = props;
+    const { type="text", leftElement, rightElement, placeholder, inputValue, setInputValue, className, maxLength, setIsAvailability, disabled = false } = props;
     const [isFocused, setIsFocused] = useState(false); // focus 상태 관리
 
     return (
@@ -39,6 +40,7 @@ const Input = (props: Props) => {
                 onFocus={() => setIsFocused(true)} // focus 시 상태 변경
                 onBlur={() => setIsFocused(false)} // blur 시 상태 변경
                 className={"subtitle-lg outline-none placeholder:body-md placeholder:text-gray4 w-full"}/>
+            {rightElement && rightElement()}
         </div>
     )
 }

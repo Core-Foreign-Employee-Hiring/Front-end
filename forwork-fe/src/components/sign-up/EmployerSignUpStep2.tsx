@@ -6,7 +6,7 @@ import Input from "@/src/components/common/Input";
 import Button from "@/src/components/common/Button";
 import SelectedFilterContent from "@/src/components/common/SelectedFilterContent";
 import Filter from "@/src/components/common/Filter";
-import {dayList, jobCategoryList, monthList, yearList} from "@/src/utils/common";
+import {changeBusinessFieldEnumType, dayList, jobCategoryList, monthList, yearList} from "@/src/utils/common";
 import TermsAgreement from "@/src/components/sign-up/TermsAgreement";
 import {
     address1Atom,
@@ -20,9 +20,10 @@ import {
     termsOfServiceAgreementAtom,
     zipcodeAtom
 } from "@/src/store/sign-up/atom";
-import {JobCategoryType} from "@/src/types/registration";
+import {JobCategoryType} from "@/src/types/register";
 import {employerRegister} from "@/src/lib/api/sign-up";
 import {handleBusinessRegistrationNumberIdVerification} from "@/src/utils/sign-up";
+import {EmployerSignUpInfoType} from "@/src/types/sign-up";
 
 const EmployerSignUpStep2 = () => {
     {/* 필드 데이터 */}
@@ -144,35 +145,6 @@ const EmployerSignUpStep2 = () => {
     }
 
     /**
-     * 업직종 백엔드 Enum 타입으로 변경
-     * @param businessField 업직종
-     */
-    const changeBusinessFieldEnumType = (businessField: JobCategoryType) => {
-        switch (businessField) {
-            case "농어촌/선원":
-                return "RURAL_FISHING"
-            case "교육":
-                return "EDUCATION"
-            case "기타/서비스":
-                return "OTHER_SERVICE"
-            case "매장/판매":
-                return "STORE_SALES"
-            case "모델/쇼핑몰":
-                return "MODEL_SHOPPING_MALL"
-            case "문화/여가/생활":
-                return "CULTURE_LEISURE_LIFESTYLE"
-            case "사무/영업":
-                return "OFFICE_SALES"
-            case "생산-건설":
-                return "PRODUCTION_CONSTRUCTION"
-            case "생산-기술":
-                return "PRODUCTION_TECHNICAL"
-            case "외식/음료":
-                return "FOOD_BEVERAGE"
-        }
-    }
-
-    /**
      * 제출 버튼 활성화 조건
      */
     const isFormValid = () => {
@@ -194,11 +166,12 @@ const EmployerSignUpStep2 = () => {
     };
 
     const handleSubmit = () => {
-        setSignUpInfo((prev) => ({...prev,
+        setSignUpInfo((prev: EmployerSignUpInfoType) => ({...prev,
             name: name,
             companyName: companyName,
             businessRegistrationNumber: businessRegistrationNumber,
             establishedDate: `${year}-${month}-${day}`,
+            representativeName: name,
             businessField: changeBusinessFieldEnumType(businessField) || '',
             zipcode: zipcode,
             address1: address1,
@@ -219,11 +192,12 @@ const EmployerSignUpStep2 = () => {
             employerRegister(signUpInfo).then((res) => {
                 console.log("res", res)
                 setIsTrigger(false);
-                setSignUpInfo((prev) => ({...prev,
+                setSignUpInfo((prev: EmployerSignUpInfoType) => ({...prev,
                     userId: "",
                     email: "",
                     password: "",
                     name: "",
+                    representativeName: "",
                     phoneNumber: "",
                     birthDate: "",
                     zipcode: "",
