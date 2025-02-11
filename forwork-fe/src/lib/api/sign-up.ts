@@ -81,7 +81,7 @@ export const verifyPhoneNumber = async (code: string) => {
  * @param representativeName 대표자명
  */
 export const verifyBusinessRegistrationNumberId = async (businessNo: string, startDate: string, representativeName: string) => {
-    const response = await client.get(`/api/v1/member/employer/company-validate?businessNo=${businessNo}&startDate=${startDate}&representativeName=${representativeName}`);
+    const response = await client.post(`/api/v1/member/employer/company-validate?businessNo=${businessNo}&startDate=${startDate}&representativeName=${representativeName}`);
     console.log(response.data);
     return response.data;
 };

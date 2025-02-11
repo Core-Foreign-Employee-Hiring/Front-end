@@ -24,6 +24,7 @@ export interface EmployerSignUpInfoType {
     email: string;
     password: string;
     name: string;
+    representativeName: string;
     phoneNumber: string;
     birthDate: string;
     zipcode: string;

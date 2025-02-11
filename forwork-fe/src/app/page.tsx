@@ -9,7 +9,7 @@ import {useRouter} from "next/navigation";
 import LOGOIcon from "@/src/assets/common/LOGOIcon";
 import Button from "@/src/components/common/Button";
 import Input from "../components/common/Input";
-import CheckIcon from "@/src/assets/common/CheckIcon";
+import UnCheckIcon from "@/src/assets/common/UnCheckIcon";
 import {login} from "@/src/lib/api/login";
 import {LoginDataType} from "@/src/types/login";
 import {ResponseType} from "@/src/types/common";
@@ -70,7 +70,7 @@ export default function MainPage() {
                   <div className={"flex subtitle-md text-gray5 gap-x-2"}>
                       <div
                           className={"flex w-[24px] h-[24px] border-[1.6px] border-gray3 rounded-full items-center justify-center"}>
-                          <CheckIcon/>
+                          <UnCheckIcon/>
                       </div>
                       아이디 저장
                   </div>

@@ -13,7 +13,7 @@ interface Props {
 }
 
 const EmployeeSignUp = (props: Props) => {
-    const [step, setStep] = useState<"First" | "Second">("First");
+    const [step, setStep] = useState<"First" | "Second">("Second");
     const setZipcode = useSetAtom(zipcodeAtom);
     const setAddress1 = useSetAtom(address1Atom);
     const [openAddrModal, setOpenAddrModal] = useAtom(openAddrModalAtom);
