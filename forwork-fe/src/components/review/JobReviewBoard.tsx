@@ -64,7 +64,7 @@ const JobReviewBoard = () => {
         likes="100"
         replies="100"
         relativeTimestamp="4분 전 작성"
-      />
+      /> 
       <ReviewPost
         regionTag="충북 청주시"
         jobTag="외식/음료"
