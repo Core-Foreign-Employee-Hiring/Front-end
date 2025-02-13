@@ -1,4 +1,4 @@
-import {Dispatch, SetStateAction} from "react";
+import {Dispatch, SetStateAction, useEffect} from "react";
 import PostCode from "react-daum-postcode";
 
 interface Props {
@@ -32,7 +32,6 @@ const SearchAddress = (props: Props) => {
 
         setOpenAddrModal(false);
     };
-
 
     return (
         <div className={"absolute left-0 right-0 z-40 flex flex-col  items-center justify-center bg-[rgba(0,0,0,0.6)] min-h-screen"}>

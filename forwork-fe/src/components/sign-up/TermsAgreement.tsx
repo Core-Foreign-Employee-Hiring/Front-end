@@ -6,7 +6,7 @@ import {
     personalInfoAgreementAtom,
     termsOfServiceAgreementAtom
 } from "@/src/store/sign-up/atom";
-import CheckIcon from "@/src/assets/common/CheckIcon";
+import UnCheckIcon from "@/src/assets/common/UnCheckIcon";
 
 const TermsAgreement = () => {
     const [allOptions, setAllOptions] = useState(false);
@@ -59,7 +59,7 @@ const TermsAgreement = () => {
                     className={allOptions
                         ? "flex w-[24px] h-[24px] bg-main rounded-full items-center justify-center"
                         : "flex w-[24px] h-[24px] border-[1.6px] border-gray3 rounded-full items-center justify-center"}>
-                    <CheckIcon/>
+                    <UnCheckIcon/>
                 </div>
                 전체동의
             </div>
@@ -75,7 +75,7 @@ const TermsAgreement = () => {
                             className={termsOfUseContent.state
                                 ? "flex w-[24px] h-[24px] bg-main rounded-full items-center justify-center"
                                 : "flex w-[24px] h-[24px] border-[1.6px] border-gray3 rounded-full items-center justify-center"}>
-                            <CheckIcon/>
+                            <UnCheckIcon/>
                         </div>
                         {termsOfUseContent.content}
                     </div>

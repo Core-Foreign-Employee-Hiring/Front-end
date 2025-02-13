@@ -62,10 +62,19 @@ body {
 @layer components {
   /* 버튼 컴포넌트 스타일 */
   .bg-main-button {
-    @apply py-[16.5px] rounded-[16px] bg-main subtitle-lg text-white
+    @apply py-[16.5px] rounded-[16px] bg-main button-md text-white
   }
   .bg-gray2-button {
-    @apply py-[16.5px] rounded-[16px] bg-gray2 subtitle-lg text-gray5
+    @apply py-[16.5px] rounded-[16px] bg-gray2 button-md text-gray5
+  }
+  .border-gray2-button {
+    @apply py-[7.5px] px-4 rounded-[12px] bg-white button-md text-gray5 border border-gray2
+  }
+  .border-gray3-button {
+    @apply py-[16.5px] px-4 rounded-[12px] bg-white subtitle-lg text-gray4 border border-gray3
+  }
+  .border-gray4-button {
+    @apply py-[19.5px] rounded-[16px] bg-white button-md text-gray5 border border-gray4
   }
   .border-gray5-button {
     @apply py-[8px] rounded-[12px] bg-white text-gray5 border-[1px] border-gray5 
