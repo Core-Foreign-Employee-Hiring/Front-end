@@ -3,7 +3,7 @@ import PortfolioFormat from "@/src/components/register/PortfolioFormat";
 import {useAtom} from "jotai";
 import {premiumRegisterDataAtom} from "@/src/store/register/atom";
 import {PortfolioFormType, PortfolioType} from "@/src/types/register";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 
 const PortfolioFormatCreator = () => {
     const [isFocusedList, setIsFocusedList] = useState<boolean[]>([]);
@@ -23,9 +23,13 @@ const PortfolioFormatCreator = () => {
         }))
     }
 
-    useEffect(() => {
-        console.log("isFocusedList", isFocusedList)
-    }, [isFocusedList]);
+    const deleteToPortfolioList = (index: number) => {
+        setIsFocusedList((prev) => prev.filter((_, i) => i !== index));
+        setPremiumRegisterData((prevState) => ({
+            ...prevState,
+            portfolios: prevState.portfolios.filter((_, i) => i !== index),
+        }));
+    };
 
     const changeTitle = (index: number, value: string) => {
         if (premiumRegisterData.portfolios) {
@@ -60,10 +64,17 @@ const PortfolioFormatCreator = () => {
         }
     };
 
-    useEffect(() => {
-        console.log(premiumRegisterData.portfolios[0]?.type)
-        console.log(premiumRegisterData.portfolios[1]?.type)
-    }, [premiumRegisterData.portfolios]);
+
+    const changeMaxFileCount = (index: number, value: number) => {
+        if (premiumRegisterData.portfolios) {
+            setPremiumRegisterData((prevState) => ({
+                ...prevState,
+                portfolios: prevState.portfolios.map((portfolio, i) =>
+                    i === index ? ({ ...portfolio, maxFileCount: value } as PortfolioType) : portfolio
+                ),
+            }));
+        }
+    };
 
     return (
         <div className={"flex flex-col gap-y-5 px-[320px] mt-[80px]"}>
@@ -88,12 +99,15 @@ const PortfolioFormatCreator = () => {
                         setTitle={changeTitle}
                         enabled={portfolio?.required}
                         setEnabled={changeEnabled}
+                        changeMaxFileCount={changeMaxFileCount}
                         maxFileCount={portfolio?.maxFileCount}
                         changeFormType={changeFormType}
                         setIsFocusedList={setIsFocusedList}
-                        isFocusedList={isFocusedList}/>
+                        isFocusedList={isFocusedList}
+                        deleteToPortfolioList={deleteToPortfolioList}/>
                 )
             })}
+            <Button className={"bg-main-button"} secondClassName={"flex justify-center items-center mt-[80px]"}>공고 등록하기</Button>
         </div>
     )
 }
