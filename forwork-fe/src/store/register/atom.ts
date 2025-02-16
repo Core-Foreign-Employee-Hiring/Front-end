@@ -1,6 +1,11 @@
 import {atom} from "jotai/index";
 import {EmployerSignUpInfoType} from "@/src/types/sign-up";
-import {ApplicationMethodEnumType, BusinessFieldEnumType, GeneralRegisterDataType} from "@/src/types/register";
+import {
+    ApplicationMethodEnumType,
+    BusinessFieldEnumType,
+    GeneralRegisterDataType, PortfolioType,
+    PremiumRegisterDataType
+} from "@/src/types/register";
 
 export const generalRegisterDataAtom = atom<GeneralRegisterDataType>({
     title: "",
@@ -27,4 +32,33 @@ export const generalRegisterDataAtom = atom<GeneralRegisterDataType>({
     salaryOther: "",
     workTimeOther: "",
     workDurationOther: "",
+});
+
+export const premiumRegisterDataAtom= atom<PremiumRegisterDataType>({
+    gender: null,
+    applicationMethods: [null],
+    salaryType: null,
+    workDuration: [null],
+    salaryOther: null,
+    workDaysOther: [null],
+    otherConditions: null,
+    workDays: [null],
+    education: null,
+    salary: null,
+    portfolios: [],
+    recruitEndDate: null,
+    workDurationOther: null,
+    latitude: null,
+    longitude: null,
+    workTimeOther: null,
+    recruitStartDate: null,
+    address: {
+        zipcode: null,
+        address1: null,
+        address2: null,
+    },
+    title: null,
+    preferredConditions: [null],
+    businessFields: [null],
+    workTime: [null],
 });
