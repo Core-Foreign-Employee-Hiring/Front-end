@@ -116,11 +116,11 @@ const WorkTime = (props: Props) => {
             {workTimeDirectList && (
                 <div className={"flex gap-x-3"}>
                     <div className={"w-full"}>
-                        <SelectedFilterContent selectedContent={startTime} className={startTime === "시작시간" ? "subtitle-lg text-gray4": "subtitle-lg"} setIsFocused={setIsStartTimeFilterContentFocused} />
+                        <SelectedFilterContent selectedContent={startTime} className={startTime === "시작시간" ? "subtitle-lg text-gray4": "subtitle-lg"} setIsFocused={() => setIsStartTimeFilterContentFocused(!isStartTimeFilterContentFocused)} />
                         {isStartTimeFilterContentFocused && (<Filter filterContents={startTimeFilterContents} />)}
                     </div>
                     <div className={"w-full"}>
-                        <SelectedFilterContent selectedContent={endTime} className={endTime === "종료시간" ? "subtitle-lg text-gray4": "subtitle-lg"} setIsFocused={setIsEndTimeFilterContentFocused} />
+                        <SelectedFilterContent selectedContent={endTime} className={endTime === "종료시간" ? "subtitle-lg text-gray4": "subtitle-lg"} setIsFocused={() => setIsEndTimeFilterContentFocused(!isEndTimeFilterContentFocused)} />
                         {isEndTimeFilterContentFocused && (<Filter filterContents={endTimeFilterContents} />)}
                     </div>
                 </div>

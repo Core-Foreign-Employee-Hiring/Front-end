@@ -63,7 +63,7 @@ const Salary = (props: Props) => {
             <div className={"text-error body-md"}>* 2024년 최저임금 10,030원</div>
             <div className={"flex gap-x-3"}>
                 <div className={"flex flex-col w-[250px]"}>
-                    <SelectedFilterContent selectedContent={salaryType} setIsFocused={setIsSalaryTypeFilterContentFocused}/>
+                    <SelectedFilterContent selectedContent={salaryType} setIsFocused={() => setIsSalaryTypeFilterContentFocused(!isSalaryTypeFilterContentFocused)}/>
                     {isSalaryTypeFilterContentFocused && (<Filter filterContents={salaryFilterContents} />)}
                 </div>
                 <Input setInputValue={setSalary} inputValue={salary} className={"w-full"} type={"number"} rightElement={wonSymbolElement}/>
