@@ -9,7 +9,7 @@ interface ReRplyProps {
 
 const ReRply = ({...props}:ReRplyProps) => {
   const{id, date, content} = props
-
+ 
   return(
     <div className="py-[20px] px-[24px] bg-gray1 border-b-[1px] border-b-gray2 w-full">
       <div className="flex justify-between">
