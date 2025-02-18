@@ -234,7 +234,7 @@ const EmployeeSignUpStep1 = (props: Props) => {
                 <SelectedFilterContent
                     placeholder={"선택"}
                     selectedContent={nationality}
-                    setIsFocused={setIsNationalityFilterContentFocused}
+                    setIsFocused={() => setIsNationalityFilterContentFocused(!isNationalityFilterContentFocused)}
                     isFocused={isNationalityFilterContentFocused}/>
                 {isNationalityFilterContentFocused ? (
                     <Filter filterContents={nationalityFilterContents}/>) : null}
@@ -249,7 +249,7 @@ const EmployeeSignUpStep1 = (props: Props) => {
                         selectedContent={education}
                         placeholder={"선택"}
                         isFocused={isEducationFilterContentFocused}
-                        setIsFocused={setIsEducationFilterContentFocused}/>
+                        setIsFocused={() => setIsEducationFilterContentFocused(!isEducationFilterContentFocused)}/>
                     {isEducationFilterContentFocused ? (
                         <Filter filterContents={eductionFilterContents}/>) : null}
                 </div>
@@ -260,7 +260,7 @@ const EmployeeSignUpStep1 = (props: Props) => {
                         selectedContent={visa}
                         placeholder={"선택"}
                         isFocused={isVisaFilterContentFocused}
-                        setIsFocused={setIsVisaFilterContentFocused}/>
+                        setIsFocused={() => setIsVisaFilterContentFocused(!isVisaFilterContentFocused)}/>
                     {isVisaFilterContentFocused ? (<Filter filterContents={visaFilterContents}/>) : null}
                 </div>
             </div>
