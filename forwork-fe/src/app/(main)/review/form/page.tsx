@@ -2,19 +2,19 @@
 
 import Footer from "@/src/components/common/Footer";
 import NavBar from "@/src/components/common/NavBar";
-import JobReviewBoard from "@/src/components/review/JobReviewBoard";
+import ReviewForm from "@/src/components/review/ReviewForm";
 
-const ReviewPage = () => {
+const Page = () => {
   return (
     <div>
       <main>
         <NavBar />
         <div className="h-60" />
-        <JobReviewBoard />
+        <ReviewForm />
         <div className="h-[180px]"/>
         <Footer />
       </main>
     </div>
   );
 };
-export default ReviewPage;
+export default Page;
