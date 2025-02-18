@@ -2,7 +2,7 @@ import useSWR from "swr";
 
 import {swrGetFetcher} from "../axios";
 import {ResponseType} from "../../types/common";
-import { ReviewBoardType } from "@/src/types/reviewBoard";
+import { ReviewBoardType } from "@/src/types/review";
 
 const useReviewBoard = () => {
     const { data, error } = useSWR<ResponseType<ReviewBoardType>>("/api/v1/albareview", swrGetFetcher);
