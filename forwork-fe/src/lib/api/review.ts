@@ -1,6 +1,7 @@
 import Cookies from "js-cookie";
 import {sendRequest} from "@/src/lib/axios";
-import { reviewFormType } from "@/src/types/review";
+import {reviewFormType} from "@/src/types/review";
+import axios from "axios";
 
 /**
  * 알바 후기 등록 api
@@ -11,7 +12,6 @@ export const createReview = async (data: reviewFormType) => {
         const response = await sendRequest({
             headers: {
                 Authorization: `Bearer ${Cookies.get("accessToken")}`,
-                'Content-Type': 'multipart/form-data',
             },
             method: "POST",
             data: data,
@@ -23,3 +23,10 @@ export const createReview = async (data: reviewFormType) => {
         console.error("알바 후기 등록시 에러:", error);
     }
 };
+
+
+export const getAddressByLevel = () => {
+    axios.get("https://sgisapi.kostat.go.kr/OpenAPI3/addr/stage.json").then((res) => {
+        console.log("res", res)
+    })
+}
