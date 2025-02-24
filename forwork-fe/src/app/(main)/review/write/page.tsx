@@ -41,16 +41,22 @@ const ReviewWrite = () => {
                     <div className={"title-md w-fit"}>가게 위치<span className={"text-main"}>*</span></div>
                     <div className={"flex gap-x-6"}>
                         <div className={"flex flex-col gap-y-3"}>
-                            <SelectedFilterContent setIsFocused={setIsProvinceFilterContentFocused}
-                                                   selectedContent={province}
-                                                   className={"border-gray2 py-3 px-4 w-[266px]"}/>
-                            {isProvinceFilterContentFocused && <Filter filterContents={provinceFilterContents}/>}
+                            <div className={"relative"}>
+                                <SelectedFilterContent setIsFocused={setIsProvinceFilterContentFocused}
+                                                       selectedContent={province}
+                                                       className={"border-gray2 py-3 px-4 w-[266px]"}/>
+                                {isProvinceFilterContentFocused &&
+                                    <Filter className={"absolute w-full bg-white border-gray2 z-10"} filterContents={provinceFilterContents}/>}
+                            </div>
                         </div>
                         <div className={"flex flex-col gap-y-3"}>
-                            <SelectedFilterContent setIsFocused={setIsDistrictFilterContentFocused}
-                                                   selectedContent={district}
-                                                   className={"border-gray2 py-3 px-4 w-[266px]"}/>
-                            {isDistrictFilterContentFocused && <Filter filterContents={districtFilterContents}/>}
+                            <div className={"relative"}>
+                                <SelectedFilterContent setIsFocused={setIsDistrictFilterContentFocused}
+                                                       selectedContent={district}
+                                                       className={"border-gray2 py-3 px-4 w-[266px]"}/>
+                                {isDistrictFilterContentFocused &&
+                                    <Filter className={"absolute w-full bg-white border-gray2 z-10"} filterContents={districtFilterContents}/>}
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -58,14 +64,16 @@ const ReviewWrite = () => {
                 <section className={"flex gap-x-[158px] items-center"}>
                     <div className={"title-md w-fit"}>업직종<span className={"text-main"}>*</span></div>
                     <div className={"flex flex-col gap-y-3"}>
-                        <SelectedFilterContent
-                            className={"border-gray2 py-3 px-4 w-[266px]"}
-                            selectedContent={businessField}
-                            placeholder={"선택"}
-                            isFocused={isBusinessFieldFilterContentFocused}
-                            setIsFocused={setIsBusinessFieldFilterContentFocused}/>
-                        {isBusinessFieldFilterContentFocused ? (
-                            <Filter className={"border-gray2"} filterContents={businessFieldFilterContents}/>) : null}
+                        <div className={"relative"}>
+                            <SelectedFilterContent
+                                className={"border-gray2 py-3 px-4 w-[266px]"}
+                                selectedContent={businessField}
+                                placeholder={"선택"}
+                                isFocused={isBusinessFieldFilterContentFocused}
+                                setIsFocused={setIsBusinessFieldFilterContentFocused}/>
+                            {isBusinessFieldFilterContentFocused ? (
+                                <Filter className={"absolute bg-white border-gray2 z-10"} filterContents={businessFieldFilterContents}/>) : null}
+                        </div>
                     </div>
                 </section>
                 {/* 제목 */}
@@ -84,7 +92,7 @@ const ReviewWrite = () => {
                                 setContent(e.target.value)
                             }}
                             placeholder={"내용을 입력해주세요."}
-                            className={"w-full h-full outline-none subtitle-lg"}/>
+                            className={"w-full h-full outline-none placeholder:body-md subtitle-lg"}/>
                         <div className={"badge-lg text-gray3"}>0/5000</div>
                     </div>
                 </section>
