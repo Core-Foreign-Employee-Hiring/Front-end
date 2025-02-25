@@ -12,7 +12,7 @@ const PremiumCard = (props: Props) => {
             <div className={"flex flex-col gap-y-[9px]"}>
                 {/* 계약서 태그 */}
                 <div
-                    className={"flex badge-lg text-main bg-main-light py-1 px-2 rounded-[8px] w-fit items-center gap-x-1"}>
+                    className={"flex badge-md text-main bg-main-light py-1 px-2 rounded-[8px] w-fit items-center gap-x-1"}>
                     <div className={"flex items-center w-[12.5px] h-[13.5px]"}><LocalFireDepartmentIcon/></div>
                     계약서 작성률 50% 기업
                 </div>

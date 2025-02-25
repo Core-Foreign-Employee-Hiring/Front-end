@@ -93,7 +93,7 @@ const ReviewWrite = () => {
                             }}
                             placeholder={"내용을 입력해주세요."}
                             className={"w-full h-full outline-none placeholder:body-md subtitle-lg"}/>
-                        <div className={"badge-lg text-gray3"}>0/5000</div>
+                        <div className={"badge-md text-gray3"}>0/5000</div>
                     </div>
                 </section>
                 {/* 버튼 */}
