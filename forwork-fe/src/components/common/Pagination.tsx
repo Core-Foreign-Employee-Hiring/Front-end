@@ -56,8 +56,8 @@ const Paging = (props: Props) => {
                                     }}
                                     className={
                                         pageNumber + 1 === num
-                                            ? "flex items-center justify-center text-white bg-primaryMid rounded-full w-[28px] h-[28px]"
-                                            : "flex items-center justify-center text-gray3 w-[28px] h-[28px]"
+                                            ? "flex items-center justify-center text-main bg-main-light rounded-full w-[28px] h-[28px] button-md"
+                                            : "flex items-center justify-center text-gray3 w-[28px] h-[28px] button-md"
                                     }>
                                     {num}
                                 </button>

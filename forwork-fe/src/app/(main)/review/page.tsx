@@ -10,22 +10,22 @@ import SelectedFilterContent from "@/src/components/common/SelectedFilterContent
 import useFilter from "@/src/hooks/useFilter";
 import Filter from "@/src/components/common/Filter";
 import {SortContentType} from "@/src/types/review";
-import {sortContents} from "@/src/utils/review";
+import {sortContents, sortContentToEnum} from "@/src/utils/review";
 import Button from "@/src/components/common/Button";
 import Pagination from "@/src/components/common/Pagination";
 import {useRouter} from "next/navigation";
 import useReview from "@/src/lib/hooks/useReview";
 
 const ReviewPage = () => {
-    const {reviewContents} = useReview()
+    const [pageNumber, setPageNumber] = useState(0);
+    const [sortContent, setSortContent, isSortFilterFocused, setIsSortFilterFocused] = useFilter<SortContentType>("날짜순");
+    const {reviewData} = useReview(pageNumber, sortContentToEnum(sortContent))
     const router = useRouter();
     const [searchValue, setSearchValue] = useState("");
-    const [sortContent, setSortContent, isSortFilterFocused, setIsSortFilterFocused] = useFilter<SortContentType>("날짜순");
-    const [pageNumber, setPageNumber] = useState(5);
 
     useEffect(() => {
-        console.log("reviewData", reviewContents)
-    }, [reviewContents]);
+        console.log("reviewData", reviewData)
+    }, [reviewData]);
 
     // 정렬 필터 내용
     const sortFilterContents = () => (
@@ -46,6 +46,7 @@ const ReviewPage = () => {
         </div>
     );
 
+    if (!reviewData) return ;
 
     return (
       <div>
@@ -86,13 +87,13 @@ const ReviewPage = () => {
               </header>
 
               <section className={"grid grid-cols-2 gap-6 mt-4"}>
-                  {reviewContents && reviewContents.map((reviewContent) => (
+                  {reviewData.data?.content.map((reviewContent) => (
                       <Post key={reviewContent.id} {...reviewContent} />
                   ))}
               </section>
 
               <Pagination className={"mt-[65px] mb-[115px]"} pageNumber={pageNumber} setPageNumber={setPageNumber}
-                          totalPageNumber={5}/>
+                          totalPageNumber={reviewData.data?.totalPages}/>
           </main>
           <Footer/>
       </div>

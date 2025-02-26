@@ -1,5 +1,4 @@
 import {BusinessFieldEnumType, EducationType, JobCategoryType, VisaType} from "@/src/types/register";
-import exp from "node:constants";
 import {Dispatch, SetStateAction} from "react";
 
 export const jobCategoryList: JobCategoryType[] = [

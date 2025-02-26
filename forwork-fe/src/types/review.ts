@@ -2,6 +2,8 @@ import {BusinessFieldEnumType} from "@/src/types/register";
 
 export type SortContentType = "날짜순" | "조회순";
 
+export type SortType = "newest" | "popular";
+
 export interface ReviewFormType {
     title: string;
     content: string;

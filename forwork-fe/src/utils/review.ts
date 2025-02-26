@@ -27,3 +27,12 @@ export function formatDate(date: string) {
         return format(d, "yy.MM.dd"); // 날짜 포맷
     }
 }
+export const sortContentToEnum = (sortContent: SortContentType) => {
+    switch (sortContent) {
+        case "조회순":
+            return "popular"
+        default:
+            return "newest"
+    }
+}
+
