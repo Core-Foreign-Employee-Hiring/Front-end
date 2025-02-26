@@ -1,20 +1,21 @@
 "use client";
 
+import {useState} from "react";
+import {useRouter} from "next/navigation";
+
+import useReview from "@/src/lib/hooks/useReview";
 import Footer from "@/src/components/common/Footer";
 import Input from "@/src/components/common/Input";
 import NavBar from "@/src/components/common/NavBar";
 import Post from "@/src/components/review/Post";
 import SearchIcon from "@/src/assets/common/SearchIcon";
-import {useEffect, useState} from "react";
 import SelectedFilterContent from "@/src/components/common/SelectedFilterContent";
 import useFilter from "@/src/hooks/useFilter";
 import Filter from "@/src/components/common/Filter";
-import {SortContentType} from "@/src/types/review";
-import {sortContents, sortContentToEnum} from "@/src/utils/review";
 import Button from "@/src/components/common/Button";
 import Pagination from "@/src/components/common/Pagination";
-import {useRouter} from "next/navigation";
-import useReview from "@/src/lib/hooks/useReview";
+import {SortContentType} from "@/src/types/review";
+import {sortContents, sortContentToEnum} from "@/src/utils/review";
 
 const ReviewPage = () => {
     const router = useRouter();

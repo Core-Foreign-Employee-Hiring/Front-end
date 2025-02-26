@@ -1,9 +1,9 @@
+import {useRouter} from "next/navigation";
 import Tag from "@/src/components/common/Tag";
 import ViewIcon from "@/src/assets/review/ViewIcon";
 import ReplyIcon from "@/src/assets/review/ReplyIcon";
-import {useRouter} from "next/navigation";
-import {ReviewDataContentType} from "@/src/types/review";
 import {formatDate} from "@/src/utils/review";
+import {ReviewDataContentType} from "@/src/types/review";
 import {changeBusinessFieldEnumToKorType} from "@/src/utils/common";
 
 const Post = (props: ReviewDataContentType) => {
