@@ -4,6 +4,10 @@ import {ko} from "date-fns/locale";
 
 export const sortContents: SortContentType[] = ["날짜순", "조회순"]
 
+/**
+ * pos t에 있는 날짜 형식으로 변경
+ * @param date "2025-02-26 14:00:01"
+ */
 export function formatDate(date: string) {
     const d = new Date(date);
     const now = Date.now();
@@ -27,6 +31,11 @@ export function formatDate(date: string) {
         return format(d, "yy.MM.dd"); // 날짜 포맷
     }
 }
+
+/**
+ * backend enum 타입으로 변경
+ * @param sortContent "날짜순" | "조회순"
+ */
 export const sortContentToEnum = (sortContent: SortContentType) => {
     switch (sortContent) {
         case "조회순":
