@@ -5,7 +5,7 @@ import Input from "@/src/components/common/Input";
 import NavBar from "@/src/components/common/NavBar";
 import Post from "@/src/components/review/Post";
 import SearchIcon from "@/src/assets/common/SearchIcon";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import SelectedFilterContent from "@/src/components/common/SelectedFilterContent";
 import useFilter from "@/src/hooks/useFilter";
 import Filter from "@/src/components/common/Filter";
@@ -14,12 +14,18 @@ import {sortContents} from "@/src/utils/review";
 import Button from "@/src/components/common/Button";
 import Pagination from "@/src/components/common/Pagination";
 import {useRouter} from "next/navigation";
+import useReview from "@/src/lib/hooks/useReview";
 
 const ReviewPage = () => {
+    const {reviewContents} = useReview()
     const router = useRouter();
     const [searchValue, setSearchValue] = useState("");
     const [sortContent, setSortContent, isSortFilterFocused, setIsSortFilterFocused] = useFilter<SortContentType>("날짜순");
     const [pageNumber, setPageNumber] = useState(5);
+
+    useEffect(() => {
+        console.log("reviewData", reviewContents)
+    }, [reviewContents]);
 
     // 정렬 필터 내용
     const sortFilterContents = () => (
@@ -79,15 +85,14 @@ const ReviewPage = () => {
                   </div>
               </header>
 
-              <section className={"flex flex-col gap-y-6 mt-4"}>
-                  <Post/>
-                  <Post/>
-                  <Post/>
-                  <Post/>
-                  <Post/>
+              <section className={"grid grid-cols-2 gap-6 mt-4"}>
+                  {reviewContents && reviewContents.map((reviewContent) => (
+                      <Post key={reviewContent.id} {...reviewContent} />
+                  ))}
               </section>
 
-              <Pagination className={"mt-[65px] mb-[115px]"} pageNumber={pageNumber} setPageNumber={setPageNumber} totalPageNumber={5}/>
+              <Pagination className={"mt-[65px] mb-[115px]"} pageNumber={pageNumber} setPageNumber={setPageNumber}
+                          totalPageNumber={5}/>
           </main>
           <Footer/>
       </div>
