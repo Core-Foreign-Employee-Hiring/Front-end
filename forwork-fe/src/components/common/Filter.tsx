@@ -45,7 +45,7 @@ const Filter = (props: Props) => {
             default:
                 return (
                     <div
-                        className={twMerge("rounded-[20px] border border-gray5 h-[302px] overflow-y-scroll", className)}>
+                        className={twMerge("rounded-[20px] border border-gray2 h-[302px] overflow-y-scroll bg-white", className)}>
                         {filterContents && filterContents()}
                     </div>
                 )

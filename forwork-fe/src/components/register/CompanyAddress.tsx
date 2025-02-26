@@ -18,8 +18,6 @@ const CompanyAddress = (props: Props) => {
             <div className=" h-[413px]">
                 <KaKaoMap
                     address={address1}
-                    setLocation={setLocation}
-                    location={location}
                 />
             </div>
             <div className={"rounded-[24px] border border-gray3"}>

@@ -32,40 +32,81 @@ const RecruitDate = (props: Props) => {
         }
     };
 
+    //
+    // const recruitDateRadioButton = () => {
+    //     return (
+    //
+    //     )
+    // }
+
     return (
-        <div className={"flex flex-col gap-y-3"}>
-            <section className={"flex gap-x-3 items-center justify-center"}>
-                {/* 모집 시작 날짜 */}
-                <div className={"rounded-[16px] py-[16.5px] border border-gray3 subtitle-lg px-4 w-full"}>
-                    {format(new Date(), 'yyyy.MM.dd')}
-                </div>
-                <div className={"subtitle-lg"}>-</div>
-                {/* 모집 종료 날짜 */}
+        <div className={"flex flex-col gap-y-5"}>
+            <section className={"flex flex-col gap-y-2"}>
+                <section className={"flex gap-x-2 items-center"}>
+                    <button
+                        type={"button"}
+                        onClick={() => {
+                            setRegularRecruit(false);
+                            setRecruitEndDate("")
+                        }}
+                        className={!regularRecruit
+                            ? "flex justify-center items-center w-[20px] h-[20px] rounded-full bg-main"
+                            : "flex justify-center items-center w-[20px] h-[20px] rounded-full border border-gray4"}>
+                        {!regularRecruit && (<div className={"w-[10px] h-[10px] rounded-full bg-white"}/>)}
+                    </button>
+                    <div className={"button-md text-gray5"}>기간 선택</div>
+                </section>
+                {!regularRecruit && (
+                    <section className={"flex gap-x-3 items-center"}>
+                        {/* 모집 시작 날짜 */}
+                        <div className={"rounded-[16px] p-4 border border-gray2 body-md px-4 w-[336px]"}>
+                            {format(new Date(), 'yyyy.MM.dd')}
+                        </div>
+                        <div className={"subtitle-lg"}>-</div>
+                        {/* 모집 종료 날짜 */}
+                        <div className={"relative"}>
+                            <button
+                                type={"button"}
+                                disabled={regularRecruit}
+                                onClick={() => {
+                                    setIsModalOpen(!isModalOpen)
+                                    setRegularRecruit(false);
+                                }}
+                                className={regularRecruit
+                                    ? "flex justify-between items-center rounded-[16px] border border-gray2 body-md p-4 w-[336px] text-gray4"
+                                    : "flex justify-between items-center rounded-[16px] border border-gray2 body-md p-4 w-[336px]"}>
+                            <span>{
+                                recruitEndDate === ""
+                                    ? "모집 종료"
+                                    : recruitEndDate}
+                            </span>
+                            </button>
+                            {isModalOpen && (
+                                <Calendar
+                                    className={"absolute w-full"}
+                                    usage={"Finish"}
+                                    setIsModalOpen={setIsModalOpen}
+                                    setDateStatus={setDateStatus}
+                                    setRecruitEndDate={setRecruitEndDate}/>)}
+                        </div>
+                    </section>
+                )}
+            </section>
+
+            <section className={"flex gap-x-2 items-center"}>
                 <button
                     type={"button"}
-                    disabled={regularRecruit}
                     onClick={() => {
-                        setIsModalOpen(!isModalOpen)
-                        setRegularRecruit(false);
+                        setRegularRecruit(true);
+                        setRecruitEndDate("")
                     }}
                     className={regularRecruit
-                        ? "flex justify-between items-center rounded-[16px] py-[10.5px] border border-gray3 subtitle-lg px-4 w-full text-gray4"
-                        : "flex justify-between items-center rounded-[16px] py-[10.5px] border border-gray3 subtitle-lg px-4 w-full"}>
-                    <span>{
-                        recruitEndDate === ""
-                            ? "종료시간"
-                            : recruitEndDate}
-                    </span>
-                    <CalendarIcon />
+                        ? "flex justify-center items-center w-[20px] h-[20px] rounded-full bg-main"
+                        : "flex justify-center items-center w-[20px] h-[20px] rounded-full border border-gray4"}>
+                    {regularRecruit && (<div className={"w-[10px] h-[10px] rounded-full bg-white"}/>)}
                 </button>
-
+                <div className={"button-md text-gray5"}>상시모집</div>
             </section>
-            {isModalOpen && (
-                <Calendar
-                    usage={"Finish"}
-                    setIsModalOpen={setIsModalOpen}
-                    setDateStatus={setDateStatus}
-                    setRecruitEndDate={setRecruitEndDate}/>)}
         </div>
 
     )

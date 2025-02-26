@@ -56,44 +56,8 @@ const GeneralAdRegisterStep2 = (props: Props) => {
         setStep("Third");
     }
 
-    const recruitDateRadioButton = () => {
-        return (
-            <div className={"flex gap-x-2 items-center"}>
-                <button
-                    type={"button"}
-                    onClick={() => {
-                        setRegularRecruit(!regularRecruit);
-                        setRecruitEndDate("")
-                    }}
-                    className={regularRecruit
-                        ? "flex justify-center items-center w-[20px] h-[20px] rounded-full bg-main"
-                        : "flex justify-center items-center w-[20px] h-[20px] rounded-full border border-gray4"}>
-                    {regularRecruit && (<div className={"w-[10px] h-[10px] rounded-full bg-white"}/>)}
-                </button>
-                <div className={"button-md text-gray5"}>상시모집</div>
-            </div>
-        )
-    }
-
     return (
         <main className={"flex flex-col gap-y-[52px]"}>
-            <Item
-                titleRightElement={recruitDateRadioButton}
-                title={"모집 기간"}
-                content={
-                <RecruitDate
-                    regularRecruit={regularRecruit}
-                    setRegularRecruit={setRegularRecruit}
-                    recruitEndDate={recruitEndDate}
-                    setRecruitEndDate={setRecruitEndDate} />} />
-            <Item
-                title={"모집 인원"}
-                content={
-                <Input
-                    type={"number"}
-                    setInputValue={setRecruitCount}
-                    inputValue={recruitCount}
-                    className={"w-full"}/>} />
             <Item
                 title={"성별"}
                 content={<Gender

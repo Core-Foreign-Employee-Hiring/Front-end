@@ -7,7 +7,7 @@ import GeneralAdRegisterStep2 from "@/src/components/register/GeneralAdRegisterS
 import GeneralAdRegisterStep3 from "@/src/components/register/GeneralAdRegisterStep3";
 import Modal from "@/src/components/common/Modal";
 import Button from "@/src/components/common/Button";
-import {draftGeneralAd, uploadGeneralAd} from "@/src/lib/api/register";
+import {draftGeneralAd, draftPremiumAd, uploadGeneralAd} from "@/src/lib/api/register";
 import {generalRegisterDataAtom} from "@/src/store/register/atom";
 
 const GeneralAdRegisterPage = () => {
@@ -47,18 +47,20 @@ const GeneralAdRegisterPage = () => {
         )
     }
 
-    /**
-     * 공통 폼 데이터 생성 함수
-     */
     const createFormData = () => {
         const formData = new FormData();
-        formData.append('request', new Blob([JSON.stringify(generalRegisterData)], { type: 'application/json' }));
 
+        // "adType"과 "uploadImage"를 제거한 새로운 객체 생성
+        const { adType, uploadImage, ...filteredData } = generalRegisterData;
+
+        console.log("filteredData", filteredData)
+
+        // JSON 문자열로 변환 후 Blob으로 FormData에 추가
+        formData.append('request', new Blob([JSON.stringify(filteredData)], { type: 'application/json' }));
+
+        // 이미지 파일이 존재하면 추가
         if (imgRef.current?.files?.[0]) {
             formData.append('posterImage', imgRef.current.files[0]);
-        } else {
-            console.error('파일이 선택되지 않았습니다.');
-            return null; // 파일이 없으면 null 반환
         }
 
         return formData;
@@ -87,8 +89,14 @@ const GeneralAdRegisterPage = () => {
         if (!formData) return; // 파일 없으면 중단
 
         try {
-            const response = await draftGeneralAd(formData);
-            console.log("draftGeneralAd", response);
+            if (generalRegisterData.adType === "일반 공고") {
+                const response = await draftGeneralAd(formData);
+                console.log("draftGeneralAd", response);
+            } else {
+                const response = await draftPremiumAd(formData);
+                console.log("draftPremiumAd", response);
+            }
+
         } catch (error) {
             console.error('임시저장 중 오류 발생:', error);
         }
@@ -114,9 +122,9 @@ const GeneralAdRegisterPage = () => {
         <form className={"mt-[80px] flex flex-col gap-y-[52px] px-[350px]"}>
             {isSubmitModalOpen && <Modal setIsModalOpen={setIsSubmitModalOpen} content={modalContent}/>}
             <ProgressBar setStep={setStep} step={step}/>
-            {step === "First" && (<GeneralAdRegisterStep1 setStep={setStep}/>)}
+            {step === "First" && (<GeneralAdRegisterStep1 setStep={setStep} imgRef={imgRef} setSubmitType={setSubmitType} setIsTrigger={setIsTrigger}/>)}
             {step === "Second" && (<GeneralAdRegisterStep2 setStep={setStep}/>)}
-            {step === "Third" && (<GeneralAdRegisterStep3 setStep={setStep} setIsSubmitModalOpen={setIsSubmitModalOpen} imgRef={imgRef}/>)}
+            {step === "Third" && (<GeneralAdRegisterStep3 setStep={setStep} />)}
         </form>
     )
 }

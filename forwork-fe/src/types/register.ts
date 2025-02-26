@@ -1,6 +1,4 @@
-import {useState} from "react";
-import ApplicationMethods from "@/src/components/register/ApplicationMethods";
-
+export type AdType = "일반 공고" | "프리미엄 공고";
 export type JobCategoryType =
     | ""
     | "외식/음료"
@@ -18,7 +16,7 @@ export type  EducationType = "" | "학력무관" | "고졸" | "대학생" | "대
 export type VisaType = "D-2" | "D-4" | "C-3"
 export type BusinessFieldEnumType = "RURAL_FISHING" | "EDUCATION" | "OTHER_SERVICE"|  "STORE_SALES" | "MODEL_SHOPPING_MALL" | "CULTURE_LEISURE_LIFESTYLE" | "OFFICE_SALES" | "PRODUCTION_CONSTRUCTION" | "PRODUCTION_TECHNICAL" | "FOOD_BEVERAGE"
 export type ApplicationMethodEnumType = "ONLINE" | "INQUIRY" | "VISIT" | "CALL_VISIT"
-export type ApplicationMethodType = ""| "온라인지원" | "문의 지원" | "방문 접수" | "전화 후 방문";
+export type ApplicationMethodType = ""| "온라인 지원" | "문의 지원" | "방문 지원" | "전화 지원";
 export type PreferredConditionType = "영어 가능" | "일본어 가능" | "중국어 가능" | "컴퓨터 활용 가능" | "포토샵 가능" | "한글(HWP) 가능" | "워드(Word) 가능" | "엑셀(Excel) 가능" | "파워포인트(PPT) 가능" | "차량소지" | "운전 가능" | "업무 관련 자격증 소지" | "유사업무 경험" | "인근 거주" | "대학 재학생" | "대학 휴학생" | "장기근무 가능"
 export type WorkDurationType = "" | "하루(1일)" | "1주일 이하" | "1주일~1개월" | "1개월~3개월" | "3개월~6개월" | "6개월~1년" | "1년이상"
 export type WorkTimeType = "" | "오전" | "오후" | "저녁" | "새벽" | "풀타임(8시간 이상)" | "오전-오후" | "오후-저녁" | "저녁-새벽" | "새벽-오전"
@@ -99,26 +97,28 @@ export interface AddressType {
 }
 
 export interface GeneralRegisterDataType {
-    title: string;
-    recruitStartDate: string;
-    recruitEndDate: string;
-    recruitCount: number;
+    adType: "일반 공고" | "프리미엄 공고";
+    uploadImage: string | ArrayBuffer | null;
+    title: string | null;
+    recruitStartDate: string | null;
+    recruitEndDate: string | null;
+    recruitCount: number | null;
     gender: "female" | "male" | null | "";
-    education: EducationType;
-    otherConditions: string;
-    preferredConditions: PreferredConditionType[];
-    workDuration: string[];
-    workTime: string[];
-    workDays: string[];
-    salary: string;
-    salaryType: string;
-    businessFields: BusinessFieldEnumType[]
-    applicationMethods: ApplicationMethodEnumType[]
-    latitude: number;
-    longitude: number;
-    zipcode: string;
-    address1: string;
-    address2: string;
+    education: EducationType | null;
+    otherConditions: string | null;
+    preferredConditions: PreferredConditionType[] | [];
+    workDuration: string[] | [];
+    workTime: string[] | [];
+    workDays: string[] | [];
+    salary: string | null;
+    salaryType: string | null;
+    businessFields: BusinessFieldEnumType[] | [];
+    applicationMethods: ApplicationMethodEnumType[] | [];
+    latitude: number | null;
+    longitude: number | null;
+    zipcode: string | null;
+    address1: string | null;
+    address2: string | null;
     workDurationOther: string | null;
     workTimeOther: string | null;
     workDaysOther: string | null;

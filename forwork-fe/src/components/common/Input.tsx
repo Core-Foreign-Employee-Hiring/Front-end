@@ -20,11 +20,11 @@ const Input = (props: Props) => {
 
     return (
         <div
-            className={disabled ? "flex gap-x-3 rounded-[16px] bg-gray1 py-[16.5px] px-4 items-center w-[520px]"
+            className={disabled ? "flex gap-x-3 rounded-[16px] bg-gray1 p-4 items-center w-[520px]"
                 : twMerge(
                     isFocused
-                        ? "flex gap-x-3 rounded-[16px] border border-main py-[16.5px] px-4 items-center w-[520px]"
-                        : "flex gap-x-3 rounded-[16px] border border-gray4 py-[16.5px] px-4 items-center w-[520px]"
+                        ? "flex gap-x-3 rounded-[16px] border border-main p-4 items-center w-[520px]"
+                        : "flex gap-x-3 rounded-[16px] border border-gray2 p-4 items-center w-[520px]"
                     , className)}>
             {leftElement && leftElement()}
             <input
@@ -39,7 +39,7 @@ const Input = (props: Props) => {
                 }}
                 onFocus={() => setIsFocused(true)} // focus 시 상태 변경
                 onBlur={() => setIsFocused(false)} // blur 시 상태 변경
-                className={"subtitle-lg outline-none placeholder:body-md placeholder:text-gray4 w-full"}/>
+                className={"button-md outline-none placeholder:body-md placeholder:text-gray4 w-full"}/>
             {rightElement && rightElement()}
         </div>
     )

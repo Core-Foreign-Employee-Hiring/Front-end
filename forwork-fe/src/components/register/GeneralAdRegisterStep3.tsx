@@ -25,11 +25,9 @@ import PosterImageUpload from "@/src/components/register/PosterImageUpload";
 
 interface Props {
     setStep: Dispatch<SetStateAction<"Second" | "First" | "Third">>;
-    setIsSubmitModalOpen: Dispatch<SetStateAction<boolean>>;
-    imgRef: React.RefObject<HTMLInputElement | null>;
 }
 const GeneralAdRegisterStep3 = (props: Props) => {
-    const {setStep, setIsSubmitModalOpen, imgRef} = props;
+    const {setStep} = props;
     const setGeneralRegisterData = useSetAtom(generalRegisterDataAtom);
     const [workDuration, setWorkDuration] = useState<WorkDurationType>("");
     const [workDurationOther, setWorkDurationOther] = useState("");
@@ -57,8 +55,6 @@ const GeneralAdRegisterStep3 = (props: Props) => {
     const [isSalaryValid, setIsSalaryValid] = useState(true);
     //지원 형태
     const [applicationEnumMethods, setApplicationEnumMethods] = useState<ApplicationMethodEnumType[]>([]);
-    //채용 포스터
-    const [uploadImage, setUploadImage] = useState<string | ArrayBuffer | null>();
 
     /**
      * 백엔드 코드에 맞게 근무 기간을 설정하는 함수 새로운 []를 만든다.
@@ -215,7 +211,6 @@ const GeneralAdRegisterStep3 = (props: Props) => {
             salaryOther: salaryOther,
             applicationMethods: applicationEnumMethods
         }))
-        setIsSubmitModalOpen(true);
     }
 
     useEffect(() => {
@@ -245,7 +240,7 @@ const GeneralAdRegisterStep3 = (props: Props) => {
                     content={<WorkDuration
                         workDuration={workDuration}
                         setWorkDuration={setWorkDuration}/>}
-                    titleRightElement={workDurationRadioButton}/>
+                />
                 <Item
                     title={"기타사항"}
                     titleRequired={false}
@@ -271,7 +266,7 @@ const GeneralAdRegisterStep3 = (props: Props) => {
                         workTimeDirectList={workTimeDirectList}
                         setWorkTimeDirectList={setWorkTimeDirectList}
                         setWorkTimeSelectList={setWorkTimeSelectList}/>}
-                    titleRightElement={workTimeRadioButton}/>
+                />
                 <Item
                     title={"기타사항"}
                     titleRequired={false}
@@ -294,7 +289,7 @@ const GeneralAdRegisterStep3 = (props: Props) => {
                         workDaysDirectList={workDaysDirectList}
                         workDaysSelectList={workDaysSelectList}
                     />}
-                    titleRightElement={workDaysRadioButton}/>
+                />
                 <Item
                     title={"기타사항"}
                     titleRequired={false}
@@ -323,18 +318,6 @@ const GeneralAdRegisterStep3 = (props: Props) => {
                         placeholder={"직접입력"}
                         className={"w-full"}/>}/>
             </div>
-            <Item
-                title={"지원방법"}
-                content={<ApplicationMethods
-                    applicationEnumMethods={applicationEnumMethods}
-                    setApplicationEnumMethods={setApplicationEnumMethods}/>}/>
-            <Item
-                title={"채용포스터 업로드"}
-                titleRequired={false}
-                content={<PosterImageUpload
-                    setUploadImage={setUploadImage}
-                    uploadImage={uploadImage}
-                    imgRef={imgRef}/>}/>
             <section className={"flex gap-x-4"}>
                 <Button
                     type={"button"}

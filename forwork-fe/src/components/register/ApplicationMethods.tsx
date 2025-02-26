@@ -1,16 +1,17 @@
 import {Dispatch, SetStateAction} from "react";
 
-import {ApplicationMethodEnumType, ApplicationMethodType} from "@/src/types/register";
+import {AdType, ApplicationMethodEnumType, ApplicationMethodType} from "@/src/types/register";
 import Button from "@/src/components/common/Button";
 import {applicationMethods} from "@/src/utils/register";
 
 interface Props {
+    adtype: AdType;
     applicationEnumMethods: ApplicationMethodEnumType[];
     setApplicationEnumMethods: Dispatch<SetStateAction<ApplicationMethodEnumType[]>>
 }
 
 const ApplicationMethods = (props: Props) => {
-    const {applicationEnumMethods, setApplicationEnumMethods} = props;
+    const {adtype, applicationEnumMethods, setApplicationEnumMethods} = props;
 
     const toggleApplicationMethod = (applicationMethod: ApplicationMethodType) => {
         const mappedMethod = switchApplicationMethod(applicationMethod);
@@ -29,13 +30,13 @@ const ApplicationMethods = (props: Props) => {
 
     const switchApplicationMethod = (applicationMethod: ApplicationMethodType): ApplicationMethodEnumType => {
         switch (applicationMethod) {
-            case "온라인지원":
+            case "온라인 지원":
                 return "ONLINE";
             case "문의 지원":
                 return "INQUIRY";
-            case "방문 접수":
+            case "방문 지원":
                 return "VISIT";
-            case "전화 후 방문":
+            case "전화 지원":
                 return "CALL_VISIT";
             default:
                 throw new Error(`Unhandled application method: ${applicationMethod}`); // 예외 처리 추가
@@ -44,12 +45,16 @@ const ApplicationMethods = (props: Props) => {
 
     return (
         <div className={"flex gap-x-3"}>
-            {applicationMethods.map((method) => {
+
+            {adtype === "프리미엄 공고" ? (
+                <div className={"button-md text-gray5"}>온라인 지원</div>
+            ) : (
+                applicationMethods.map((method) => {
                 return (
                     <Button
                         type={"button"}
                         key={method}
-                        className={applicationEnumMethods.includes(switchApplicationMethod(method))  ? "bg-main-button subtitle-lg" : "border-gray4-button subtitle-lg"}
+                        className={applicationEnumMethods.includes(switchApplicationMethod(method))  ? "bg-main-button py-4" : "border-gray2-button py-4 rounded-[16px]"}
                         secondClassName={"flex items-center justify-center w-full"}
                         onClick={() => {
                             toggleApplicationMethod(method);
@@ -57,7 +62,8 @@ const ApplicationMethods = (props: Props) => {
                         {method}
                     </Button>
                 )
-            })}
+            })
+            )}
 
         </div>
     )

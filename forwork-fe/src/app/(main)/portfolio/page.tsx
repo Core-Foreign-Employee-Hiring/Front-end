@@ -23,7 +23,7 @@ const PortfolioPage = () => {
                     <header className={"flex flex-col gap-y-6"}>
                         <h1 className={"title-lg"}>포트폴리오</h1>
                         <div className={"flex flex-col gap-y-2"}>
-                            <div className={"flex justify-between items-center"}>
+                            <section className={"flex justify-between items-center"}>
                                 <div className={"flex items-center justify-center gap-x-2"}>
                                     <Button className={"border-gray2-button"}
                                             secondClassName={"flex justify-center items-center w-[80px] h-[36px] button-md"}>기본</Button>
@@ -36,12 +36,12 @@ const PortfolioPage = () => {
                                     className={"w-[235px] h-[45px] border-gray2"}
                                     textStyle={"button-md placeholder:text-gray4"}
                                     setIsFocused={setIsFocused}/>
-                            </div>
+                            </section>
                             {isFocused && (<Filter type={"BusinessField"}/>)}
                         </div>
                     </header>
                 </section>
-                <div className={"grid grid-cols-3 gap-x-4 gap-y-5 mt-[32px]"}>
+                <section className={"grid grid-cols-3 gap-x-4 gap-y-5 mt-[32px]"}>
                     <RatingReviewBox type={"apply"}/>
                     <RatingReviewBox type={"apply"}/>
                     <RatingReviewBox type={"apply"}/>
@@ -51,7 +51,7 @@ const PortfolioPage = () => {
                     <RatingReviewBox type={"apply"}/>
                     <RatingReviewBox type={"apply"}/>
                     <RatingReviewBox type={"apply"}/>
-                </div>
+                </section>
             </main>
 
             <Pagination className={"pt-[56px] pb-[132px]"} totalPageNumber={5} setPageNumber={setPageNumber}
