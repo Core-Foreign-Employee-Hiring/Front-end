@@ -92,13 +92,27 @@ const useAdRegisterStep1 = (setStep: Dispatch<SetStateAction<"Second" | "First" 
         </div>
     );
 
+    useEffect(() => {
+        if (selectedAdTypeContent === "프리미엄 공고" ) {
+            console.log("통과")
+            setApplicationEnumMethods(["ONLINE"])
+        }
+    }, [selectedAdTypeContent]);
+
+    useEffect(() => {
+        if (regularRecruit) {
+            console.log("통과2")
+            setRecruitEndDate("2099-12-31");
+        }
+    }, [regularRecruit]);
+
     const isNextButtonDisabled = useMemo(() => {
         return (title === null
             || location.latitude === 0
             || location.longitude === 0
             || recruitEndDate === null
             || recruitCount === null
-            || applicationEnumMethods === null
+            || applicationEnumMethods.length === 0
         );
     }, [selectedAdTypeContent, title, location, recruitEndDate, recruitCount, applicationEnumMethods]);
 

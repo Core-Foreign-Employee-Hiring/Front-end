@@ -29,7 +29,7 @@ const Education = (props: Props) => {
                                 setEducation(education);
                                 setIsEducationFilterContentFocused(false)
                             }}
-                            key={education} className={"w-full py-[16.5px] px-4 subtitle-lg hover:bg-gray1"}>
+                            key={education} className={"w-full body-md py-[16.5px] px-4 hover:bg-gray1"}>
                             {education}
                         </Button>
                     )
@@ -40,7 +40,7 @@ const Education = (props: Props) => {
 
     return (
         <section className={"flex flex-col gap-y-2"}>
-            <SelectedFilterContent selectedContent={education} setIsFocused={setIsEducationFilterContentFocused} />
+            <SelectedFilterContent selectedContent={education} setIsFocused={setIsEducationFilterContentFocused} className={"py-3"}/>
             {isEducationFilterContentFocused && (<Filter filterContents={educationFilterContents} />)}
         </section>
     )
