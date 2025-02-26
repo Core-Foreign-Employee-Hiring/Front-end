@@ -4,7 +4,7 @@ import { useAtom } from "jotai";
 import useFilter from "@/src/hooks/useFilter";
 import { generalRegisterDataAtom } from "@/src/store/review/atom";
 import { createReview } from "@/src/lib/api/review";
-import { changeBusinessFieldEnumType, jobCategoryList } from "@/src/utils/common";
+import { changeKorToBusinessFieldEnumType, jobCategoryList } from "@/src/utils/common";
 import { JobCategoryType } from "@/src/types/register";
 
 const useReviewForm = () => {
@@ -75,7 +75,7 @@ const useReviewForm = () => {
         setGeneralRegisterData((prevState) => ({
             ...prevState,
             content,
-            businessFields: changeBusinessFieldEnumType(businessField),
+            businessFields: changeKorToBusinessFieldEnumType(businessField),
             region1: province,
             region2: district,
             title,

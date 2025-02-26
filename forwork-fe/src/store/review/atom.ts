@@ -1,8 +1,8 @@
 import {atom} from "jotai/index";
 import {GeneralRegisterDataType} from "@/src/types/register";
-import {reviewFormType} from "@/src/types/review";
+import {ReviewFormType} from "@/src/types/review";
 
-export const generalRegisterDataAtom = atom<reviewFormType>({
+export const generalRegisterDataAtom = atom<ReviewFormType>({
     title: "",
     content: "",
     region1: "",

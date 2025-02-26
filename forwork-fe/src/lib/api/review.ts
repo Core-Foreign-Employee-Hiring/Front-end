@@ -1,13 +1,13 @@
 import Cookies from "js-cookie";
 import {sendRequest} from "@/src/lib/axios";
-import {reviewFormType} from "@/src/types/review";
+import {ReviewFormType} from "@/src/types/review";
 import axios from "axios";
 
 /**
  * 알바 후기 등록 api
  * @param data reviewFormType
  */
-export const createReview = async (data: reviewFormType) => {
+export const createReview = async (data: ReviewFormType) => {
     try {
         const response = await sendRequest({
             headers: {
