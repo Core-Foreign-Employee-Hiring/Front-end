@@ -17,15 +17,11 @@ import {useRouter} from "next/navigation";
 import useReview from "@/src/lib/hooks/useReview";
 
 const ReviewPage = () => {
+    const router = useRouter();
     const [pageNumber, setPageNumber] = useState(0);
     const [sortContent, setSortContent, isSortFilterFocused, setIsSortFilterFocused] = useFilter<SortContentType>("날짜순");
     const {reviewData} = useReview(pageNumber, sortContentToEnum(sortContent))
-    const router = useRouter();
     const [searchValue, setSearchValue] = useState("");
-
-    useEffect(() => {
-        console.log("reviewData", reviewData)
-    }, [reviewData]);
 
     // 정렬 필터 내용
     const sortFilterContents = () => (
