@@ -79,6 +79,9 @@ body {
   .border-gray5-button {
     @apply py-[8px] rounded-[12px] bg-white text-gray5 border-[1px] border-gray5 
   }
+  .border-main-button {
+    @apply py-[8px] rounded-[12px] bg-main-light text-main border-[1px] border-main button-md
+  }
 }
 
 @layer components {
