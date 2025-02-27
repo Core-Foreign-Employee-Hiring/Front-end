@@ -1,5 +1,5 @@
 import Button from "@/src/components/common/Button";
-import {changeBusinessFieldEnumType, jobCategoryList} from "@/src/utils/common";
+import {changeKorToBusinessFieldEnumType, jobCategoryList} from "@/src/utils/common";
 import {BusinessFieldEnumType} from "@/src/types/register";
 
 interface Props {
@@ -19,7 +19,7 @@ const JobCategory = (props: Props) => {
                     <Button
                         key={jobCategory}
                         className={
-                        businessFields.includes(changeBusinessFieldEnumType(jobCategory))
+                        businessFields.includes(changeKorToBusinessFieldEnumType(jobCategory))
                             ? "bg-main-button flex justify-center"
                             : "border-gray4-button flex justify-center"}>
                         {jobCategory}

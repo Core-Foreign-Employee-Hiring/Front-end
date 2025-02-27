@@ -1,101 +1,140 @@
-import {Dispatch, SetStateAction, useState} from "react";
-import {useSetAtom} from "jotai/index";
+import {Dispatch, SetStateAction} from "react";
 
-import {format} from "date-fns";
-
-import {EducationType, PreferredConditionType} from "@/src/types/register";
-import {generalRegisterDataAtom} from "@/src/store/register/atom";
 import Item from "@/src/components/common/Item";
 import Input from "@/src/components/common/Input";
 import Gender from "@/src/components/register/Gender";
-import RecruitDate from "@/src/components/register/RecruitDate";
 import Education from "@/src/components/register/Education";
 import PreferredConditions from "@/src/components/register/PreferredConditions";
 import Button from "@/src/components/common/Button";
+import WorkDuration from "@/src/components/register/WorkDuration";
+import WorkTime from "@/src/components/register/WorkTime";
+import WorkDays from "@/src/components/register/WorkDays";
+import Salary from "@/src/components/register/Salary";
+import useAdRegisterStep2 from "@/src/hooks/useAdRegisterStep2";
 
 interface Props {
     setStep: Dispatch<SetStateAction<"Second" | "First" | "Third">>
+    setSubmitType: Dispatch<SetStateAction<"" | "draft" | "upload">>;
+    setIsTrigger: Dispatch<SetStateAction<boolean>>;
 }
 
 const GeneralAdRegisterStep2 = (props: Props) => {
-    const {setStep} = props;
-    const setGeneralRegisterData = useSetAtom(generalRegisterDataAtom);
-    const [recruitCount, setRecruitCount] = useState<string>("");
-    const [recruitEndDate, setRecruitEndDate] = useState("");
-    const [regularRecruit, setRegularRecruit] = useState(false);
-    const [otherConditions, setOtherConditions] = useState("");
-    const [gender, setGender] = useState<"female" | "male" | null | "">("");
-    const [education, setEducation] = useState<EducationType>("");
-    const [selectedPreferredConditions, setSelectedPreferredConditions] = useState<PreferredConditionType[]>([]);
+    const {setStep, setSubmitType, setIsTrigger} = props;
 
-    const handleBeforeSubmit = () => {
-        setGeneralRegisterData((prevState) => ({
-            ...prevState,
-            recruitStartDate: format(new Date(), 'yyyy-MM-dd'),
-            recruitEndDate: regularRecruit ? "2099-12-31" : format(recruitEndDate, 'yyyy-MM-dd'),
-            recruitCount: parseInt(recruitCount),
-            gender: gender,
-            education: education,
-            otherConditions: otherConditions,
-            preferredConditions: selectedPreferredConditions,
-        }))
-        setStep("First");
-    }
+    const {
+        formState, // ✅ 상태 묶어서 반환
+        uiState, // ✅ UI 관련 상태도 묶기
+        saveRegisterData,
+        handleBeforeSubmit,
+        handleNextSubmit
+    } = useAdRegisterStep2(setStep, setSubmitType, setIsTrigger);
 
-    const handleNextSubmit = () => {
-        setGeneralRegisterData((prevState) => ({
-            ...prevState,
-            recruitStartDate: format(new Date(), 'yyyy-MM-dd'),
-            recruitEndDate: regularRecruit ? "2099-12-31" : format(recruitEndDate, 'yyyy-MM-dd'),
-            recruitCount: parseInt(recruitCount),
-            gender: gender,
-            education: education,
-            otherConditions: otherConditions,
-            preferredConditions: selectedPreferredConditions,
-        }))
-        setStep("Third");
-    }
+    const {
+        generalRegisterData, setGeneralRegisterData,
+        workDuration, setWorkDuration,
+        workDurationOther, setWorkDurationOther,
+        workDurationAgreement, setWorkDurationAgreement,
+        workTime, setWorkTime,
+        startTime, setStartTime,
+        endTime, setEndTime,
+        workTimeSelectList, setWorkTimeSelectList,
+        workTimeDirectList, setWorkTimeDirectList,
+        workTimeOther, setWorkTimeOther,
+        workTimeAgreement, setWorkTimeAgreement,
+        workDay, setWorkDay,
+        workWeekDays, setWorkWeekDays,
+        workDaysSelectList, setWorkDaysSelectList,
+        workDaysDirectList, setWorkDaysDirectList,
+        workDaysOther, setWorkDaysOther,
+        workDaysAgreement, setWorkDaysAgreement,
+        salaryType, setSalaryType,
+        salary, setSalary,
+        salaryOther, setSalaryOther,
+        salaryErrorMessageEnable, setSalaryErrorMessageEnable,
+        otherConditions, setOtherConditions,
+        gender, setGender,
+        education, setEducation,
+        selectedPreferredConditions, setSelectedPreferredConditions
+    } = formState;
 
-    const recruitDateRadioButton = () => {
-        return (
-            <div className={"flex gap-x-2 items-center"}>
-                <button
-                    type={"button"}
-                    onClick={() => {
-                        setRegularRecruit(!regularRecruit);
-                        setRecruitEndDate("")
-                    }}
-                    className={regularRecruit
-                        ? "flex justify-center items-center w-[20px] h-[20px] rounded-full bg-main"
-                        : "flex justify-center items-center w-[20px] h-[20px] rounded-full border border-gray4"}>
-                    {regularRecruit && (<div className={"w-[10px] h-[10px] rounded-full bg-white"}/>)}
-                </button>
-                <div className={"button-md text-gray5"}>상시모집</div>
-            </div>
-        )
-    }
+    const{
+        isNextButtonDisabled
+    } = uiState;
 
     return (
         <main className={"flex flex-col gap-y-[52px]"}>
-            <Item
-                titleRightElement={recruitDateRadioButton}
-                title={"모집 기간"}
-                content={
-                <RecruitDate
-                    regularRecruit={regularRecruit}
-                    setRegularRecruit={setRegularRecruit}
-                    recruitEndDate={recruitEndDate}
-                    setRecruitEndDate={setRecruitEndDate} />} />
-            <Item
-                title={"모집 인원"}
-                content={
-                <Input
-                    type={"number"}
-                    setInputValue={setRecruitCount}
-                    inputValue={recruitCount}
-                    className={"w-full"}/>} />
+            <div className={"flex flex-col gap-y-3"}>
+                <Item
+                    title={"근무 기간"}
+                    className={"items-start"}
+                    content={<WorkDuration
+                        workDurationAgreement={workDurationAgreement}
+                        workDurationOther={workDurationOther}
+                        workDuration={workDuration}
+                        setWorkDurationAgreement={setWorkDurationAgreement}
+                        setWorkDurationOther={setWorkDurationOther}
+                        setWorkDuration={setWorkDuration}/>}
+                />
+            </div>
+            <div className={"flex flex-col gap-y-3"}>
+                <Item
+                    title={"근무 시간"}
+                    className={"items-start"}
+                    content={<WorkTime
+                        workTimeOther={workTimeOther}
+                        setWorkTimeOther={setWorkTimeOther}
+                        workTimeAgreement={workTimeAgreement}
+                        setWorkTimeAgreement={setWorkTimeAgreement}
+                        workTime={workTime}
+                        setStartTime={setStartTime}
+                        startTime={startTime}
+                        setEndTime={setEndTime}
+                        endTime={endTime}
+                        setWorkTime={setWorkTime}
+                        workTimeSelectList={workTimeSelectList}
+                        workTimeDirectList={workTimeDirectList}
+                        setWorkTimeDirectList={setWorkTimeDirectList}
+                        setWorkTimeSelectList={setWorkTimeSelectList}/>}
+                />
+            </div>
+            <section className={"flex flex-col gap-y-3"}>
+                <Item
+                    className={"items-start"}
+                    title={"근무 요일"}
+                    content={<WorkDays
+                        setWorkDaysAgreement={setWorkDaysAgreement}
+                        workDaysAgreement={workDaysAgreement}
+                        setWorkDaysOther={setWorkDaysOther}
+                        workDaysOther={workDaysOther}
+                        workDay={workDay}
+                        workWeekDays={workWeekDays}
+                        setWorkDay={setWorkDay}
+                        setWorkWeekDays={setWorkWeekDays}
+                        setWorkDaysDirectList={setWorkDaysDirectList}
+                        setWorkDaysSelectList={setWorkDaysSelectList}
+                        workDaysDirectList={workDaysDirectList}
+                        workDaysSelectList={workDaysSelectList}
+                    />}
+                />
+            </section>
+            <section className={"flex flex-col gap-y-3"}>
+                <Item
+                    title={"급여"}
+                    className={"items-start"}
+                    content={<Salary
+                        generalRegisterData={generalRegisterData}
+                        salaryOther={salaryOther}
+                        setSalaryOther={setSalaryOther}
+                        salary={salary}
+                        setSalary={setSalary}
+                        salaryType={salaryType}
+                        setSalaryType={setSalaryType}
+                        salaryErrorMessageEnable={salaryErrorMessageEnable}
+                        setSalaryErrorMessageEnable={setSalaryErrorMessageEnable}/>}/>
+            </section>
             <Item
                 title={"성별"}
+                className={"items-start"}
                 content={<Gender
                     gender={gender}
                     setGender={setGender}/>}/>
@@ -105,6 +144,12 @@ const GeneralAdRegisterStep2 = (props: Props) => {
                     education={education}
                     setEducation={setEducation}/>}/>
             <Item
+                title={"우대조건"}
+                titleRequired={false}
+                content={<PreferredConditions
+                    selectedPreferredConditions={selectedPreferredConditions}
+                    setSelectedPreferredConditions={setSelectedPreferredConditions}/>}/>
+            <Item
                 title={"기타조건"}
                 titleRequired={false}
                 content={<Input
@@ -112,26 +157,30 @@ const GeneralAdRegisterStep2 = (props: Props) => {
                     inputValue={otherConditions}
                     placeholder={"직접입력"}
                     className={"w-full"}/>}/>
-            <Item
-                title={"우대조건"}
-                titleRequired={false}
-                content={<PreferredConditions
-                    selectedPreferredConditions={selectedPreferredConditions}
-                    setSelectedPreferredConditions={setSelectedPreferredConditions}/>}/>
-            <section className={"flex gap-x-4"}>
+            <section className={"flex justify-between"}>
                 <Button
                     type={"button"}
                     onClick={() => handleBeforeSubmit()}
-                    className={"mt-[28px] flex items-center justify-center bg-gray2-button w-full"}>이전</Button>
-                <Button
-                    type={"button"}
-                    disabled={(recruitEndDate === "" && !regularRecruit) || recruitCount === "" || gender === "" || education === ""}
-                    onClick={() => handleNextSubmit()}
-                    className={(recruitEndDate === "" && !regularRecruit) || recruitCount === "" || gender === "" || education === ""
-                        ? "mt-[28px] flex items-center justify-center bg-gray2-button w-full"
-                        : "mt-[28px] flex items-center justify-center bg-main-button w-full"}>
-                    다음
-                </Button>
+                    className={"mt-[28px] flex items-center justify-center border-gray2-button w-[200px]"}>이전</Button>
+                <div className={"flex gap-x-4"}>
+                    <Button
+                        type={"button"}
+                        onClick={() => {
+                            saveRegisterData();
+                            setSubmitType("draft");
+                            setIsTrigger(true);
+                        }}
+                        className={"mt-[28px] flex items-center justify-center border-gray2-button w-[200px]"}>임시저장</Button>
+                    <Button
+                        type={"button"}
+                        disabled={isNextButtonDisabled}
+                        onClick={() => handleNextSubmit()}
+                        className={isNextButtonDisabled
+                            ? "mt-[28px] flex items-center justify-center bg-gray2-button w-[200px]"
+                            : "mt-[28px] flex items-center justify-center bg-main-button w-[200px]"}>
+                        {generalRegisterData.adType === "일반 공고" ? "공고 등록하기" : "다음"}
+                    </Button>
+                </div>
             </section>
         </main>
     )

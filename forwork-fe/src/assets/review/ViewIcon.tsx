@@ -1,13 +1,30 @@
-interface ViewIconProps {
-  className?: string; // className은 선택적 prop
+import * as React from "react";
+import type { SVGProps } from "react";
+
+interface ViewIconProps extends SVGProps<SVGSVGElement> {
+    width?: number | string;
+    height?: number | string;
+    fill?: string;
 }
 
-const ViewIcon = ({className}:ViewIconProps) => {
-  return(
-    <svg width="18" height="12" viewBox="0 0 18 12" fill="none" className={className} xmlns="http://www.w3.org/2000/svg" >
-<path id="Vector" d="M9 1.6C12.1009 1.6 14.8664 3.304 16.2164 6C14.8664 8.696 12.1091 10.4 9 10.4C5.89091 10.4 3.13364 8.696 1.78364 6C3.13364 3.304 5.89909 1.6 9 1.6ZM9 0C4.90909 0 1.41545 2.488 0 6C1.41545 9.512 4.90909 12 9 12C13.0909 12 16.5845 9.512 18 6C16.5845 2.488 13.0909 0 9 0ZM9 4C10.1291 4 11.0455 4.896 11.0455 6C11.0455 7.104 10.1291 8 9 8C7.87091 8 6.95455 7.104 6.95455 6C6.95455 4.896 7.87091 4 9 4ZM9 2.4C6.97091 2.4 5.31818 4.016 5.31818 6C5.31818 7.984 6.97091 9.6 9 9.6C11.0291 9.6 12.6818 7.984 12.6818 6C12.6818 4.016 11.0291 2.4 9 2.4Z" fill="#6F717C"/>
-</svg>
-  )
-}
-export default ViewIcon
+const ViewIcon = ({
+                      width = 14,
+                      height = 10,
+                      fill = "#999BA5",
+                      ...props
+                  }: ViewIconProps) => (
+    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width={width}
+        height={height}
+        viewBox="0 0 14 10" // ✅ 비율 유지
+        {...props}
+    >
+        <path
+            fill={fill} // ✅ props로 받은 색상 적용
+            d="M7 2.044c2.326 0 4.4 1.278 5.412 3.3-1.012 2.022-3.08 3.3-5.412 3.3s-4.4-1.278-5.412-3.3C2.6 3.322 4.674 2.044 7 2.044m0-1.2c-3.068 0-5.688 1.866-6.75 4.5 1.062 2.634 3.682 4.5 6.75 4.5s5.688-1.866 6.75-4.5C12.688 2.71 10.068.844 7 .844m0 3c.847 0 1.534.672 1.534 1.5s-.687 1.5-1.534 1.5-1.534-.672-1.534-1.5.687-1.5 1.534-1.5m0-1.2c-1.522 0-2.761 1.212-2.761 2.7s1.24 2.7 2.761 2.7 2.761-1.212 2.761-2.7-1.24-2.7-2.761-2.7"
+        />
+    </svg>
+);
 
+export default ViewIcon;

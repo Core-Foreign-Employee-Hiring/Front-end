@@ -2,13 +2,13 @@ import useSWR from "swr";
 
 import {swrGetFetcher} from "../axios";
 import {ResponseType} from "../../types/common";
-import { ReviewType } from "@/src/types/review";
+import {ReviewDataType, SortType} from "@/src/types/review";
 
-const useReview = () => {
-    const { data, error } = useSWR<ResponseType<ReviewType>>("/api/v1/albareview", swrGetFetcher);
+const useReview = (page: number, sortType:SortType) => {
+    const { data, error } = useSWR<ResponseType<ReviewDataType>>(`/api/v1/albareview?page=${page}&size=8&sortType=${sortType}`, swrGetFetcher);
 
     return {
-        reviewData: data ? data.data : null,
+        reviewData:  data ? data : null,
         isLoading: !error && !data,
         isError: error,
     };

@@ -1,9 +1,15 @@
-import {Dispatch, SetStateAction} from "react";
+import {Dispatch, SetStateAction, useEffect} from "react";
 
 import {preferredConditions} from "@/src/utils/register";
 import {PreferredConditionType} from "@/src/types/register";
 import Button from "@/src/components/common/Button";
 import CheckIcon from "@/src/assets/common/CheckIcon";
+import CancelIcon from "@/src/assets/common/CancelIcon";
+import useFilter from "@/src/hooks/useFilter";
+import Filter from "@/src/components/common/Filter";
+import {twMerge} from "tailwind-merge";
+import SelectedFilterContent from "@/src/components/common/SelectedFilterContent";
+import DropDownIcon from "@/src/assets/common/DropDownIcon";
 
 interface Props {
     selectedPreferredConditions: PreferredConditionType[]
@@ -12,7 +18,7 @@ interface Props {
 
 const PreferredConditions = (props: Props) => {
     const {selectedPreferredConditions, setSelectedPreferredConditions} = props;
-
+    const [preferredConditionsSelectedContent, setPreferredConditionsSelectedContent, isPreferredConditionsFilterFocused, setIsPreferredConditionsFilterFocused] = useFilter("우대조건 선택");
     const togglePreferredCondition = (preferredCondition: PreferredConditionType) => {
         setSelectedPreferredConditions((prevState) => {
             if (prevState.includes(preferredCondition)) {
@@ -25,45 +31,84 @@ const PreferredConditions = (props: Props) => {
         });
     };
 
+    useEffect(() => {
+        setPreferredConditionsSelectedContent(selectedPreferredConditions.join(", "))
+    }, [selectedPreferredConditions]);
+
     return (
-        <div className={"rounded-[32px] w-full border border-gray4"}>
-            <div className={"flex justify-between items-center mx-[32px] py-[24px] border-b border-gray2"}>
-                <div className={"flex gap-x-3"}>
-                    {selectedPreferredConditions.map((selectedPreferredCondition) => {
-                        return (
-                            <div
-                                key={selectedPreferredCondition}
-                                className={"rounded-full border border-gray2 subtitle-md py-[12px] px-[16px] w-fit"}>
-                                {selectedPreferredCondition}
-                            </div>
-                        )
-                    })}
+        <div>
+            <Button
+                onClick={() => {
+                    setIsPreferredConditionsFilterFocused && setIsPreferredConditionsFilterFocused(!isPreferredConditionsFilterFocused);
+                }}
+                className={isPreferredConditionsFilterFocused
+                    ? "flex justify-between items-center w-full pl-4 pr-3 py-3 rounded-[16px] border border-main"
+                    : "flex justify-between items-center w-full pl-4 pr-3 py-3 rounded-[16px] border border-gray2"}>
+                <div className={preferredConditionsSelectedContent === "우대조건 선택" ? twMerge("button-md text-gray4") : twMerge("button-md")}>{preferredConditionsSelectedContent === "우대조건 선택" ? "우대조건 선택" : preferredConditionsSelectedContent}</div>
+                <div className={"flex justify-center items-center w-[36px] h-[36px]"}>
+                    <DropDownIcon />
                 </div>
+            </Button>
+            {isPreferredConditionsFilterFocused && (
+                <section className={"flex flex-col gap-y-[32px] rounded-[24px] w-full border border-gray2 p-5"}>
+                    <section className={"flex flex-col gap-y-4"}>
+                        <section className={"flex justify-between items-center"}>
+                            <div className={"flex flex-wrap gap-2"}>
+                                {selectedPreferredConditions.map((selectedPreferredCondition) => {
+                                    return (
+                                        <div
+                                            key={selectedPreferredCondition}
+                                            className={"flex gap-x-2 border-gray3-button pr-2 bg-gray1 py-2"}>
+                                            {selectedPreferredCondition}
+                                            <CancelIcon
+                                                onClick={() => {
+                                                    togglePreferredCondition(selectedPreferredCondition)
+                                                }}
+                                                className={"cursor-pointer"}
+                                                size={20}
+                                                color={"#6F717C"}/>
+                                        </div>
+                                    )
+                                })}
+                            </div>
+                        </section>
+                        <section className={"flex flex-wrap gap-2"}>
+                            {preferredConditions.map((preferredCondition) => {
+                                return (
+                                    <div key={preferredCondition}>
+                                        <Button
+                                            type={"button"}
+                                            onClick={() => togglePreferredCondition(preferredCondition)}
+                                            className={selectedPreferredConditions.includes(preferredCondition)
+                                                ? "border-main-button px-4"
+                                                : "border-gray2-button"}>
+                                            {preferredCondition}
+                                        </Button>
+                                    </div>
+                                )
+                            })}
+                        </section>
+                    </section>
 
-                <div className={"text-gray4 body-md"}>{selectedPreferredConditions.length} / 5</div>
-            </div>
-            <div className={"grid grid-cols-4 gap-y-3 py-[24px] px-[32px]"}>
-                {preferredConditions.map((preferredCondition) => {
-                    return (
-                        <div key={preferredCondition} className={"w-[205px]"}>
-                            <Button
-                                type={"button"}
-                                onClick={() => togglePreferredCondition(preferredCondition)}
-                                className={selectedPreferredConditions.includes(preferredCondition)
-                                    ? "flex gap-x-2 py-3 px-4 subtitle-md rounded-full border border-main"
-                                    : "flex gap-x-2 py-3 px-4 body-md text-gray5 rounded-full border border-gray2"}
-                                LeftIcon={() =>
-                                    selectedPreferredConditions.includes(preferredCondition)
-                                        ? (<CheckIcon />)
-                                        : (<div className={"w-[24px] h-[24px] rounded-full border-[1.3px] border-gray3"}/>)
-                                }>
-                                {preferredCondition}
-                            </Button>
-                        </div>
-                    )
-                })}
-
-            </div>
+                    <section className={"flex justify-end gap-x-2"}>
+                        <Button
+                            onClick={() => {
+                                setSelectedPreferredConditions([])
+                            }}
+                            className={"border-gray2-button"}
+                            secondClassName={"flex items-center justify-center w-[120px] py-3"}>초기화</Button>
+                        <Button
+                            onClick={() => {
+                                setPreferredConditionsSelectedContent(selectedPreferredConditions.join(", "))
+                                setIsPreferredConditionsFilterFocused(false)
+                            }}
+                            className={"bg-main-button"}
+                            secondClassName={"flex items-center justify-center w-[120px] py-3"}>
+                            {selectedPreferredConditions.length} / 5 적용
+                        </Button>
+                    </section>
+                </section>
+            )}
         </div>
     )
 }
