@@ -74,7 +74,7 @@ export type TimeType =
     "시작시간" |
     "종료시간";
 
-export type SalaryType = "시급" | "일급" | "주급" | "월급" | "연봉";
+export type SalaryType = "" | "시급" | "일급" | "주급" | "월급" | "연봉";
 
 
 export interface EmployerInfoType {

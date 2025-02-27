@@ -1,18 +1,5 @@
-import {Dispatch, SetStateAction, useEffect, useMemo, useState} from "react";
-import {useSetAtom} from "jotai/index";
+import {Dispatch, SetStateAction} from "react";
 
-import {format} from "date-fns";
-
-import {
-    ApplicationMethodEnumType,
-    EducationType,
-    PreferredConditionType, SalaryType,
-    TimeType, WeekDaysType,
-    WorkDaysType,
-    WorkDurationType,
-    WorkTimeType
-} from "@/src/types/register";
-import {generalRegisterDataAtom} from "@/src/store/register/atom";
 import Item from "@/src/components/common/Item";
 import Input from "@/src/components/common/Input";
 import Gender from "@/src/components/register/Gender";
@@ -23,11 +10,7 @@ import WorkDuration from "@/src/components/register/WorkDuration";
 import WorkTime from "@/src/components/register/WorkTime";
 import WorkDays from "@/src/components/register/WorkDays";
 import Salary from "@/src/components/register/Salary";
-import Filter from "@/src/components/common/Filter";
-import SelectedFilterContent from "@/src/components/common/SelectedFilterContent";
-import Title from "@/src/components/common/Title";
-import {useAtom} from "jotai";
-import {weekDaysList, workDaysList, workDurationList, workTimeList} from "@/src/utils/register";
+import useAdRegisterStep2 from "@/src/hooks/useAdRegisterStep2";
 
 interface Props {
     setStep: Dispatch<SetStateAction<"Second" | "First" | "Third">>
@@ -37,240 +20,45 @@ interface Props {
 
 const GeneralAdRegisterStep2 = (props: Props) => {
     const {setStep, setSubmitType, setIsTrigger} = props;
-    const [workDuration, setWorkDuration] = useState<WorkDurationType>("");
-    const [workDurationOther, setWorkDurationOther] = useState("");
-    const [workDurationAgreement, setWorkDurationAgreement] = useState(false);
-    //근무 시간
-    const [workTime, setWorkTime] = useState<WorkTimeType>("");
-    const [startTime, setStartTime] = useState<TimeType>("시작시간");
-    const [endTime, setEndTime] = useState<TimeType>("종료시간");
-    const [workTimeSelectList, setWorkTimeSelectList] = useState<boolean>(false); //목록 선택
-    const [workTimeDirectList, setWorkTimeDirectList] = useState<boolean>(true); //직접 선택
-    const [workTimeOther, setWorkTimeOther] = useState("");
-    const [workTimeAgreement, setWorkTimeAgreement] = useState(false);
-    //근무 요일 선택
-    const [workDay, setWorkDay] = useState<WorkDaysType>(""); //목록선택 항목
-    const [workWeekDays, setWorkWeekDays] = useState<WeekDaysType[]>([]); //직접선택 항목
-    const [workDaysSelectList, setWorkDaysSelectList] = useState<boolean>(false); //목록 선택
-    const [workDaysDirectList, setWorkDaysDirectList] = useState<boolean>(true); //직접 선택
-    const [workDaysOther, setWorkDaysOther] = useState(""); //기타사항
-    const [workDaysAgreement, setWorkDaysAgreement] = useState(false);
-    //월급 선택
-    const [salaryType, setSalaryType] = useState<SalaryType>("시급")
-    const [salary, setSalary] = useState("");
-    const [salaryOther, setSalaryOther] = useState("");
-    const [salaryErrorMessageEnable, setSalaryErrorMessageEnable] = useState(false);
-    const [isSalaryValid, setIsSalaryValid] = useState(true);
-    //지원 형태
-    const [applicationEnumMethods, setApplicationEnumMethods] = useState<ApplicationMethodEnumType[]>([]);
-    const [generalRegisterData, setGeneralRegisterData] = useAtom(generalRegisterDataAtom);
-    const [otherConditions, setOtherConditions] = useState("");
-    const [gender, setGender] = useState<"female" | "male" | null | "">("");
-    const [education, setEducation] = useState<EducationType>("");
-    const [selectedPreferredConditions, setSelectedPreferredConditions] = useState<PreferredConditionType[]>([]);
 
-    /**
-     * 백엔드 코드에 맞게 근무 기간을 설정하는 함수 새로운 []를 만든다.
-     * @param workDuration 선택된 근무 기간
-     * @param workDurationAgreement 기간 협의 클릭 여부
-     */
-    const getWorkDurationList = (workDuration: WorkDurationType, workDurationAgreement: boolean): string[] => {
-        let durationList: string[] = [];
+    const {
+        formState, // ✅ 상태 묶어서 반환
+        uiState, // ✅ UI 관련 상태도 묶기
+        saveRegisterData,
+        handleBeforeSubmit,
+        handleNextSubmit
+    } = useAdRegisterStep2(setStep);
 
-        if (workDuration) {
-            durationList.push(workDuration); // workDuration 값이 있다면 추가
-        }
+    const {
+        workDuration, setWorkDuration,
+        workDurationOther, setWorkDurationOther,
+        workDurationAgreement, setWorkDurationAgreement,
+        workTime, setWorkTime,
+        startTime, setStartTime,
+        endTime, setEndTime,
+        workTimeSelectList, setWorkTimeSelectList,
+        workTimeDirectList, setWorkTimeDirectList,
+        workTimeOther, setWorkTimeOther,
+        workTimeAgreement, setWorkTimeAgreement,
+        workDay, setWorkDay,
+        workWeekDays, setWorkWeekDays,
+        workDaysSelectList, setWorkDaysSelectList,
+        workDaysDirectList, setWorkDaysDirectList,
+        workDaysOther, setWorkDaysOther,
+        workDaysAgreement, setWorkDaysAgreement,
+        salaryType, setSalaryType,
+        salary, setSalary,
+        salaryOther, setSalaryOther,
+        salaryErrorMessageEnable, setSalaryErrorMessageEnable,
+        otherConditions, setOtherConditions,
+        gender, setGender,
+        education, setEducation,
+        selectedPreferredConditions, setSelectedPreferredConditions
+    } = formState;
 
-        if (workDurationAgreement) {
-            durationList.push("기간 협의"); // workDurationAgreement가 true면 '기간 협의' 추가
-        }
-
-        return durationList;
-    };
-
-    /**
-     * 백엔드 코드에 맞게 근무 시간을 설정하는 함수 새로운 []를 만든다.
-     * @param workTime 선택된 근무 시간
-     * @param startTime 시작 시간
-     * @param endTime 종료 시간
-     * @param workTimeAgreement 시간 협의 클릭 여부
-     */
-    const getWorkTimeList = (workTime: WorkTimeType, startTime: TimeType, endTime: TimeType, workTimeAgreement: boolean): string[] => {
-        let timeList: string[] = [];
-
-        if (workTime !== "") {
-            timeList.push(workTime); // workTime 값이 있다면 추가
-        }
-
-        if (startTime !== "시작시간" && endTime !== "종료시간") {
-            timeList.push(`${startTime}~${endTime}`);
-        }
-
-        if (workTimeAgreement) {
-            timeList.push("시간 협의"); // workDurationAgreement가 true면 '기간 협의' 추가
-        }
-
-        return timeList;
-    };
-
-    /**
-     * 백엔드 코드에 맞게 근무 시간을 설정하는 함수 새로운 []를 만든다.
-     * @param workDay 선택된 근무 시간
-     * @param workWeekDays 시작 시간
-     * @param workDaysAgreement 종료 시간
-     */
-    const getWorkDaysList = (workDay: WorkDaysType, workWeekDays: WeekDaysType[], workDaysAgreement: boolean): string[] => {
-        let dayList: string[] = [];
-
-        if (workDay !== "") {
-            dayList.push(workDay);
-        }
-
-        if (workWeekDays.length !== 0) {
-            workWeekDays.map((workWeekDay) => {
-                dayList.push(workWeekDay);
-            })
-        }
-
-        if (workDaysAgreement) {
-            dayList.push("요일 협의");
-        }
-
-        return dayList;
-    };
-
-    useEffect(() => {
-        // salary 값이 숫자로 변환 가능하면 체크
-        if (salary.trim() === "" || parseInt(salary) >= 10030) {
-            setIsSalaryValid(true);
-        } else {
-            setIsSalaryValid(false);
-        }
-    }, [salary]);
-
-    const saveRegisterData = () => {
-        setGeneralRegisterData((prevState) => ({
-            ...prevState,
-            workDuration: getWorkDurationList(workDuration, workDurationAgreement),
-            workDurationOther: workDurationOther,
-            workTime: getWorkTimeList(workTime, startTime, endTime, workTimeAgreement),
-            workTimeOther: workTimeOther,
-            workDays: getWorkDaysList(workDay, workWeekDays, workDaysAgreement),
-            workDaysOther: workDaysOther,
-            salary: salary,
-            salaryType: salaryType,
-            salaryOther: salaryOther,
-            gender: gender,
-            education: education,
-            preferredConditions: selectedPreferredConditions,
-            otherConditions: otherConditions,
-        }))
-    }
-
-    /**
-     * 시작하자 마자 불러오기
-     */
-    useEffect(() => {
-        if (generalRegisterData.workDuration.length !== 0
-            || generalRegisterData.workDurationOther
-            || generalRegisterData.workTime.length !== 0
-            || generalRegisterData.workTimeOther
-            || generalRegisterData.workDays.length !== 0
-            || generalRegisterData.workDaysOther
-            || generalRegisterData.salary
-            || generalRegisterData.salaryType
-            || generalRegisterData.salaryOther
-            || generalRegisterData.gender
-            || generalRegisterData.education
-            || generalRegisterData.preferredConditions.length !==0
-            || generalRegisterData.otherConditions
-
-        ) {
-            //근무 기간
-            console.log("workDurationList.every((duration) => (generalRegisterData.workDuration as string[]).includes(duration))", workDurationList.every((duration) => (generalRegisterData.workDuration as string[]).includes(duration)))
-            if (!workDurationList.every((duration) => (generalRegisterData.workDuration as string[]).includes(duration))) {
-                setWorkDuration(generalRegisterData.workDuration[0] as WorkDurationType)
-                if ((generalRegisterData.workDuration as string[]).includes('기간 협의')) {
-                    setWorkDurationAgreement(true);
-                }
-            }
-            setWorkDurationOther(generalRegisterData.workDurationOther as string)
-
-            //근무 시간
-            if (!workTimeList.every((time) => (generalRegisterData.workTime as string[]).includes(time))) {
-                setWorkTime(generalRegisterData.workTime[0] as WorkTimeType)
-                if ((generalRegisterData.workTime as string[]).includes("시간 협의")) {
-                    setWorkTimeAgreement(true);
-                }
-            } else if ((generalRegisterData.workTime as string[]).includes("~")) {
-                const parts = generalRegisterData.workTime[0].split("~").map(part => part.trim());
-                setStartTime(parts[0] as TimeType);
-                setEndTime(parts[1] as TimeType);
-                if ((generalRegisterData.workTime as string[]).includes("시간 협의")) {
-                    setWorkTimeAgreement(true);
-                }
-            }
-            setWorkTimeOther(generalRegisterData.workTimeOther as string)
-
-            //근무 요일
-            if (!weekDaysList.every(day => (generalRegisterData.workDays as string[]).includes(day))) {
-                setWorkWeekDays(
-                    generalRegisterData.workDays
-                        .filter(day => day !== "요일 협의") as WeekDaysType[]
-                );
-                if ((generalRegisterData.workDays as string[]).includes("요일 협의")) {
-                    setWorkDaysAgreement(true);
-                }
-            } else if (!workDaysList.every(day => (generalRegisterData.workDays as string[]).includes(day))) {
-                setWorkDay(generalRegisterData.workDays[0] as WorkDaysType)
-                if ((generalRegisterData.workDays as string[]).includes("요일 협의")) {
-                    setWorkDaysAgreement(true);
-                }
-            }
-            setWorkDaysOther(generalRegisterData.workDaysOther as string)
-
-            //급여
-            setSalaryType(generalRegisterData.salaryType as SalaryType)
-            setSalary(generalRegisterData.salary as string)
-            setSalaryOther(generalRegisterData.salaryOther as string)
-            //성별
-            setGender(generalRegisterData.gender)
-            //학력
-            setEducation(generalRegisterData.education as EducationType)
-            //우대조건
-            setSelectedPreferredConditions(generalRegisterData.preferredConditions)
-            //기타조건
-            setOtherConditions(generalRegisterData.otherConditions as string)
-
-        }
-    }, [generalRegisterData]);
-
-    const handleBeforeSubmit = () => {
-        saveRegisterData();
-        setStep("First");
-    }
-
-    const handleNextSubmit = () => {
-        saveRegisterData();
-        setStep("Third");
-    }
-
-    const isNextButtonDisabled = useMemo(() => {
-        return (
-            workDuration === "" ||
-            (workTime === "" && (startTime === "시작시간" || endTime === "종료시간")) ||
-            (workDay === "" && workWeekDays.length === 0) ||
-            !isSalaryValid || // 급여 유효성 검사 추가
-            applicationEnumMethods.length === 0 ||
-            education === ""
-        );
-    }, [workDuration, workTime, startTime, endTime, workDay, workWeekDays, isSalaryValid, education]);
-
-
-
-    useEffect(() => {
-        console.log("generalRegisterData", generalRegisterData)
-    }, [generalRegisterData]);
+    const{
+        isNextButtonDisabled
+    } = uiState;
 
     return (
         <main className={"flex flex-col gap-y-[52px]"}>
@@ -383,9 +171,9 @@ const GeneralAdRegisterStep2 = (props: Props) => {
                         className={"mt-[28px] flex items-center justify-center border-gray2-button w-[200px]"}>임시저장</Button>
                     <Button
                         type={"button"}
-                        disabled={!isNextButtonDisabled}
+                        disabled={isNextButtonDisabled}
                         onClick={() => handleNextSubmit()}
-                        className={!isNextButtonDisabled
+                        className={isNextButtonDisabled
                             ? "mt-[28px] flex items-center justify-center bg-gray2-button w-[200px]"
                             : "mt-[28px] flex items-center justify-center bg-main-button w-[200px]"}>
                         다음
