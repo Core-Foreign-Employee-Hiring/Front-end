@@ -1,4 +1,4 @@
-import {Dispatch, SetStateAction} from "react";
+import {Dispatch, SetStateAction, useEffect} from "react";
 
 import {preferredConditions} from "@/src/utils/register";
 import {PreferredConditionType} from "@/src/types/register";
@@ -30,6 +30,10 @@ const PreferredConditions = (props: Props) => {
             }
         });
     };
+
+    useEffect(() => {
+        setPreferredConditionsSelectedContent(selectedPreferredConditions.join(", "))
+    }, [selectedPreferredConditions]);
 
     return (
         <div>

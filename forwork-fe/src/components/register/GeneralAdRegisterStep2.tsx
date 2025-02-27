@@ -27,6 +27,7 @@ import Filter from "@/src/components/common/Filter";
 import SelectedFilterContent from "@/src/components/common/SelectedFilterContent";
 import Title from "@/src/components/common/Title";
 import {useAtom} from "jotai";
+import {weekDaysList, workDaysList, workDurationList, workTimeList} from "@/src/utils/register";
 
 interface Props {
     setStep: Dispatch<SetStateAction<"Second" | "First" | "Third">>
@@ -63,9 +64,6 @@ const GeneralAdRegisterStep2 = (props: Props) => {
     //지원 형태
     const [applicationEnumMethods, setApplicationEnumMethods] = useState<ApplicationMethodEnumType[]>([]);
     const [generalRegisterData, setGeneralRegisterData] = useAtom(generalRegisterDataAtom);
-    const [recruitCount, setRecruitCount] = useState<string>("");
-    const [recruitEndDate, setRecruitEndDate] = useState("");
-    const [regularRecruit, setRegularRecruit] = useState(false);
     const [otherConditions, setOtherConditions] = useState("");
     const [gender, setGender] = useState<"female" | "male" | null | "">("");
     const [education, setEducation] = useState<EducationType>("");
@@ -101,7 +99,7 @@ const GeneralAdRegisterStep2 = (props: Props) => {
         let timeList: string[] = [];
 
         if (workTime !== "") {
-            timeList.push(workTime); // workDuration 값이 있다면 추가
+            timeList.push(workTime); // workTime 값이 있다면 추가
         }
 
         if (startTime !== "시작시간" && endTime !== "종료시간") {
@@ -169,28 +167,83 @@ const GeneralAdRegisterStep2 = (props: Props) => {
         }))
     }
 
+    /**
+     * 시작하자 마자 불러오기
+     */
+    useEffect(() => {
+        if (generalRegisterData.workDuration.length !== 0
+            || generalRegisterData.workDurationOther
+            || generalRegisterData.workTime.length !== 0
+            || generalRegisterData.workTimeOther
+            || generalRegisterData.workDays.length !== 0
+            || generalRegisterData.workDaysOther
+            || generalRegisterData.salary
+            || generalRegisterData.salaryType
+            || generalRegisterData.salaryOther
+            || generalRegisterData.gender
+            || generalRegisterData.education
+            || generalRegisterData.preferredConditions.length !==0
+            || generalRegisterData.otherConditions
 
-    // /**
-    //  * 시작하자 마자 불러오기
-    //  */
-    // useEffect(() => {
-    //     if (generalRegisterData.title || generalRegisterData.recruitCount || generalRegisterData.recruitEndDate || generalRegisterData.applicationMethods.length !== 0) {
-    //         setWorkDuration(generalRegisterData.workDuration);
-    //         setWorkDurationOther(generalRegisterData.workDurationOther)
-    //         setWorkTime(generalRegisterData.workTime);
-    //         setWorkTimeOther(generalRegisterData.workTimeOther as string);
-    //         if (!["월요일", "화요일", "수요일", "목요일", "금요일"].every(day => generalRegisterData.workDays.includes(day))) {
-    //             setWorkDay()
-    //         }
-    //         setRecruitCount(generalRegisterData.recruitCount?.toString() as string);
-    //         if (generalRegisterData.recruitEndDate === "2099-12-31"){
-    //             setRegularRecruit(true);
-    //         } else {
-    //             setRecruitEndDate(generalRegisterData.recruitEndDate as string);
-    //         }
-    //         setApplicationEnumMethods(generalRegisterData.applicationMethods)
-    //     }
-    // }, [generalRegisterData]);
+        ) {
+            //근무 기간
+            console.log("workDurationList.every((duration) => (generalRegisterData.workDuration as string[]).includes(duration))", workDurationList.every((duration) => (generalRegisterData.workDuration as string[]).includes(duration)))
+            if (!workDurationList.every((duration) => (generalRegisterData.workDuration as string[]).includes(duration))) {
+                setWorkDuration(generalRegisterData.workDuration[0] as WorkDurationType)
+                if ((generalRegisterData.workDuration as string[]).includes('기간 협의')) {
+                    setWorkDurationAgreement(true);
+                }
+            }
+            setWorkDurationOther(generalRegisterData.workDurationOther as string)
+
+            //근무 시간
+            if (!workTimeList.every((time) => (generalRegisterData.workTime as string[]).includes(time))) {
+                setWorkTime(generalRegisterData.workTime[0] as WorkTimeType)
+                if ((generalRegisterData.workTime as string[]).includes("시간 협의")) {
+                    setWorkTimeAgreement(true);
+                }
+            } else if ((generalRegisterData.workTime as string[]).includes("~")) {
+                const parts = generalRegisterData.workTime[0].split("~").map(part => part.trim());
+                setStartTime(parts[0] as TimeType);
+                setEndTime(parts[1] as TimeType);
+                if ((generalRegisterData.workTime as string[]).includes("시간 협의")) {
+                    setWorkTimeAgreement(true);
+                }
+            }
+            setWorkTimeOther(generalRegisterData.workTimeOther as string)
+
+            //근무 요일
+            if (!weekDaysList.every(day => (generalRegisterData.workDays as string[]).includes(day))) {
+                setWorkWeekDays(
+                    generalRegisterData.workDays
+                        .filter(day => day !== "요일 협의") as WeekDaysType[]
+                );
+                if ((generalRegisterData.workDays as string[]).includes("요일 협의")) {
+                    setWorkDaysAgreement(true);
+                }
+            } else if (!workDaysList.every(day => (generalRegisterData.workDays as string[]).includes(day))) {
+                setWorkDay(generalRegisterData.workDays[0] as WorkDaysType)
+                if ((generalRegisterData.workDays as string[]).includes("요일 협의")) {
+                    setWorkDaysAgreement(true);
+                }
+            }
+            setWorkDaysOther(generalRegisterData.workDaysOther as string)
+
+            //급여
+            setSalaryType(generalRegisterData.salaryType as SalaryType)
+            setSalary(generalRegisterData.salary as string)
+            setSalaryOther(generalRegisterData.salaryOther as string)
+            //성별
+            setGender(generalRegisterData.gender)
+            //학력
+            setEducation(generalRegisterData.education as EducationType)
+            //우대조건
+            setSelectedPreferredConditions(generalRegisterData.preferredConditions)
+            //기타조건
+            setOtherConditions(generalRegisterData.otherConditions as string)
+
+        }
+    }, [generalRegisterData]);
 
     const handleBeforeSubmit = () => {
         saveRegisterData();
