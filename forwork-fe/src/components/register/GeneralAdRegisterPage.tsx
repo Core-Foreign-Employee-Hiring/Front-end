@@ -7,7 +7,7 @@ import GeneralAdRegisterStep2 from "@/src/components/register/GeneralAdRegisterS
 import GeneralAdRegisterStep3 from "@/src/components/register/GeneralAdRegisterStep3";
 import Modal from "@/src/components/common/Modal";
 import Button from "@/src/components/common/Button";
-import {draftGeneralAd, draftPremiumAd, uploadGeneralAd} from "@/src/lib/api/register";
+import {draftGeneralAd, draftPremiumAd, uploadGeneralAd, uploadPremiumAd} from "@/src/lib/api/register";
 import {generalRegisterDataAtom} from "@/src/store/register/atom";
 
 const GeneralAdRegisterPage = () => {
@@ -51,16 +51,30 @@ const GeneralAdRegisterPage = () => {
         const formData = new FormData();
 
         // "adType"과 "uploadImage"를 제거한 새로운 객체 생성
-        const { adType, uploadImage, ...filteredData } = generalRegisterData;
+        if (generalRegisterData.adType === "일반 공고") {
+            const { adType, uploadImage, portfolios, ...filteredData } = generalRegisterData;
 
-        console.log("filteredData", filteredData)
+            console.log("filteredData", filteredData)
 
-        // JSON 문자열로 변환 후 Blob으로 FormData에 추가
-        formData.append('request', new Blob([JSON.stringify(filteredData)], { type: 'application/json' }));
+            // JSON 문자열로 변환 후 Blob으로 FormData에 추가
+            formData.append('request', new Blob([JSON.stringify(filteredData)], { type: 'application/json' }));
 
-        // 이미지 파일이 존재하면 추가
-        if (imgRef.current?.files?.[0]) {
-            formData.append('posterImage', imgRef.current.files[0]);
+            // 이미지 파일이 존재하면 추가
+            if (imgRef.current?.files?.[0]) {
+                formData.append('posterImage', imgRef.current.files[0]);
+            }
+        } else {
+            const { adType, uploadImage, ...filteredData } = generalRegisterData;
+
+            console.log("filteredData", filteredData)
+
+            // JSON 문자열로 변환 후 Blob으로 FormData에 추가
+            formData.append('request', new Blob([JSON.stringify(filteredData)], { type: 'application/json' }));
+
+            // 이미지 파일이 존재하면 추가
+            if (imgRef.current?.files?.[0]) {
+                formData.append('posterImage', imgRef.current.files[0]);
+            }
         }
 
         return formData;
@@ -74,8 +88,13 @@ const GeneralAdRegisterPage = () => {
         if (!formData) return; // 파일 없으면 중단
 
         try {
-            const response = await uploadGeneralAd(formData);
-            console.log("uploadGeneralAd", response);
+            if (generalRegisterData.adType === "일반 공고") {
+                const response = await uploadGeneralAd(formData);
+                console.log("uploadGeneralAd", response);
+            } else {
+                const response = await  uploadPremiumAd(formData);
+                console.log("uploadPremiumAd", response);
+            }
         } catch (error) {
             console.error('폼 제출 중 오류 발생:', error);
         }
@@ -124,7 +143,7 @@ const GeneralAdRegisterPage = () => {
             <ProgressBar step={step}/>
             {step === "First" && (<GeneralAdRegisterStep1 setStep={setStep} imgRef={imgRef} setSubmitType={setSubmitType} setIsTrigger={setIsTrigger}/>)}
             {step === "Second" && (<GeneralAdRegisterStep2 setStep={setStep} setSubmitType={setSubmitType} setIsTrigger={setIsTrigger}/>)}
-            {step === "Third" && (<GeneralAdRegisterStep3 setStep={setStep} />)}
+            {step === "Third" && (<GeneralAdRegisterStep3 setStep={setStep} setSubmitType={setSubmitType} setIsTrigger={setIsTrigger}/>)}
         </form>
     )
 }

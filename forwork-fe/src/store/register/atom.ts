@@ -19,6 +19,12 @@ export const generalRegisterDataAtom = atom<GeneralRegisterDataType>({
     education: null,
     otherConditions: null,
     preferredConditions: [],
+    portfolios: [{
+        title: "",
+        type: "LONG_TEXT",
+        maxFileCount: null,
+        required: false,
+    },],
     workDuration: [],
     workTime: [],
     workDays: [],

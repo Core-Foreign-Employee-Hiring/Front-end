@@ -12,7 +12,7 @@ import {useAtom} from "jotai/index";
 import {generalRegisterDataAtom} from "@/src/store/register/atom";
 import {weekDaysList, workDaysList, workDurationList, workTimeList} from "@/src/utils/register";
 
-const useAdRegisterStep2 = (setStep: Dispatch<SetStateAction<"Second" | "First" | "Third">>) => {
+const useAdRegisterStep2 = (setStep: Dispatch<SetStateAction<"Second" | "First" | "Third">>, setSubmitType: Dispatch<SetStateAction<"" | "draft" | "upload">>, setIsTrigger: Dispatch<SetStateAction<boolean>>) => {
     const [generalRegisterData, setGeneralRegisterData] = useAtom(generalRegisterDataAtom);
     //근무 기간
     const [workDuration, setWorkDuration] = useState<WorkDurationType>("");
@@ -232,7 +232,12 @@ const useAdRegisterStep2 = (setStep: Dispatch<SetStateAction<"Second" | "First" 
 
     const handleNextSubmit = () => {
         saveRegisterData();
-        setStep("Third");
+        if (generalRegisterData.adType === "일반 공고") {
+            setSubmitType("upload");
+            setIsTrigger(true);
+        } else {
+            setStep("Third");
+        }
     }
 
     const isNextButtonDisabled = useMemo(() => {

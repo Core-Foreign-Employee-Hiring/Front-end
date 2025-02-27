@@ -1,6 +1,6 @@
 import {
     AdType,
-    ApplicationMethodType, PreferredConditionType,
+    ApplicationMethodType, FileCountType, PortfolioContentType, PortfolioType, PreferredConditionType,
     SalaryType,
     TimeType,
     WeekDaysType,
@@ -10,7 +10,9 @@ import {
 } from "@/src/types/register";
 import {Dispatch, SetStateAction} from "react";
 
+export const fileCount :FileCountType[] = ["1", "5", "10"]
 export const adTypes: AdType[] = ["일반 공고", "프리미엄 공고"]
+export const portfolioContents: PortfolioContentType[] = ["장문형", "단답형", "파일 업로드"]
 export const workDurationList: WorkDurationType[] = ["하루(1일)", "1주일 이하", "1주일~1개월", "1개월~3개월", "3개월~6개월", "6개월~1년", "1년이상"]
 export const workTimeList: WorkTimeType[] = ["오전", "오후", "저녁", "새벽", "풀타임(8시간 이상)", "오전-오후", "오후-저녁", "저녁-새벽", "새벽-오전"]
 export const preferredConditions: PreferredConditionType[] = ["영어 가능", "일본어 가능", "중국어 가능", "컴퓨터 활용 가능", "포토샵 가능", "한글(HWP) 가능", "워드(Word) 가능", "엑셀(Excel) 가능", "파워포인트(PPT) 가능", "차량소지", "운전 가능", "업무 관련 자격증 소지", "유사업무 경험", "인근 거주", "대학 재학생", "대학 휴학생", "장기근무 가능"]
@@ -78,3 +80,25 @@ export const handleSelectList = (selectList:boolean, setSelectList: Dispatch<Set
         setUnSelectList(false); // 직접 선택을 비활성화
     }
 };
+
+export const switchPortfolioTypeToEnum = (selectedPortfolioFormContent: PortfolioContentType) => {
+    switch (selectedPortfolioFormContent) {
+        case "장문형":
+            return "LONG_TEXT"
+        case "단답형":
+            return "SHORT_TEXT"
+        case "파일 업로드":
+            return "FILE_UPLOAD"
+    }
+}
+
+export const switchEnumToPortfolioType = (selectedPortfolioFormContent: PortfolioType) => {
+    switch (selectedPortfolioFormContent) {
+        case "LONG_TEXT":
+            return "장문형"
+        case "SHORT_TEXT":
+            return "단답형"
+        case "FILE_UPLOAD":
+            return "파일 업로드"
+    }
+}

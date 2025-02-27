@@ -3,11 +3,12 @@ import Input from "../common/Input";
 import {salaryTypeList, timeList} from "@/src/utils/register";
 import Button from "@/src/components/common/Button";
 import Filter from "@/src/components/common/Filter";
-import {SalaryType} from "@/src/types/register";
+import {GeneralRegisterDataType, SalaryType} from "@/src/types/register";
 import {Dispatch, SetStateAction, useEffect, useState} from "react";
 import * as React from "react";
 import Tag from "@/src/components/common/Tag";
 interface Props {
+    generalRegisterData: GeneralRegisterDataType;
     salary: string;
     setSalary: Dispatch<SetStateAction<string>>;
     salaryType: SalaryType;
@@ -19,15 +20,23 @@ interface Props {
 }
 
 const Salary = (props: Props) => {
-    const {salary, setSalary, salaryType, setSalaryType, salaryErrorMessageEnable, setSalaryErrorMessageEnable, salaryOther, setSalaryOther} = props;
+    const {generalRegisterData, salary, setSalary, salaryType, setSalaryType, salaryErrorMessageEnable, setSalaryErrorMessageEnable, salaryOther, setSalaryOther} = props;
 
     const [isSalaryTypeFilterContentFocused, setIsSalaryTypeFilterContentFocused] = useState(false);
 
     const validateMinimumWage = () => {
-        if (parseInt(salary) < 10030) {
-            setSalaryErrorMessageEnable(true);
+        if (generalRegisterData.adType === "일반 공고") {
+            if (parseInt(salary) < 10030){
+                setSalaryErrorMessageEnable(true);
+            } else {
+                setSalaryErrorMessageEnable(false);
+            }
         } else {
-            setSalaryErrorMessageEnable(false);
+            if (parseInt(salary) < 13030){
+                setSalaryErrorMessageEnable(true);
+            } else {
+                setSalaryErrorMessageEnable(false);
+            }
         }
     }
 
@@ -63,7 +72,9 @@ const Salary = (props: Props) => {
 
     return (
         <div className={"flex flex-col gap-y-3"}>
-            <Tag className={"bg-error-light-tag"}>프리미엄 서비스는 시급10,030원 이상부터 등록 가능합니다.</Tag>
+            <Tag className={"bg-error-light-tag"}>{generalRegisterData.adType === "프리미엄 공고"
+                ? "프리미엄 서비스는 시급13,030원 이상부터 등록 가능합니다."
+                : "일반 서비스는 시급10,030원 이상부터 등록 가능합니다."}</Tag>
             <div className={"flex gap-x-3"}>
                 <div className={"relative flex flex-col w-[250px]"}>
                     <SelectedFilterContent selectedContent={salaryType} setIsFocused={setIsSalaryTypeFilterContentFocused} className={"py-3"}/>

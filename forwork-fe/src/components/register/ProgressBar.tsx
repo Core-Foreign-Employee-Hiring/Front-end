@@ -1,10 +1,13 @@
 import {SVGProps} from "react";
+import {useAtom} from "jotai/index";
+import {generalRegisterDataAtom} from "@/src/store/register/atom";
 
 interface Props {
     step: "First" | "Second" | "Third";
 }
 const ProgressBar = (props: Props) => {
     const {step} = props;
+    const [generalRegisterData, setGeneralRegisterData] = useAtom(generalRegisterDataAtom);
 
     return (
         <section className={"flex flex-col gap-y-2"}>
@@ -16,12 +19,38 @@ const ProgressBar = (props: Props) => {
                     <div className={"flex flex-col items-center"}>
                         <div
                             className={"flex justify-center items-center w-[40px] h-[40px] rounded-full bg-main z-10"}>
-                            {(step === "Second" || step === "Third") ? <CheckIcon/> : <div className={"text-white subtitle-md"}>1</div>}
+                            {(step === "Second" || step === "Third") ? <CheckIcon/> :
+                                <div className={"text-white subtitle-md"}>1</div>}
                         </div>
                     </div>
-                    <div className={step === "Second" || step === "Third" ? "absolute h-[4px] w-full bg-main" : "absolute h-[4px] w-full bg-gray2"}/>
+                    {generalRegisterData.adType === "프리미엄 공고" && (<div
+                        className={step === "Second" || step === "Third" ? "absolute h-[4px] w-full bg-main" : "absolute h-[4px] w-full bg-gray2"}/>)}
                 </section>
+                {generalRegisterData.adType === "일반 공고" && <div
+                    className={step === "Second" || step === "Third" ? "absolute h-[4px] w-full bg-main" : "absolute h-[4px] w-full bg-gray2"}/>}
                 <section className={"relative flex w-full items-center"}>
+                    {generalRegisterData.adType === "프리미엄 공고" && (
+                        <div className={"flex flex-col items-center"}>
+                            <div
+                                className={step === "Second" || step === "Third"
+                                    ? "flex justify-center items-center w-[40px] h-[40px] rounded-full bg-main z-10"
+                                    : "flex justify-center items-center w-[40px] h-[40px] rounded-full bg-gray2 z-10"}>
+                                {(step === "Third")
+                                    ? <CheckIcon/>
+                                    : (
+                                        <div
+                                            className={(step === "Second") ? "text-white subtitle-md" : "text-gray3 subtitle-md"}>2</div>
+                                    )}
+
+                            </div>
+                        </div>
+                    )}
+                    {generalRegisterData.adType === "프리미엄 공고" && (
+                        <div
+                            className={step === "Third" ? "absolute h-[4px] w-full bg-main" : "absolute h-[4px] w-full bg-gray2"}/>
+                    )}
+                </section>
+                {generalRegisterData.adType === "일반 공고" && (
                     <div className={"flex flex-col items-center"}>
                         <div
                             className={step === "Second" || step === "Third"
@@ -29,26 +58,34 @@ const ProgressBar = (props: Props) => {
                                 : "flex justify-center items-center w-[40px] h-[40px] rounded-full bg-gray2 z-10"}>
                             {(step === "Third")
                                 ? <CheckIcon/>
-                                : (<div className={(step === "Second") ? "text-white subtitle-md" : "text-gray3 subtitle-md"}>2</div>
-                            )}
+                                : (
+                                    <div
+                                        className={(step === "Second") ? "text-white subtitle-md" : "text-gray3 subtitle-md"}>2</div>
+                                )}
 
                         </div>
                     </div>
-                    <div className={step === "Third" ? "absolute h-[4px] w-full bg-main" : "absolute h-[4px] w-full bg-gray2" }/>
-                </section>
-                <section className={"flex flex-col items-center"}>
-                    <div
-                        className={step === "Third"
-                            ? "flex justify-center items-center w-[40px] h-[40px] rounded-full bg-main z-10"
-                            : "flex justify-center items-center w-[40px] h-[40px] rounded-full bg-gray2 z-10"}>
-                        <span className={step === "Third" ? "text-white subtitle-md" : "text-gray3 subtitle-md"}>3</span>
-                    </div>
-                </section>
+                )}
+
+                {generalRegisterData.adType === "프리미엄 공고" && (
+                    <section className={"flex flex-col items-center"}>
+                        <div
+                            className={step === "Third"
+                                ? "flex justify-center items-center w-[40px] h-[40px] rounded-full bg-main z-10"
+                                : "flex justify-center items-center w-[40px] h-[40px] rounded-full bg-gray2 z-10"}>
+                            <span
+                                className={step === "Third" ? "text-white subtitle-md" : "text-gray3 subtitle-md"}>3</span>
+                        </div>
+                    </section>
+                )}
             </section>
             <div className={"flex justify-between"}>
                 <span className={"text-main subtitle-md"}>기본 정보</span>
-                <span className={step === "Second" || step === "Third" ? "text-main subtitle-md" : "text-gray3 subtitle-md"}>근무 및 지원 조건</span>
-                <span className={step === "Third" ? "text-main subtitle-md" : "text-gray3 subtitle-md"}>추가 입력</span>
+                <span
+                    className={step === "Second" || step === "Third" ? "text-main subtitle-md" : "text-gray3 subtitle-md"}>근무 및 지원 조건</span>
+                {generalRegisterData.adType === "프리미엄 공고" && (
+                    <span className={step === "Third" ? "text-main subtitle-md" : "text-gray3 subtitle-md"}>추가 입력</span>
+                )}
             </div>
         </section>
     )

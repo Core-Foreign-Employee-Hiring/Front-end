@@ -1,4 +1,4 @@
-import {Dispatch, SetStateAction, useEffect, useMemo, useState} from "react";
+import {Dispatch, SetStateAction, useEffect, useMemo, useRef, useState} from "react";
 import {format} from "date-fns";
 import {useAtom} from "jotai/index";
 
@@ -22,6 +22,14 @@ const useAdRegisterStep1 = (setStep: Dispatch<SetStateAction<"Second" | "First" 
     const [uploadImage, setUploadImage] = useState<string | ArrayBuffer | null>(null);
     const {location, setLocation} = useLocation(employerInfo?.address1)
     const [selectedAdTypeContent, setSelectedAdTypeContent, isAdTypeFilterFocused, setAdTypeFilterIsFocused] = useFilter<AdType>("일반 공고");
+    const adTypeRef = useRef(selectedAdTypeContent);
+
+    useEffect(() => {
+        if (adTypeRef.current !== selectedAdTypeContent) {
+            adTypeRef.current = selectedAdTypeContent;
+            setGeneralRegisterData((prevState) => ({ ...prevState, adType: selectedAdTypeContent }));
+        }
+    }, [selectedAdTypeContent]);
 
     const saveRegisterData = () => {
         if (employerInfo) {

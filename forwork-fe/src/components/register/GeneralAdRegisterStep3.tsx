@@ -1,63 +1,72 @@
 'use client';
 
-import {Dispatch, SetStateAction, useEffect, useMemo, useState} from "react";
-import {useAtom, useSetAtom} from "jotai/index";
+import {Dispatch, SetStateAction, useMemo} from "react";
+import {useAtomValue} from "jotai";
 
-import {generalRegisterDataAtom} from "@/src/store/register/atom";
-import Item from "@/src/components/common/Item";
-import Input from "../common/Input";
-import WorkDuration from "@/src/components/register/WorkDuration";
-import WorkTime from "@/src/components/register/WorkTime";
-import WorkDays from "@/src/components/register/WorkDays";
-import Salary from "@/src/components/register/Salary";
-import ApplicationMethods from "@/src/components/register/ApplicationMethods";
-import {
-    ApplicationMethodEnumType,
-    SalaryType,
-    TimeType,
-    WeekDaysType,
-    WorkDaysType,
-    WorkDurationType,
-    WorkTimeType
-} from "@/src/types/register";
 import Button from "@/src/components/common/Button";
-import PosterImageUpload from "@/src/components/register/PosterImageUpload";
+import PortfolioForm from "@/src/components/register/PortfolioForm";
+import {generalRegisterDataAtom} from "@/src/store/register/atom";
 
 interface Props {
     setStep: Dispatch<SetStateAction<"Second" | "First" | "Third">>;
+    setSubmitType: Dispatch<SetStateAction<"" | "draft" | "upload">>;
+    setIsTrigger: Dispatch<SetStateAction<boolean>>;
 }
 const GeneralAdRegisterStep3 = (props: Props) => {
-    const {setStep} = props;
-    const setGeneralRegisterData = useSetAtom(generalRegisterDataAtom);
-    const [workDuration, setWorkDuration] = useState<WorkDurationType>("");
-    const [workDurationOther, setWorkDurationOther] = useState("");
-    const [workDurationAgreement, setWorkDurationAgreement] = useState(false);
-    //근무 시간
-    const [workTime, setWorkTime] = useState<WorkTimeType>("");
-    const [startTime, setStartTime] = useState<TimeType>("시작시간");
-    const [endTime, setEndTime] = useState<TimeType>("종료시간");
-    const [workTimeSelectList, setWorkTimeSelectList] = useState<boolean>(false); //목록 선택
-    const [workTimeDirectList, setWorkTimeDirectList] = useState<boolean>(false); //직접 선택
-    const [workTimeOther, setWorkTimeOther] = useState("");
-    const [workTimeAgreement, setWorkTimeAgreement] = useState(false);
-    //근무 요일 선택
-    const [workDay, setWorkDay] = useState<WorkDaysType>(""); //목록선택 항목
-    const [workWeekDays, setWorkWeekDays] = useState<WeekDaysType[]>([]); //직접선택 항목
-    const [workDaysSelectList, setWorkDaysSelectList] = useState<boolean>(false); //목록 선택
-    const [workDaysDirectList, setWorkDaysDirectList] = useState<boolean>(false); //직접 선택
-    const [workDaysOther, setWorkDaysOther] = useState(""); //기타사항
-    const [workDaysAgreement, setWorkDaysAgreement] = useState(false);
-    //월급 선택
-    const [salaryType, setSalaryType] = useState<SalaryType>("시급")
-    const [salary, setSalary] = useState("");
-    const [salaryOther, setSalaryOther] = useState("");
-    const [salaryErrorMessageEnable, setSalaryErrorMessageEnable] = useState(false);
-    const [isSalaryValid, setIsSalaryValid] = useState(true);
-    //지원 형태
-    const [applicationEnumMethods, setApplicationEnumMethods] = useState<ApplicationMethodEnumType[]>([]);
+    const {setStep, setSubmitType, setIsTrigger} = props;
+
+    const generalRegisterData = useAtomValue(generalRegisterDataAtom)
+
+    const handleBeforeSubmit = () => {
+        setStep("Second");
+    }
+
+    const handleNextSubmit = () => {
+        setSubmitType("upload");
+        setIsTrigger(true);
+    }
+
+    const isNextButtonDisabled = useMemo(() => {
+        return (
+            generalRegisterData.portfolios.some((portfolio) => portfolio.title === "") // ✅ 추가된 조건
+        );
+    }, [generalRegisterData.portfolios]);
 
     return (
-        <main className={"flex flex-col gap-y-[52px]"}>
+        <main className={"flex flex-col"}>
+            <h1 className={"title-md"}>추가로 받고 싶은 정보를 입력해보세요.</h1>
+            <section className={"flex flex-col gap-y-6 mt-5"}>
+                {generalRegisterData.portfolios.map((portfolio, index) => {
+                    return (
+                        <PortfolioForm key={index} index={index}/>
+                    )
+                })}
+            </section>
+
+            <section className={"flex justify-between"}>
+                <Button
+                    type={"button"}
+                    onClick={() => handleBeforeSubmit()}
+                    className={"mt-[28px] flex items-center justify-center border-gray2-button w-[200px]"}>이전</Button>
+                <div className={"flex gap-x-4"}>
+                    <Button
+                        type={"button"}
+                        onClick={() => {
+                            setSubmitType("draft");
+                            setIsTrigger(true);
+                        }}
+                        className={"mt-[28px] flex items-center justify-center border-gray2-button w-[200px]"}>임시저장</Button>
+                    <Button
+                        type={"button"}
+                        disabled={isNextButtonDisabled}
+                        onClick={() => handleNextSubmit()}
+                        className={isNextButtonDisabled
+                            ? "mt-[28px] flex items-center justify-center bg-gray2-button w-[200px]"
+                            : "mt-[28px] flex items-center justify-center bg-main-button w-[200px]"}>
+                        공고 등록하기
+                    </Button>
+                </div>
+            </section>
         </main>
     )
 }

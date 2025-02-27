@@ -27,9 +27,10 @@ const GeneralAdRegisterStep2 = (props: Props) => {
         saveRegisterData,
         handleBeforeSubmit,
         handleNextSubmit
-    } = useAdRegisterStep2(setStep);
+    } = useAdRegisterStep2(setStep, setSubmitType, setIsTrigger);
 
     const {
+        generalRegisterData, setGeneralRegisterData,
         workDuration, setWorkDuration,
         workDurationOther, setWorkDurationOther,
         workDurationAgreement, setWorkDurationAgreement,
@@ -121,6 +122,7 @@ const GeneralAdRegisterStep2 = (props: Props) => {
                     title={"급여"}
                     className={"items-start"}
                     content={<Salary
+                        generalRegisterData={generalRegisterData}
                         salaryOther={salaryOther}
                         setSalaryOther={setSalaryOther}
                         salary={salary}
@@ -176,7 +178,7 @@ const GeneralAdRegisterStep2 = (props: Props) => {
                         className={isNextButtonDisabled
                             ? "mt-[28px] flex items-center justify-center bg-gray2-button w-[200px]"
                             : "mt-[28px] flex items-center justify-center bg-main-button w-[200px]"}>
-                        다음
+                        {generalRegisterData.adType === "일반 공고" ? "공고 등록하기" : "다음"}
                     </Button>
                 </div>
             </section>

@@ -22,6 +22,10 @@ export type WorkDurationType = "" | "하루(1일)" | "1주일 이하" | "1주일
 export type WorkTimeType = "" | "오전" | "오후" | "저녁" | "새벽" | "풀타임(8시간 이상)" | "오전-오후" | "오후-저녁" | "저녁-새벽" | "새벽-오전"
 export type WorkDaysType = "" | "평일(월, 화, 수, 목, 금)" | "주말(토, 일)" | "주 7일(월~일)" | "주 6일"
 export type WeekDaysType = "" | "월요일" | "화요일" | "수요일" | "목요일" | "금요일" | "토요일" | "일요일"
+export type PortfolioType = "LONG_TEXT" | "SHORT_TEXT" | "FILE_UPLOAD"
+export type PortfolioContentType = "장문형" | "단답형" | "파일 업로드"
+export type FileCountType = "파일 개수" | "1" | "5" | "10";
+
 export type TimeType =
     "00:00" |
     "00:30" |
@@ -107,6 +111,7 @@ export interface GeneralRegisterDataType {
     education: EducationType | null;
     otherConditions: string | null;
     preferredConditions: PreferredConditionType[] | [];
+    portfolios: PortfolioFormType[] | []
     workDuration: string[] | [];
     workTime: string[] | [];
     workDays: string[] | [];
@@ -123,4 +128,10 @@ export interface GeneralRegisterDataType {
     workTimeOther: string | null;
     workDaysOther: string | null;
     salaryOther: string | null;
+}
+export interface PortfolioFormType {
+    title: string;
+    type: PortfolioType,
+    maxFileCount: number | null,
+    required: boolean;
 }
