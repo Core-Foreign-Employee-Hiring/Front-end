@@ -103,3 +103,16 @@ export const changeBusinessFieldEnumToKorType = (businessField: BusinessFieldEnu
 export const toggleData = (data: any, setState: Dispatch<SetStateAction<any>>) => {
     setState((prev: any) => (prev === data ? "" : data));
 };
+
+export const formatDate = (isoString: string): string => {
+    const date = new Date(isoString);
+
+    const year = date.getFullYear().toString().slice(2); // 2025 → 25
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // 0-based → 1-based
+    const day = String(date.getDate()).padStart(2, "0");
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+    const seconds = String(date.getSeconds()).padStart(2, "0");
+
+    return `${year}.${month}.${day} ${hours}:${minutes}:${seconds}`;
+};

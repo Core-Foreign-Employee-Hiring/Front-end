@@ -36,3 +36,8 @@ export const generalRegisterDataAtom = atom<GeneralRegisterDataType>({
     workTimeOther: null,
     workDurationOther: null,
 });
+
+/**
+ * 임시 등록 선택한 recruitId
+ */
+export const draftRecruitIdAtom = atom(0)

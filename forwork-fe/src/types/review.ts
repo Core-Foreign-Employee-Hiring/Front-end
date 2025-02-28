@@ -1,4 +1,4 @@
-import {BusinessFieldEnumType} from "@/src/types/register";
+import {ApplicationMethodEnumType, BusinessFieldEnumType} from "@/src/types/register";
 
 export type SortContentType = "날짜순" | "조회순";
 
