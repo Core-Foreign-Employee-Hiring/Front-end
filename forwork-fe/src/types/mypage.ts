@@ -31,6 +31,16 @@ export interface ApplicationType {
     resumeCount: number;
 }
 
+export interface ContractType {
+    recruitId: number;
+    title: string;
+    recruitStartDate: string; //"2025-02-28",
+    recruitEndDate: string; //"2025-02-28",
+    employerName: string;
+    workDuration: string[];
+    workDays: string[];
+    workTime: string[];
+}
 
 export interface ResumeType {
     resumeId: number;

@@ -8,6 +8,7 @@ import EmployerMyPageMenu from "@/src/components/mypage/employer/EmployerMyPageM
 import EmployerProfile from "@/src/components/mypage/employer/EmployerProfile";
 import MyAds from "@/src/components/mypage/employer/MyAds";
 import ApplicationStatus from "@/src/components/mypage/employer/ApplicationStatus";
+import MyWorkContracts from "@/src/components/mypage/employer/MyWorkContracts";
 
 const Mypage = () => {
     const [step, setStep] = useState<MyPageStepType>("프로필 설정");
@@ -19,6 +20,7 @@ const Mypage = () => {
                 <EmployerMyPageMenu setStep={setStep} step={step}/>
                 {step === "프로필 설정" && (<EmployerProfile />)}
                 {step === "내 공고" && (<MyAds />)}
+                {step === "내 근로 계약서" && (<MyWorkContracts />)}
                 {step === "지원 현황" && (<ApplicationStatus />)}
             </main>
         </div>
