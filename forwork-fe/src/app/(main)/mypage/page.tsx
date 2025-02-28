@@ -7,6 +7,7 @@ import {MyPageStepType} from "@/src/types/mypage";
 import EmployerMyPageMenu from "@/src/components/mypage/employer/EmployerMyPageMenu";
 import EmployerProfile from "@/src/components/mypage/employer/EmployerProfile";
 import MyAds from "@/src/components/mypage/employer/MyAds";
+import ApplicationStatus from "@/src/components/mypage/employer/ApplicationStatus";
 
 const Mypage = () => {
     const [step, setStep] = useState<MyPageStepType>("프로필 설정");
@@ -18,6 +19,7 @@ const Mypage = () => {
                 <EmployerMyPageMenu setStep={setStep} step={step}/>
                 {step === "프로필 설정" && (<EmployerProfile />)}
                 {step === "내 공고" && (<MyAds />)}
+                {step === "지원 현황" && (<ApplicationStatus />)}
             </main>
         </div>
     )

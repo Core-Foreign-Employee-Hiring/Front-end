@@ -17,3 +17,14 @@ export interface MyUploadAdType {
     workTime: string[];
     recruitType: "GENERAL" | "PREMIUM"
 }
+
+export interface ApplicationType {
+    recruitId: number;
+    title: string;
+    recruitStartDate: string; //"2025-02-28",
+    recruitEndDate: string; //"2025-02-28",
+    workDuration: string[];
+    workDays: string[];
+    workTime: string[];
+    resumeCount: number;
+}
