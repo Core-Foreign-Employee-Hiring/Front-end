@@ -3,17 +3,12 @@ import Tag from "@/src/components/common/Tag";
 import CalenderIcon from "@/src/assets/mypage/CalenderIcon";
 import SpaceIcon from "@/src/assets/mypage/SpaceIcon";
 import TimeIcon from "@/src/assets/mypage/TimeIcon";
+import {formatRecruitEndDate} from "@/src/utils/mypage";
 
 const UploadAd = (props: MyUploadAdType) => {
     const {title, recruitStartDate, recruitEndDate, recruitType} = props;
 
-    const formatRecruitEndDate = (recruitEndDate: string) => {
-        if (recruitEndDate === "2099-12-31") {
-            return "상시 모집"
-        } else {
-            return recruitStartDate + " ~ " + recruitEndDate
-        }
-    }
+
     const switchRecruitType = (recruitType: "GENERAL" | "PREMIUM") => {
         switch (recruitType) {
             case "PREMIUM":
@@ -34,7 +29,7 @@ const UploadAd = (props: MyUploadAdType) => {
             </div>
             <div className={"flex flex-col gap-y-[8px]"}>
                 <h2 className={"subtitle-lg"}>{title}</h2>
-                <div className={"badge-sm text-gray4 pb-2 border-b border-gray2"}>{formatRecruitEndDate(recruitEndDate)}</div>
+                <div className={"badge-sm text-gray4 pb-2 border-b border-gray2"}>{formatRecruitEndDate(recruitStartDate, recruitEndDate)}</div>
                 <section className={"flex gap-x-1"}>
                     <div className={"flex items-center justify-center w-[20px] h-[20px]"}>
                         <CalenderIcon/>
