@@ -6,7 +6,7 @@ import LikeIcon from "@/src/assets/portfolio/LikeIcon";
 import ClockIcon from "@/src/assets/portfolio/ClockIcon";
 
 interface Props {
-    type: "default" | "apply"
+    type?: "default" | "apply"
 }
 
 const RatingReviewBox = (props: Props) => {
