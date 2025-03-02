@@ -4,55 +4,83 @@ import FireIcon from "@/src/assets/portfolio/FireIcon";
 import GoodIcon from "@/src/assets/portfolio/GoodIcon";
 import LikeIcon from "@/src/assets/portfolio/LikeIcon";
 import ClockIcon from "@/src/assets/portfolio/ClockIcon";
+import {ApplyPortfolioType, BasicPortfolioType} from "@/src/types/portfolio";
+import {useRouter} from "next/navigation";
+import {useEffect} from "react";
+import {changeBusinessFieldEnumToKorType} from "@/src/utils/common";
 
-interface Props {
-    type?: "default" | "apply"
+interface Props extends Partial<BasicPortfolioType & ApplyPortfolioType> {
+    type?: "default" | "apply";
 }
 
+
 const RatingReviewBox = (props: Props) => {
-    const {type="default"} = props;
+    const {type="default", name, employeeEvaluationCount, employeeId, resumeId, businessFields} = props;
+    const router = useRouter();
+
     return (
-        <section className={"flex flex-col gap-y-3 border border-gray2 rounded-[32px] p-6"}>
+        <section
+            onClick={() => {
+                type === "default" ?  router.push(`/portfolio/${employeeId}`) : router.push(`/portfolio/${resumeId}`) ;
+            }}
+            className={"flex flex-col gap-y-3 border border-gray2 rounded-[32px] p-6 cursor-pointer"}>
             <div className={"flex justify-between"}>
-                <div className={"subtitle-lg"}>염수빈</div>
+                <div className={"subtitle-lg"}>{name}</div>
                 {type === "apply" && (<Tag className={"bg-mainLight-tag"}>실제 지원</Tag>)}
             </div>
-            <div className={"border-b border-gray2 pb-3"}>
-                <span className={"body-sm text-gray5"}>
-                    외식/음료, 매장/판매, 기타/서비스
-                </span>
-            </div>
+            {type === "apply" && (
+                <div className={"border-b border-gray2 pb-3"}>
+                    {businessFields?.map((businessField) => {
+                        return (
+                            <span className={"body-sm text-gray5"}>
+                                {changeBusinessFieldEnumToKorType(businessField)}
+                            </span>
+                        )
+                    })}
+
+                </div>
+            )}
             <section className={"flex gap-x-4"}>
-                <div className={"flex gap-x-1"}>
+                {employeeEvaluationCount?.worksDiligently !== 0 && (
+                    <div className={"flex gap-x-1"}>
                     <div className={"flex justify-center items-center w-[20px] h-[20px]"}>
-                        <MoneyIcon/>
+                            <MoneyIcon/>
+                        </div>
+                        <span className={"body-sm text-gray5"}>{employeeEvaluationCount?.worksDiligently}</span>
                     </div>
-                    <span className={"body-sm text-gray5"}>3</span>
-                </div>
-                <div className={"flex gap-x-1"}>
-                    <div className={"flex justify-center items-center w-[20px] h-[20px]"}>
-                        <FireIcon/>
+                )}
+                {employeeEvaluationCount?.skilledAtWork !== 0 && (
+                    <div className={"flex gap-x-1"}>
+                        <div className={"flex justify-center items-center w-[20px] h-[20px]"}>
+                            <FireIcon/>
+                        </div>
+                        <span className={"body-sm text-gray5"}>{employeeEvaluationCount?.skilledAtWork}</span>
+                    </div>)
+                }
+                {employeeEvaluationCount?.skilledAtWork !==0 && (
+                    <div className={"flex gap-x-1"}>
+                        <div className={"flex justify-center items-center w-[20px] h-[20px]"}>
+                            <GoodIcon/>
+                        </div>
+                        <span className={"body-sm text-gray5"}>{employeeEvaluationCount?.goodCustomerService}</span>
                     </div>
-                    <span className={"body-sm text-gray5"}>3</span>
-                </div>
-                <div className={"flex gap-x-1"}>
-                    <div className={"flex justify-center items-center w-[20px] h-[20px]"}>
-                        <GoodIcon/>
+                )}
+                {employeeEvaluationCount?.politeAndFriendly !== 0 && (
+                    <div className={"flex gap-x-1"}>
+                        <div className={"flex justify-center items-center w-[20px] h-[20px]"}>
+                            <LikeIcon/>
+                        </div>
+                        <span className={"body-sm text-gray5"}>{employeeEvaluationCount?.politeAndFriendly}</span>
                     </div>
-                    <span className={"body-sm text-gray5"}>3</span>
-                </div>
-                <div className={"flex gap-x-1"}>
-                    <div className={"flex justify-center items-center w-[20px] h-[20px]"}>
-                        <LikeIcon/>
+                )}
+                {employeeEvaluationCount?.noLatenessOrAbsence !== 0 && (
+                    <div className={"flex gap-x-1"}>
+                        <div className={"flex justify-center items-center w-[20px] h-[20px]"}>
+                            <ClockIcon/>
+                        </div>
+                        <span className={"body-sm text-gray5"}>{employeeEvaluationCount?.noLatenessOrAbsence}</span>
                     </div>
-                    <span className={"body-sm text-gray5"}>3</span>
-                </div>
-                <div className={"flex gap-x-1"}>
-                    <div className={"flex justify-center items-center w-[20px] h-[20px]"}>
-                        <ClockIcon/>
-                    </div>
-                    <span className={"body-sm text-gray5"}>3</span>
-                </div>
+                )}
             </section>
 
         </section>
