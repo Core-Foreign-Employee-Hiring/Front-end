@@ -54,6 +54,7 @@ export interface ResumeType {
     mail: boolean;
 }
 
+
 export type RecruitmentStatusType = null | "PENDING" | "REJECTED" | "APPROVED"
 export type RecruitmentStatusContentType = "전체" | "대기" | "승인" | "거절"
 export type EvaluationStatusType = "COMPLETED" | "NOT_EVALUATED" | "NONE"

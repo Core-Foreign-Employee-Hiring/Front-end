@@ -1,10 +1,12 @@
 import * as React from "react";
 import type { SVGProps } from "react";
-const LikeIcon = (props: SVGProps<SVGSVGElement>) => (
+
+const LikeIcon = ({ width = 18, height = 15, ...props }: SVGProps<SVGSVGElement>) => (
     <svg
         xmlns="http://www.w3.org/2000/svg"
-        width={18}
-        height={15}
+        width={width}
+        height={height}
+        viewBox="0 0 18 15" // 원본 비율 유지
         fill="none"
         {...props}
     >
@@ -15,4 +17,5 @@ const LikeIcon = (props: SVGProps<SVGSVGElement>) => (
         />
     </svg>
 );
+
 export default LikeIcon;
