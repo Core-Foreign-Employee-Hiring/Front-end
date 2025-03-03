@@ -32,7 +32,9 @@ const RatingReviewBox = (props: Props) => {
                 <div className={"border-b border-gray2 pb-3"}>
                     {businessFields?.map((businessField) => {
                         return (
-                            <span className={"body-sm text-gray5"}>
+                            <span
+                                key={businessField}
+                                className={"body-sm text-gray5"}>
                                 {changeBusinessFieldEnumToKorType(businessField)}
                             </span>
                         )

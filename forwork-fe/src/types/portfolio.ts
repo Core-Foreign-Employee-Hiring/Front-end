@@ -1,4 +1,4 @@
-import {BusinessFieldEnumType} from "@/src/types/register";
+import {BusinessFieldEnumType, PortfolioType} from "@/src/types/register";
 
 export interface BasicPortfolioType {
     employeeId: number;
@@ -7,6 +7,7 @@ export interface BasicPortfolioType {
 }
 export interface ApplyPortfolioType {
     resumeId: number;
+    viewCount: number;
     name: string;
     businessFields: BusinessFieldEnumType[];
     employeeEvaluationCount: EmployeeEvaluationCountType;
@@ -14,6 +15,7 @@ export interface ApplyPortfolioType {
 
 export interface BasicDetailPortfolioType {
     employeeId: number;
+    viewCount: number;
     name: string;
     nationality: string;
     education: string;
@@ -22,6 +24,24 @@ export interface BasicDetailPortfolioType {
     email: string;
     employeePortfolioDTO: EmployeePortfolioDTOType;
     employeeEvaluationCountDTO: EmployeeEvaluationCountType;
+    liked: boolean;
+}
+
+export interface ApplyDetailPortfolioType {
+    resumeId: number;
+    employeeId: number;
+    viewCount: number;
+    name: string;
+    nationality: string;
+    education: string;
+    visa: string;
+    birthday: string;
+    email: string;
+    employeePortfolioDTO: EmployeePortfolioDTOType;
+    employeeEvaluationCountDTO: EmployeeEvaluationCountType;
+    texts: PortfolioTextType[];
+    files: PortfolioUpLoadType[];
+    liked: boolean;
 }
 
 export interface EmployeePortfolioDTOType {
@@ -39,12 +59,12 @@ export interface EmployeePortfolioDTOType {
 }
 
 export interface EmployeeEvaluationCountType {
-    worksDiligently: number;
-    noLatenessOrAbsence: number;
-    politeAndFriendly: number;
-    goodCustomerService: number;
-    skilledAtWork: number;
-    joinCount: number;
+    worksDiligently: number | undefined;
+    noLatenessOrAbsence: number | undefined;
+    politeAndFriendly: number | undefined;
+    goodCustomerService: number | undefined;
+    skilledAtWork: number | undefined;
+    joinCount: number | undefined;
 }
 
 export interface CertificationType {
@@ -64,4 +84,16 @@ export interface AwardType  {
     businessField: "FOOD_BEVERAGE",
     awardName: string;
     awardDate: string;
+}
+
+export interface PortfolioTextType {
+    title: string;
+    content: string;
+    portfolioType: PortfolioType;
+}
+
+export interface PortfolioUpLoadType {
+    portfolioType: PortfolioType;
+    title: string;
+    urls: string[]
 }

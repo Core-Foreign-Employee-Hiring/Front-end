@@ -64,6 +64,9 @@ body {
   .bg-main-button {
     @apply py-[16.5px] rounded-[16px] bg-main button-md text-white
   }
+  .bg-gray1-button {
+    @apply py-3 px-6 rounded-[16px] bg-gray1 border border-gray2 button-md
+  }
   .bg-gray2-button {
     @apply py-[16.5px] rounded-[16px] bg-gray2 button-md text-gray5
   }
@@ -81,6 +84,9 @@ body {
   }
   .border-main-button {
     @apply py-[8px] rounded-[12px] bg-main-light text-main border-[1px] border-main button-md
+  }
+  .border-main-bg-white-button {
+    @apply py-[8px] rounded-[12px] bg-white  border-[1px] border-main button-md shadow-sm
   }
 }
 
