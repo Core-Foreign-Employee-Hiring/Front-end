@@ -80,7 +80,7 @@ const PreferredConditions = (props: Props) => {
                                             type={"button"}
                                             onClick={() => togglePreferredCondition(preferredCondition)}
                                             className={selectedPreferredConditions.includes(preferredCondition)
-                                                ? "border-main-button px-4"
+                                                ? "border-main-bg-lightMain-button px-4"
                                                 : "border-gray2-button"}>
                                             {preferredCondition}
                                         </Button>

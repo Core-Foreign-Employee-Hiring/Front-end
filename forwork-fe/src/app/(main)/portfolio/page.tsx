@@ -47,7 +47,7 @@ const PortfolioPage = () => {
                                         onClick={() => {
                                             setType("basic");
                                         }}
-                                        className={type === "basic" ? "border-main-button" : "border-gray2-button"}
+                                        className={type === "basic" ? "border-main-bg-lightMain-button" : "border-gray2-button"}
                                         secondClassName={"flex justify-center items-center w-[85px] h-[36px] button-md"}>
                                         기본
                                     </Button>
@@ -55,7 +55,7 @@ const PortfolioPage = () => {
                                         onClick={() => {
                                             setType("apply");
                                         }}
-                                        className={type === "apply" ? "border-main-button" : "border-gray2-button"}
+                                        className={type === "apply" ? "border-main-bg-lightMain-button" : "border-gray2-button"}
                                         secondClassName={"flex justify-center items-center w-[85px] h-[36px]"}>
                                         실제 지원
                                     </Button>

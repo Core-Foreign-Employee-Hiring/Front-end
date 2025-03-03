@@ -68,7 +68,7 @@ const BusinessFieldFilter = (props: Props) => {
                                             type={"button"}
                                             onClick={() => togglePreferredCondition(jobCategory)}
                                             className={selectedJobCategories.includes(jobCategory)
-                                                ? "border-main-button px-4"
+                                                ? "border-main-bg-lightMain-button px-4"
                                                 : "border-gray2-button"}>
                                             {jobCategory}
                                         </Button>
