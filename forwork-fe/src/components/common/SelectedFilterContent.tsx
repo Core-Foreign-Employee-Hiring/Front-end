@@ -1,7 +1,7 @@
-import ArrowForwardIcon from "@/src/assets/common/ArrowForwardIcon";
 import {Dispatch, SetStateAction} from "react";
 import Button from "@/src/components/common/Button";
 import {twMerge} from "tailwind-merge";
+import DropDownIcon from "@/src/assets/common/DropDownIcon";
 
 interface Props {
     placeholder?: string;
@@ -21,17 +21,13 @@ const SelectedFilterContent = (props: Props) => {
                 setIsFocused &&  setIsFocused();
             }}
             className={disabled ?
-                twMerge("flex justify-between items-center w-full px-4 py-[16.5px] rounded-[16px] bg-gray1", className)
+                twMerge("flex justify-between items-center w-full pl-4 pr-3 py-4 rounded-[16px] bg-gray1", className)
                 : isFocused
-                    ? twMerge("flex justify-between items-center w-full px-4 py-[16.5px] rounded-[16px] border border-main", className)
-                    : twMerge("flex justify-between items-center w-full px-4 py-[16.5px] rounded-[16px] border border-gray4", className)}>
-            <div className={selectedContent === ""
-                ? twMerge("body-md text-gray4", textStyle)
-                : twMerge("subtitle-lg", textStyle)}>
-                {selectedContent === "" ? placeholder : selectedContent}
-            </div>
+                    ? twMerge("flex justify-between items-center w-full pl-4 pr-3 py-4 rounded-[16px] border border-main", className)
+                    : twMerge("flex justify-between items-center w-full pl-4 pr-3 rounded-[16px] border border-gray2", className)}>
+            <div className={selectedContent === "" ? twMerge("button-md text-gray4", textStyle) : twMerge("button-md", textStyle)}>{selectedContent === "" ? placeholder : selectedContent}</div>
             <div className={"flex justify-center items-center w-[36px] h-[36px]"}>
-                <ArrowForwardIcon size={12} color={"#999BA5"} direction={isFocused ? "up" : "down"} strokeWidth={0.1}/>
+                <DropDownIcon />
             </div>
         </Button>
     )

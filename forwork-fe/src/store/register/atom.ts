@@ -8,31 +8,40 @@ import {
 } from "@/src/types/register";
 
 export const generalRegisterDataAtom = atom<GeneralRegisterDataType>({
-    title: "",
+    adType: "일반 공고",
+    uploadImage: null,
+    title: null,
     businessFields: [],
-    zipcode: "",
-    address1: "",
-    address2: "",
-    longitude: 0,
-    latitude: 0,
-    recruitStartDate: "",
-    recruitEndDate: "",
-    recruitCount: 0,
-    gender: "",
-    education: "학력무관",
-    otherConditions: "",
+    zipcode: null,
+    address1: null,
+    address2: null,
+    longitude: null,
+    latitude: null,
+    recruitStartDate: null,
+    recruitEndDate: null,
+    recruitCount: null,
+    gender: null,
+    education: null,
+    otherConditions: null,
     preferredConditions: [],
+    portfolios: [{
+        title: "",
+        type: "LONG_TEXT",
+        maxFileCount: null,
+        required: false,
+    },],
     workDuration: [],
     workTime: [],
     workDays: [],
     workDaysOther: null,
-    salary: "",
-    salaryType: "",
+    salary: null,
+    salaryType: null,
     applicationMethods: [],
-    salaryOther: "",
-    workTimeOther: "",
-    workDurationOther: "",
+    salaryOther: null,
+    workTimeOther: null,
+    workDurationOther: null,
 });
+
 
 export const premiumRegisterDataAtom= atom<PremiumRegisterDataType>({
     gender: null,
@@ -62,3 +71,9 @@ export const premiumRegisterDataAtom= atom<PremiumRegisterDataType>({
     businessFields: [null],
     workTime: [null],
 });
+
+/**
+ * 임시 등록 선택한 recruitId
+ */
+export const draftRecruitIdAtom = atom(0)
+

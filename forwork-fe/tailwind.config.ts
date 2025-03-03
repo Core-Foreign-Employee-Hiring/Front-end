@@ -20,6 +20,7 @@ export default {
 
       // Particular colors
       error: '#FF5F4A',
+      "error-light": '#FFDFDB',
 
       // Achromatic colors
       black: '#1E1E1E',

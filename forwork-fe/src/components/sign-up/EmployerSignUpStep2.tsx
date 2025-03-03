@@ -6,7 +6,7 @@ import Input from "@/src/components/common/Input";
 import Button from "@/src/components/common/Button";
 import SelectedFilterContent from "@/src/components/common/SelectedFilterContent";
 import Filter from "@/src/components/common/Filter";
-import {changeBusinessFieldEnumType, dayList, jobCategoryList, monthList, yearList} from "@/src/utils/common";
+import {changeKorToBusinessFieldEnumType, dayList, jobCategoryList, monthList, yearList} from "@/src/utils/common";
 import TermsAgreement from "@/src/components/sign-up/TermsAgreement";
 import {
     address1Atom,
@@ -172,7 +172,7 @@ const EmployerSignUpStep2 = () => {
             businessRegistrationNumber: businessRegistrationNumber,
             establishedDate: `${year}-${month}-${day}`,
             representativeName: name,
-            businessField: changeBusinessFieldEnumType(businessField) || '',
+            businessField: changeKorToBusinessFieldEnumType(businessField) || '',
             zipcode: zipcode,
             address1: address1,
             address2: address2,

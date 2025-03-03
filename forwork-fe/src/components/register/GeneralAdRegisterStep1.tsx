@@ -1,73 +1,49 @@
-import {useAtom, useSetAtom} from "jotai/index";
-import {Dispatch, SetStateAction, useEffect, useState} from "react";
+import {Dispatch, SetStateAction} from "react";
 
-import {generalRegisterDataAtom} from "@/src/store/register/atom";
-import {AddressType} from "@/src/types/register";
 import Item from "@/src/components/common/Item";
 import Button from "@/src/components/common/Button";
 import Input from "@/src/components/common/Input";
-import AdCategory from "@/src/components/register/AdCategory";
 import CompanyInfo from "@/src/components/register/CompanyInfo";
-import JobCategory from "@/src/components/register/JobCategory";
-import CompanyAddress from "@/src/components/register/CompanyAddress";
-import useEmployerInfo from "@/src/lib/hooks/useEmployInfo";
+import SelectedFilterContent from "@/src/components/common/SelectedFilterContent";
+import RecruitDate from "@/src/components/register/RecruitDate";
+import ApplicationMethods from "@/src/components/register/ApplicationMethods";
+import PosterImageUpload from "@/src/components/register/PosterImageUpload";
+import Filter from "@/src/components/common/Filter";
+import useAdRegisterStep1 from "@/src/hooks/useAdRegisterStep1";
 
 interface Props {
     setStep: Dispatch<SetStateAction<"Second" | "First" | "Third">>
+    imgRef: React.RefObject<HTMLInputElement | null>;
+    setSubmitType: Dispatch<SetStateAction<"" | "draft" | "upload">>;
+    setIsTrigger: Dispatch<SetStateAction<boolean>>;
 }
 
 const GeneralAdRegisterStep1 = (props: Props) => {
-    const {setStep} = props;
-    const setGeneralRegisterData = useSetAtom(generalRegisterDataAtom);
-    const {employerInfo} = useEmployerInfo();
-    const [title, setTitle] = useState("");
-    const [location, setLocation] = useState<AddressType>({latitude: 0, longitude: 0});
+    const {setStep, imgRef, setSubmitType, setIsTrigger} = props;
 
-    /**
-     * 회사정보 수정하러 이동하는 버튼
-     */
-    const companyInfoEditButton = () => {
-        return (
-            <Button className={"text-gray5 button-md"}>수정하기</Button>
-        )
-    }
+    const {
+        employerInfo,
+        formState, // ✅ 상태 묶어서 반환
+        uiState, // ✅ UI 관련 상태도 묶기
+        saveRegisterData,
+        handleSubmit
+    } = useAdRegisterStep1(setStep);
 
-    /**
-     * 회사주소 수정하러 이동하는 버튼
-     */
-    const companyAddressEditButton = () => {
-        return (
-            <Button className={"text-gray5 button-md"}>수정하기</Button>
-        )
-    }
+    const {
+        title, setTitle,
+        recruitCount, setRecruitCount,
+        recruitEndDate, setRecruitEndDate,
+        regularRecruit, setRegularRecruit,
+        applicationEnumMethods, setApplicationEnumMethods,
+        uploadImage, setUploadImage,
+        selectedAdTypeContent,
+    } = formState;
 
-    /**
-     * 업직종 수정하러 이동하는 버튼
-     */
-    const companyBusinessFieldEditButton = () => {
-        return (
-            <Button className={"text-gray5 button-md"}>수정하기</Button>
-        )
-    }
-
-    /**
-     * 다음 버튼 클릭시
-     */
-    const handleSubmit = () => {
-        if (employerInfo) {
-            setGeneralRegisterData((prevState) => ({...prevState,
-                title: title,
-                businessFields: employerInfo.businessFields,
-                address1: employerInfo.address1,
-                address2: employerInfo.address2,
-                zipcode: employerInfo.zipcode,
-                longitude: location.longitude,
-                latitude:location.latitude,
-            }))
-
-            setStep("Second");
-        }
-    }
+    const {
+        isAdTypeFilterFocused, setAdTypeFilterIsFocused,
+        adTypeContents,
+        isNextButtonDisabled
+    } = uiState;
 
     if (!employerInfo) {
         return
@@ -75,17 +51,25 @@ const GeneralAdRegisterStep1 = (props: Props) => {
 
     return (
         <main className={"flex flex-col gap-y-[52px]"}>
-            <Item title={"공고종류"} content={<AdCategory adCategory={"일반 공고"}/>}/>
+            <section className={"relative"}>
+                <Item title={"공고종류"} content={
+                    <SelectedFilterContent
+                        setIsFocused={setAdTypeFilterIsFocused}
+                        selectedContent={selectedAdTypeContent}
+                        className={"py-3 h-fit w-[508px]"}/>}/>
+                {isAdTypeFilterFocused && (<Filter className={"absolute left-[214px] z-10 h-fit w-[508px]"} filterContents={adTypeContents}/>)}
+            </section>
             <Item title={"공고제목"} content={
                 <Input
                     setInputValue={setTitle}
                     inputValue={title}
-                    className={"w-full"}/>} />
+                    className={"h-fit w-full border-gray2"}/>} />
             <Item
+                className={"items-start"}
                 title={"회사정보"}
-                titleRightElement={() => companyInfoEditButton()}
                 content={
                     <CompanyInfo
+                        businessFields={employerInfo.businessFields}
                         companyAddress={`${employerInfo.address1} ${employerInfo.address2}`}
                         companyName={employerInfo.companyName}
                         businessRegistrationNumber={employerInfo.businessRegistrationNumber}
@@ -94,28 +78,54 @@ const GeneralAdRegisterStep1 = (props: Props) => {
                         logoUrl={"/image 55.png"}
                         phoneNumber={employerInfo.mainPhoneNumber}/>} />
             <Item
-                title={"업직종"}
-                titleRightElement={() => companyBusinessFieldEditButton()}
-                content={<JobCategory businessFields={employerInfo.businessFields}/>}
-            />
+                className={"items-start"}
+                title={"모집 기간"}
+                content={
+                    <RecruitDate
+                        regularRecruit={regularRecruit}
+                        setRegularRecruit={setRegularRecruit}
+                        recruitEndDate={recruitEndDate}
+                        setRecruitEndDate={setRecruitEndDate} />} />
             <Item
-                title={"근무지 주소"}
-                titleRightElement={() => companyAddressEditButton()}
-                content={<CompanyAddress
-                    setLocation={setLocation}
-                    location={location}
-                    address1={employerInfo.address1}
-                    address2={employerInfo.address2}
-                    zipcode={employerInfo.zipcode}/>
-            }/>
-            <Button
-                disabled={title === "" || location.latitude === 0 || location.longitude === 0}
-                onClick={() => handleSubmit()}
-                className={title === "" || location.latitude === 0 || location.longitude === 0
-                    ? "mt-[28px] flex items-center justify-center bg-gray2-button w-full"
-                    : "mt-[28px] flex items-center justify-center bg-main-button w-full"}>
-                다음
-            </Button>
+                title={"모집 인원"}
+                content={
+                    <Input
+                        placeholder={"모집 인원을 작성해주세요."}
+                        type={"number"}
+                        setInputValue={setRecruitCount}
+                        inputValue={recruitCount}
+                        className={"w-[520px]"}/>} />
+            <Item
+                title={"지원방법"}
+                content={<ApplicationMethods
+                    adtype={selectedAdTypeContent}
+                    applicationEnumMethods={applicationEnumMethods}
+                    setApplicationEnumMethods={setApplicationEnumMethods}/>}/>
+            <Item
+                title={"채용포스터 업로드"}
+                titleRequired={false}
+                className={"items-start"}
+                content={<PosterImageUpload
+                    setUploadImage={setUploadImage}
+                    uploadImage={uploadImage}
+                    imgRef={imgRef}/>}/>
+            <section className={"flex justify-end w-full gap-x-3"}>
+                <Button
+                    onClick={() => {
+                        saveRegisterData();
+                        setSubmitType("draft");
+                        setIsTrigger(true);
+                    }}
+                    className={"mt-[28px] flex items-center justify-center border-gray2-button w-[200px]"}>임시저장</Button>
+                <Button
+                    disabled={isNextButtonDisabled}
+                    onClick={() => handleSubmit()}
+                    className={isNextButtonDisabled
+                        ? "mt-[28px] flex items-center justify-center bg-gray2-button w-[200px]"
+                        : "mt-[28px] flex items-center justify-center bg-main-button w-[200px]"}>
+                    다음
+                </Button>
+            </section>
         </main>
     )
 }

@@ -7,7 +7,7 @@ import EmployerSignUp from "@/src/components/sign-up/EmployerSignUp";
 
 
 const SignUpPage = () => {
-   const [type, setType] = useState<"Employee" | "Employer">("Employer");
+   const [type, setType] = useState<"Employee" | "Employer">("Employee");
 
    return (
        <main>
