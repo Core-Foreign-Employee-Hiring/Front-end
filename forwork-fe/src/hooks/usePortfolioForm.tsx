@@ -3,7 +3,11 @@ import {useAtom} from "jotai/index";
 
 import {FileCountType, PortfolioContentType} from "@/src/types/register";
 import {generalRegisterDataAtom} from "@/src/store/register/atom";
-import {fileCount, portfolioContents, switchEnumToPortfolioType, switchPortfolioTypeToEnum} from "@/src/utils/register";
+import {
+    fileCount,
+    portfolioContents, switchEngToKorContent,
+    switchKorToEngContent,
+} from "@/src/utils/register";
 import useFilter from "@/src/hooks/useFilter";
 import Input from "@/src/components/common/Input";
 import SelectedFilterContent from "@/src/components/common/SelectedFilterContent";
@@ -27,7 +31,7 @@ const usePortfolioForm = (index: number) => {
                 ...prevState.portfolios, // 기존 배열 유지
                 {
                     title: "",
-                    type: switchPortfolioTypeToEnum(selectedPortfolioFormContent),
+                    type: switchKorToEngContent(selectedPortfolioFormContent),
                     maxFileCount: 1,
                     required: false,
                 },
@@ -98,7 +102,7 @@ const usePortfolioForm = (index: number) => {
         setGeneralRegisterData((prevState) => ({
             ...prevState,
             portfolios: prevState.portfolios.map((portfolio, i) =>
-                i === index ? { ...portfolio, type: switchPortfolioTypeToEnum(selectedPortfolioFormContent) } : portfolio
+                i === index ? { ...portfolio, type: switchKorToEngContent(selectedPortfolioFormContent) } : portfolio
             ),
         }));
         if (selectedPortfolioFormContent === "파일 업로드") {
@@ -115,7 +119,7 @@ const usePortfolioForm = (index: number) => {
      * 페이지 새로 이동시 값 초기화
      */
     useEffect(() => {
-        setSelectedPortfolioFormContent(switchEnumToPortfolioType(generalRegisterData.portfolios[index].type));
+        setSelectedPortfolioFormContent(switchEngToKorContent(generalRegisterData.portfolios[index].type));
         setSelectedFileCountContent((generalRegisterData.portfolios[index].maxFileCount ?? 1).toString() as FileCountType)
         setInputValue(generalRegisterData.portfolios[index].title)
     }, [])
@@ -196,7 +200,7 @@ const usePortfolioForm = (index: number) => {
                                 <div className={"relative"}>
                                     <SelectedFilterContent selectedContent={selectedFileCountContent}
                                                            className={"w-fit py-3"}
-                                                           setIsFocused={setIsFileCountFilterFocused}
+                                                           setIsFocused={() => setIsFileCountFilterFocused}
                                                            isFocused={isFileCountFilterFocused}/>
                                     {isFileCountFilterFocused && (
                                         <Filter className={"absolute h-fit"} filterContents={fileCountFilterContents}/>

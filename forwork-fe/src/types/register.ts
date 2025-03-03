@@ -134,17 +134,7 @@ export interface GeneralRegisterDataType {
     salaryOther: string | null;
 }
 
-
-export type PortfolioFormType = "LONG_TEXT" | "SHORT_TEXT" | "FILE_UPLOAD";
 export type PortfolioFormTypeToKor = "장문형" | "단답형" | "파일 업로드";
-
-export interface PortfolioType {
-    title: string;
-    type: PortfolioFormType;
-    maxFileCount: number;
-    maxFileSize: number;
-    required: boolean;
-}
 
 export interface PremiumRegisterDataType {
     gender: string | null;

@@ -1,4 +1,3 @@
-import {Dispatch, SetStateAction} from "react";
 import Button from "@/src/components/common/Button";
 import {twMerge} from "tailwind-merge";
 import DropDownIcon from "@/src/assets/common/DropDownIcon";

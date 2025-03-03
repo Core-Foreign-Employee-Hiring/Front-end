@@ -15,8 +15,8 @@ const RegistrationPage = () => {
         <>
             <NavBar/>
             <div className={"h-[158px]"}/>
-            {/*<GeneralAdRegisterPage />*/}
-            <PortfolioFormatCreator />
+            <GeneralAdRegisterPage />
+            {/*<PortfolioFormatCreator />*/}
             {/*<ApplyGeneralAd />*/}
         </>
 

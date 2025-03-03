@@ -11,7 +11,7 @@ import {draftGeneralAd, draftPremiumAd, uploadGeneralAd, uploadPremiumAd} from "
 import {generalRegisterDataAtom} from "@/src/store/register/atom";
 
 const GeneralAdRegisterPage = () => {
-    const [step, setStep] = useState<"First" | "Second" | "Third">("First");
+    const [step, setStep] = useState<"First" | "Second" | "Third">("Third");
     const [isSubmitModalOpen, setIsSubmitModalOpen] = useState(false);
     const [generalRegisterData, setGeneralRegisterData] = useAtom(generalRegisterDataAtom);
     //채용 포스터

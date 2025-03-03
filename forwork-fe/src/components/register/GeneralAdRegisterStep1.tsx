@@ -54,7 +54,7 @@ const GeneralAdRegisterStep1 = (props: Props) => {
             <section className={"relative"}>
                 <Item title={"공고종류"} content={
                     <SelectedFilterContent
-                        setIsFocused={setAdTypeFilterIsFocused}
+                        setIsFocused={() => setAdTypeFilterIsFocused}
                         selectedContent={selectedAdTypeContent}
                         className={"py-3 h-fit w-[508px]"}/>}/>
                 {isAdTypeFilterFocused && (<Filter className={"absolute left-[214px] z-10 h-fit w-[508px]"} filterContents={adTypeContents}/>)}
