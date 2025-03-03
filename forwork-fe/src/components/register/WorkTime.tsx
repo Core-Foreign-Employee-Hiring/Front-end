@@ -163,7 +163,6 @@ const WorkTime = (props: Props) => {
                 <div className={"button-md text-gray5"}>시간 협의</div>
             </section>
         </section>
-
     )
 }
 export default WorkTime;

@@ -1,6 +1,7 @@
 import {
+    ApplicationMethodType, PortfolioFormType, PortfolioFormTypeToKor, PreferredConditionType,
     AdType,
-    ApplicationMethodType, FileCountType, PortfolioContentType, PortfolioType, PreferredConditionType,
+    FileCountType, PortfolioContentType, PortfolioType, PreferredConditionType,
     SalaryType,
     TimeType,
     WeekDaysType,
@@ -70,8 +71,9 @@ export const timeList: TimeType[] = [
 ]
 
 export const salaryTypeList: SalaryType[] = ["시급", "일급", "주급", "월급", "연봉"];
-export const applicationMethods: ApplicationMethodType[] = ["온라인 지원", "문의 지원", "방문 지원", "전화 지원"]
-
+export const applicationMethods: ApplicationMethodType[] = ["온라인지원", "문의 지원", "방문 접수", "전화 후 방문"]
+export const premiumFormTypeList: PortfolioFormTypeToKor[] = ["장문형", "단답형", "파일 업로드"]
+export const maxFileCountList = [1, 5, 10]
 export const handleSelectList = (selectList:boolean, setSelectList: Dispatch<SetStateAction<boolean>>, setUnSelectList: Dispatch<SetStateAction<boolean>>) => {
     if (selectList) {
         setSelectList(false);
@@ -81,8 +83,24 @@ export const handleSelectList = (selectList:boolean, setSelectList: Dispatch<Set
     }
 };
 
+
+export const switchEngToKorContent = (type: PortfolioFormType) => {
+    switch (type) {
+        case "LONG_TEXT":
+            return "장문형"
+        case "SHORT_TEXT":
+            return "단답형"
+        case "FILE_UPLOAD":
+            return "파일 업로드"
+    }
+}
+
+export const switchKorToEngContent = (type: PortfolioFormTypeToKor) => {
+    switch (type) {
+
 export const switchPortfolioTypeToEnum = (selectedPortfolioFormContent: PortfolioContentType) => {
     switch (selectedPortfolioFormContent) {
+
         case "장문형":
             return "LONG_TEXT"
         case "단답형":
@@ -102,3 +120,4 @@ export const switchEnumToPortfolioType = (selectedPortfolioFormContent: Portfoli
             return "파일 업로드"
     }
 }
+

@@ -253,7 +253,7 @@ const EmployerSignUpStep2 = () => {
                             className={"w-[210px]"}
                             placeholder={"년도"}
                             selectedContent={year}
-                            setIsFocused={setIsYearFilterContentFocused}
+                            setIsFocused={() => setIsYearFilterContentFocused(!isYearFilterContentFocused)}
                             isFocused={isYearFilterContentFocused}/>
                         {isYearFilterContentFocused ? (
                             <Filter filterContents={yearFilterContents}/>) : null}
@@ -263,7 +263,7 @@ const EmployerSignUpStep2 = () => {
                             className={"w-[143px]"}
                             placeholder={"월"}
                             selectedContent={month}
-                            setIsFocused={setIsMonthFilterContentFocused}
+                            setIsFocused={() => setIsMonthFilterContentFocused(!isMonthFilterContentFocused)}
                             isFocused={isMonthFilterContentFocused}/>
                         {isMonthFilterContentFocused ? (
                             <Filter filterContents={monthFilterContents}/>) : null}
@@ -273,7 +273,7 @@ const EmployerSignUpStep2 = () => {
                             className={"w-[143px]"}
                             placeholder={"일"}
                             selectedContent={day}
-                            setIsFocused={setIsDayFilterContentFocused}
+                            setIsFocused={() => setIsDayFilterContentFocused(!isDayFilterContentFocused)}
                             isFocused={isDayFilterContentFocused}/>
                         {isDayFilterContentFocused ? (
                             <Filter filterContents={dayFilterContents}/>) : null}
@@ -319,7 +319,7 @@ const EmployerSignUpStep2 = () => {
                     selectedContent={businessField}
                     placeholder={"선택"}
                     isFocused={isBusinessFieldFilterContentFocused}
-                    setIsFocused={setIsBusinessFieldFilterContentFocused}/>
+                    setIsFocused={() => setIsBusinessFieldFilterContentFocused(!isBusinessFieldFilterContentFocused)}/>
                 {isBusinessFieldFilterContentFocused ? (
                     <Filter filterContents={businessFieldFilterContents}/>) : null}
             </div>

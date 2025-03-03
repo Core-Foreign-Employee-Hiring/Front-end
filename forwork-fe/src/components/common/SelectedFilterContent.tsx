@@ -7,7 +7,7 @@ interface Props {
     placeholder?: string;
     selectedContent: string;
     isFocused?: boolean;
-    setIsFocused?:  Dispatch<SetStateAction<boolean>>
+    setIsFocused?: () => void;
     disabled?: boolean;
     className?: string;
     textStyle?: string;
@@ -18,7 +18,7 @@ const SelectedFilterContent = (props: Props) => {
     return (
         <Button
             onClick={() => {
-                setIsFocused && setIsFocused(!isFocused);
+                setIsFocused &&  setIsFocused();
             }}
             className={disabled ?
                 twMerge("flex justify-between items-center w-full pl-4 pr-3 py-4 rounded-[16px] bg-gray1", className)

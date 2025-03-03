@@ -1,6 +1,12 @@
+
+import ArrowForwardIcon from "@/src/assets/common/ArrowForwardIcon";
+import {Dispatch, SetStateAction, useEffect} from "react";
+import Button from "@/src/components/common/Button";
+
 import {SVGProps} from "react";
 import {useAtom} from "jotai/index";
 import {generalRegisterDataAtom} from "@/src/store/register/atom";
+
 
 interface Props {
     step: "First" | "Second" | "Third";
@@ -9,7 +15,12 @@ const ProgressBar = (props: Props) => {
     const {step} = props;
     const [generalRegisterData, setGeneralRegisterData] = useAtom(generalRegisterDataAtom);
 
+    useEffect(() => {
+        console.log(step);
+    }, []);
+
     return (
+
         <section className={"flex flex-col gap-y-2"}>
             <div className={"flex gap-x-2 items-center"}>
                 <h1 className={"title-lg items-start"}>공고 등록</h1>

@@ -1,6 +1,11 @@
 import {atom} from "jotai/index";
 import {EmployerSignUpInfoType} from "@/src/types/sign-up";
-import {ApplicationMethodEnumType, BusinessFieldEnumType, GeneralRegisterDataType} from "@/src/types/register";
+import {
+    ApplicationMethodEnumType,
+    BusinessFieldEnumType,
+    GeneralRegisterDataType, PortfolioType,
+    PremiumRegisterDataType
+} from "@/src/types/register";
 
 export const generalRegisterDataAtom = atom<GeneralRegisterDataType>({
     adType: "일반 공고",
@@ -37,7 +42,38 @@ export const generalRegisterDataAtom = atom<GeneralRegisterDataType>({
     workDurationOther: null,
 });
 
+
+export const premiumRegisterDataAtom= atom<PremiumRegisterDataType>({
+    gender: null,
+    applicationMethods: [null],
+    salaryType: null,
+    workDuration: [null],
+    salaryOther: null,
+    workDaysOther: [null],
+    otherConditions: null,
+    workDays: [null],
+    education: null,
+    salary: null,
+    portfolios: [],
+    recruitEndDate: null,
+    workDurationOther: null,
+    latitude: null,
+    longitude: null,
+    workTimeOther: null,
+    recruitStartDate: null,
+    address: {
+        zipcode: null,
+        address1: null,
+        address2: null,
+    },
+    title: null,
+    preferredConditions: [null],
+    businessFields: [null],
+    workTime: [null],
+});
+
 /**
  * 임시 등록 선택한 recruitId
  */
 export const draftRecruitIdAtom = atom(0)
+

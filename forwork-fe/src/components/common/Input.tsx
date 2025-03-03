@@ -8,7 +8,7 @@ interface Props {
     rightElement?: () => JSX.Element;
     placeholder?: string;
     inputValue: string;
-    setInputValue: React.Dispatch<React.SetStateAction<string>>
+    setInputValue: React.Dispatch<React.SetStateAction<string>>;
     className?: string;
     maxLength?: number;
     setIsAvailability?: React.Dispatch<React.SetStateAction<undefined | boolean>>;

@@ -1,4 +1,9 @@
+
+import {Dispatch, SetStateAction, useState} from "react";
+import ApplicationMethods from "@/src/components/register/ApplicationMethods";
+
 export type AdType = "일반 공고" | "프리미엄 공고";
+
 export type JobCategoryType =
     | ""
     | "외식/음료"
@@ -80,7 +85,6 @@ export type TimeType =
 
 export type SalaryType = "" | "시급" | "일급" | "주급" | "월급" | "연봉";
 
-
 export interface EmployerInfoType {
     companyImage: string;
     companyName: string;
@@ -129,6 +133,48 @@ export interface GeneralRegisterDataType {
     workDaysOther: string | null;
     salaryOther: string | null;
 }
+
+
+export type PortfolioFormType = "LONG_TEXT" | "SHORT_TEXT" | "FILE_UPLOAD";
+export type PortfolioFormTypeToKor = "장문형" | "단답형" | "파일 업로드";
+
+export interface PortfolioType {
+    title: string;
+    type: PortfolioFormType;
+    maxFileCount: number;
+    maxFileSize: number;
+    required: boolean;
+}
+
+export interface PremiumRegisterDataType {
+    gender: string | null;
+    applicationMethods: ApplicationMethodEnumType[] | null[];
+    salaryType: string | null;
+    workDuration: string[] | null[];
+    salaryOther: string | null;
+    workDaysOther: string[] | null[],
+    otherConditions: string | null;
+    workDays: string[] | null[];
+    education: string | null;
+    salary: string | null;
+    portfolios: (PortfolioType | null)[];
+    recruitEndDate: string | null; //"2025-02-16"
+    workDurationOther: string | null;
+    latitude: number | null;
+    longitude: number | null;
+    workTimeOther: string | null;
+    recruitStartDate: string | null; //"2025-02-16"
+    address: {
+        zipcode: string | null;
+        address1: string | null;
+        address2: string | null;
+    },
+    title: string | null;
+    preferredConditions: string[] | null[];
+    businessFields: BusinessFieldEnumType[] | null[];
+    workTime: string[] | null[];
+}
+
 export interface PortfolioFormType {
     title: string;
     type: PortfolioType,

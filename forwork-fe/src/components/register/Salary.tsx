@@ -76,6 +76,7 @@ const Salary = (props: Props) => {
                 ? "프리미엄 서비스는 시급13,030원 이상부터 등록 가능합니다."
                 : "일반 서비스는 시급10,030원 이상부터 등록 가능합니다."}</Tag>
             <div className={"flex gap-x-3"}>
+
                 <div className={"relative flex flex-col w-[250px]"}>
                     <SelectedFilterContent selectedContent={salaryType} setIsFocused={setIsSalaryTypeFilterContentFocused} className={"py-3"}/>
                     {isSalaryTypeFilterContentFocused && (<Filter className={"absolute top-16 w-full"} filterContents={salaryFilterContents} />)}
