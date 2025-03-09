@@ -1,9 +1,19 @@
+'use client';
+
 import {usePathname, useRouter} from "next/navigation";
 import Button from "@/src/components/common/Button";
 import LOGOIcon from "@/src/assets/common/LOGOIcon";
 import LanguageIcon from "@/src/assets/common/LanguageIcon";
 import NotificationIcon from "@/src/assets/common/NotificationIcon";
 import SearchIcon from "@/src/assets/common/SearchIcon";
+import {useEffect, useState} from "react";
+import {RoleType} from "@/src/types/login";
+import Cookies from "js-cookie";
+import ArrowDropDownIcon from "@/src/components/common/ArrowDropDownIcon";
+import NavBarFilter from "@/src/components/common/NavBarFilter";
+import useFilter from "@/src/hooks/useFilter";
+import {userMenuOptions} from "@/src/utils/common";
+import CancelIcon from "@/src/assets/common/CancelIcon";
 
 interface Props {
 
@@ -13,6 +23,9 @@ const NavBar = (props: Props) => {
     const router = useRouter();
     const pathname = usePathname();
     const [isScrolled, setIsScrolled] = useState(false);
+    const [isUserMenuOptionFilterFocused, setIsUserMenuOptionFilterFocused] = useFilter(false);
+    const [isRegisterAdFilterFocused, setIsRegisterAdFilterFocused] = useFilter(false);
+
     useEffect(() => {
         const handleScroll = () => {
             setIsScrolled(window.scrollY > 50); // 50px 이상 스크롤 시 숨김
@@ -23,6 +36,77 @@ const NavBar = (props: Props) => {
             window.removeEventListener("scroll", handleScroll);
         };
     }, []);
+
+    /**
+     * 이름 클릭시 마이페이지 / 로그인
+     */
+    const getUserMenuOptions = () => {
+        return (
+            <div>
+                {userMenuOptions.map((userMenuOption: "마이페이지" | "로그아웃") => {
+                    return (
+                        <Button
+                            onClick={() => {
+                                if (userMenuOption === "마이페이지") {
+                                    router.push("/mypage")
+                                    setIsUserMenuOptionFilterFocused(false);
+                                } else {
+                                    Cookies.set("accessToken", "", { expires: new Date(0) });
+                                    Cookies.set("refreshToken", "", { expires: new Date(0) });
+                                    Cookies.set("role", "", { expires: new Date(0) });
+                                    Cookies.set("name", "", { expires: new Date(0) });
+                                    Cookies.set("userId", "", { expires: new Date(0) });
+                                    setIsUserMenuOptionFilterFocused(false);
+                                }
+                            }}
+                            className={`"flex justify-center items-center w-full py-[9.5px]`}
+                            secondClassName={userMenuOption === "로그아웃" ? "text-gray4 button" : "button"}
+                            key={userMenuOption}>
+                            {userMenuOption}
+                        </Button>
+                    )
+                })}
+            </div>
+        )
+    }
+
+
+    /**
+     * 이름 클릭시 마이페이지 / 로그인
+     */
+    const getRegisterMenuOptions = () => {
+        return (
+            <div className={"w-full"}>
+                <div className={"flex w-full justify-end"}>
+                    <CancelIcon className={"cursor-pointer"} onClick={() => setIsRegisterAdFilterFocused(false)}/>
+                </div>
+                <section>
+                    <div>
+                        <div>상품 상세 안내</div>
+                        <div className={"flex"}>
+                            <div className={"flex flex-col"}>
+                                <div>공고</div>
+                                <div>프리미엄 공고</div>
+                                <div>일반 공고</div>
+                            </div>
+                            <div className={"flex flex-col"}>
+                                <div>상단 점프</div>
+                                <div>프리미엄 상단 점프</div>
+                                <div>일반 상단 점프</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <div>공고 등록</div>
+                            <div>공고 등록</div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        )
+    }
+
     const renderButtonComponentByRole = (role: RoleType | string | undefined) => {
         if (role === "EMPLOYEE" || role === "EMPLOYEE_PREMIUM") {
             return (
