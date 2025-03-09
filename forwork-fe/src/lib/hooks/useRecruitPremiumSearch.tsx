@@ -3,7 +3,8 @@ import {CommonDataType, ResponseType} from "@/src/types/common";
 import { ApplyDetailPortfolioType } from "@/src/types/portfolio";
 import { swrGetFetcher } from "@/src/lib/axios";
 import {
-    JobCategoryType,
+    GenderEnumType,
+    JobCategoryType, SalaryType,
     TimeType,
     WeekDaysType,
     WorkDaysType,
@@ -22,6 +23,8 @@ const useRecruitPremiumSearch = (
     workTimes: WorkTimeType[],
     startTime: TimeType,
     endTime: TimeType,
+    gender: GenderEnumType,
+    salaryTypeList: SalaryType[],
 ) => {
     const queryParams = [
         `page=${page}`,
@@ -44,6 +47,12 @@ const useRecruitPremiumSearch = (
         startTime !== "시작시간" && endTime !== "종료시간"
             ? `workTimes=${startTime}~${endTime}`
             : "",
+        gender !== ""
+            ? `gender=${gender}`
+            : "",
+        salaryTypeList && salaryTypeList.length > 0
+            ? salaryTypeList.map((salaryType) => `salaryType=${salaryType}`).join("&")
+            : ""
     ].filter(Boolean).join("&"); // 빈 값 제거
 
     const { data, error, mutate } = useSWR<ResponseType<CommonDataType<PremiumContentType[]>>>(

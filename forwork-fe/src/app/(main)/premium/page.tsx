@@ -72,7 +72,7 @@ const PremiumPage = () => {
         )
     }
 
-    const {premiumRecruitData} = useRecruitPremiumSearch(pageNumber, selectedJobCategories, workDurations, workDays, workWeekDays, workTimes, startTime, endTime);
+    const {premiumRecruitData} = useRecruitPremiumSearch(pageNumber, selectedJobCategories, workDurations, workDays, workWeekDays, workTimes, startTime, endTime, selectedGender, selectedSalaryTypeList);
 
 
     useEffect(() => {
