@@ -50,7 +50,7 @@ export default function LoginPage() {
                 Cookies.set("name", response.data.name, { expires: Date.now() + 604800000 })
                 Cookies.set("userId", response.data.userId, { expires: Date.now() + 604800000 })
                 setErrorContent(false);
-                router.push("/home")
+                router.push("/")
             }
         } catch (error: any) {
             const axiosError = error as AxiosError<ResponseType>; // AxiosError로 캐스팅
