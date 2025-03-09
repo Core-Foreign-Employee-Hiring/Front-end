@@ -6,9 +6,13 @@ import {useEffect, useState} from "react";
 import SelectedFilterContent from "@/src/components/common/SelectedFilterContent";
 import BusinessFieldFilter from "@/src/components/portfolio/BusinessFieldFilter";
 import useFilter from "@/src/hooks/useFilter";
-import {JobCategoryType, WorkDaysType, WorkDurationType, WorkTimeType} from "@/src/types/register";
+import {
+    GenderEnumType,
+    SalaryType,
+} from "@/src/types/register";
 import PremiumCard from "@/src/components/home/PremiumCard";
 import Footer from "@/src/components/common/Footer";
+import DetailOptionFilter from "@/src/components/common/DetailOptionFilter";
 
 const PremiumPage = () => {
     const [pageNumber, setPageNumber] = useState(0);
@@ -21,9 +25,14 @@ const PremiumPage = () => {
     // const [selectedWorkDays, setSelectedWorkDays] = useState<WorkDaysType[]>([]);
     const [selectedWorkDurationContent, setSelectedWorkDurationContent, isWorkDurationFilterFocused, setIsWorkDurationFilterFocused] = useFilter("근무기간");
     {/*상세조건*/}
-    // const [selectedWorkDays, setSelectedWorkDays] = useState<WorkDaysType[]>([]);
-
+    const [selectedSalaryTypeList, setSelectedSalaryTypeList] = useState<SalaryType[]>([])
+    const [selectedGender, setSelectedGender] = useState<GenderEnumType>()
     const [selectedDetailedConditionContent, setSelectedDetailedConditionContent, isDetailedConditionFilterFocused, setIsDetailedConditionFilterFocused] = useFilter("상세조건");
+    const detailOptionCountElement = () => {
+        return (
+            <div className={"flex justify-center items-center w-[20px] h-[20px] rounded-full badge-sm bg-main text-white"}>{selectedSalaryTypeList.length + (selectedGender !== "" ? 1 : 0)}</div>
+        )
+    }
 
     useEffect(() => {
         console.log("isJobCategoryFilterFocused", isJobCategoryFilterFocused)
@@ -53,8 +62,10 @@ const PremiumPage = () => {
                                         setIsWorkDurationFilterFocused(!isWorkDurationFilterFocused);
                                     }}/>
                             </div>
+                            {/* 상세 조건 */}
                             <div>
                                 <SelectedFilterContent
+                                    element={detailOptionCountElement}
                                     selectedContent={selectedDetailedConditionContent}
                                     className={"w-fit h-[45px] border-gray2"}
                                     textStyle={"button-md placeholder:text-gray4"}
@@ -73,9 +84,15 @@ const PremiumPage = () => {
                                 setSelectedJobCategories={setSelectedJobCategories}
                                 setIsJobCategoriesFilterFocused={setIsJobCategoryFilterFocused}/>
                         )}
+                        {isDetailedConditionFilterFocused && (
+                            <DetailOptionFilter
+                                selectedGender={selectedGender}
+                                setSelectedGender={setSelectedGender}
+                                setSelectedSalaryTypeList={setSelectedSalaryTypeList}
+                                selectedSalaryTypeList={selectedSalaryTypeList}
+                                setIsDetailedConditionFilterFocused={setIsDetailedConditionFilterFocused}/>
+                        )}
                     </div>
-
-
                     <div className={"grid grid-cols-3 gap-6 mt-[24px]"}>
                         <PremiumCard/>
                         <PremiumCard/>

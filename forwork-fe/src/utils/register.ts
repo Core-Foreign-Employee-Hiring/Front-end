@@ -7,7 +7,7 @@ import {
     WeekDaysType,
     WorkDaysType,
     WorkDurationType,
-    WorkTimeType,
+    WorkTimeType, GenderEnumType, GenderType,
 } from "@/src/types/register";
 import {Dispatch, SetStateAction} from "react";
 
@@ -69,7 +69,7 @@ export const timeList: TimeType[] = [
     "23:00",
     "23:30",
 ]
-
+export const genderList: GenderType[]  = ["여성", "남성", "성별 무관"]
 export const salaryTypeList: SalaryType[] = ["시급", "일급", "주급", "월급", "연봉"];
 export const applicationMethods: ApplicationMethodType[] = ["온라인 지원", "문의 지원", "방문 지원", "전화 지원"]
 export const premiumFormTypeList: PortfolioFormTypeToKor[] = ["장문형", "단답형", "파일 업로드"]
@@ -105,3 +105,23 @@ export const switchEngToKorContent = (selectedPortfolioFormContent: PortfolioTyp
     }
 }
 
+export const switchKorToEnumGenderType = (gender: GenderType) => {
+    switch (gender) {
+        case "여성":
+            return "FEMALE";
+        case "남성":
+            return "MALE";
+        case "성별 무관":
+            return "NULL";
+    }
+}
+export const switchEnumToKorGenderType = (gender: GenderEnumType | undefined) => {
+    switch (gender) {
+        case "FEMALE":
+            return "여성";
+        case "MALE":
+            return "남성";
+        case "NULL":
+            return "성별 무관";
+    }
+}
