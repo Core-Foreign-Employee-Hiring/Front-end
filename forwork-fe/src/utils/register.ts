@@ -113,6 +113,8 @@ export const switchKorToEnumGenderType = (gender: GenderType) => {
             return "MALE";
         case "성별 무관":
             return "NULL";
+        default:
+            return ""
     }
 }
 export const switchEnumToKorGenderType = (gender: GenderEnumType | undefined) => {

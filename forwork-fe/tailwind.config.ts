@@ -18,6 +18,11 @@ export default {
       main: '#5551F5',
       "main-light": '#DDE0FF',
 
+      sub1: "#00B0A9",
+      sub2: "#C151F5",
+      sub3: "#FFB038",
+      sub5: "#018DFF",
+
       // Particular colors
       error: '#FF5F4A',
       "error-light": '#FFDFDB',

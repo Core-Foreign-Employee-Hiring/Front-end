@@ -19,6 +19,7 @@ import Footer from "@/src/components/common/Footer";
 import DetailOptionFilter from "@/src/components/common/DetailOptionFilter";
 import WorkDurationFilter from "@/src/components/common/WorkDurationFilter";
 import useRecruitPremiumSearch from "@/src/lib/hooks/useRecruitPremiumSearch";
+import Star1Icon from "@/src/assets/premium/Star1Icon";
 
 const PremiumPage = () => {
     const [isClient, setIsClient] = useState(false);
@@ -86,10 +87,16 @@ const PremiumPage = () => {
         isClient && (
             <div>
                 <NavBar/>
-                <div className={"h-60"}/>
+                <div className={"h-48"}/>
                 <main className={"px-[360px]"}>
+                    <h1 className={"flex gap-x-1 title-lg items-center"}>
+                        <div className={"flex justify-center items-center w-[28px] h-[28px]"}>
+                            <Star1Icon />
+                        </div>
+                        프리미엄 채용공고
+                    </h1>
                     {/* 필터 */}
-                    <section>
+                    <section className={"mt-[16px]"}>
                         <div className={"flex flex-col gap-y-2"}>
                             <section className={"flex gap-x-3"}>
                                 {/* 업직종 필터 */}
@@ -125,7 +132,6 @@ const PremiumPage = () => {
                                             setIsDetailedConditionFilterFocused(!isDetailedConditionFilterFocused)
                                         }}/>
                                 </div>
-
                             </section>
                             {isJobCategoryFilterFocused && (
                                 <BusinessFieldFilter
@@ -173,22 +179,16 @@ const PremiumPage = () => {
                             )}
                         </div>
                         <div className={"grid grid-cols-3 gap-6 mt-[24px]"}>
-                            <PremiumCard/>
-                            <PremiumCard/>
-                            <PremiumCard/>
-                            <PremiumCard/>
-                            <PremiumCard/>
-                            <PremiumCard/>
-                            <PremiumCard/>
-                            <PremiumCard/>
-                            <PremiumCard/>
+                            {premiumRecruitData && premiumRecruitData.data?.content.map((premiumRecruit) => {
+                                return (
+                                    <PremiumCard key={premiumRecruit.recruitId} {...premiumRecruit} />
+                                )
+                            })}
                         </div>
-                        <div></div>
                     </section>
-
                 </main>
                 <Pagination setPageNumber={setPageNumber} pageNumber={pageNumber} className={"my-32"}
-                            totalPageNumber={5}/>
+                            totalPageNumber={premiumRecruitData && premiumRecruitData.data?.totalPages}/>
                 <Footer/>
             </div>
         )
