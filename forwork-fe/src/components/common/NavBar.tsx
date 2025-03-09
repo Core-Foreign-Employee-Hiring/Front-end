@@ -13,33 +13,115 @@ const NavBar = (props: Props) => {
     const router = useRouter();
     const pathname = usePathname();
 
+    const renderButtonComponentByRole = (role: RoleType | string | undefined) => {
+        if (role === "EMPLOYEE" || role === "EMPLOYEE_PREMIUM") {
+            return (
+                <section className={"flex gap-x-3 items-center"}>
+                    {isScrolled && <SearchIcon onClick={() => {
+                        router.push("/search")
+                    }} fill={"#6F717C"} className={"cursor-pointer"}/>}
+                    <Button
+                        onClick={() => {
+                            router.push("/mypage");
+                        }}
+                        className={"bg-main-button"} secondClassName={"rounded-[12px] py-[7.5px] px-4"}>
+                        포트폴리오 등록
+                    </Button>
+                    <Button
+                        onClick={() => {
+                            router.push("/contract")
+                        }}
+                        className={"border-gray2-button"}
+                        secondClassName={"rounded-[12px] py-[7.5px] px-4"}>
+                        계약서 작성
+                    </Button>
+                </section>
+            )
+        } else if (role === "EMPLOYER" || role === "EMPLOYER_PREMIUM" || role === "ADMIN") {
+            return (
+                <section className={"relative flex gap-x-3 items-center"}>
+                    {isScrolled && <SearchIcon onClick={() => {
+                        router.push("/search")
+                    }} fill={"#6F717C"} className={"cursor-pointer"}/>}
+                    <Button
+                        onClick={() => {
+                            setIsRegisterAdFilterFocused(!isRegisterAdFilterFocused);
+                        }}
+                        className={"bg-main-button"} secondClassName={"rounded-[12px] py-[7.5px] px-4"}>
+                        공고 등록
+                    </Button>
+                    <Button className={"border-gray2-button"} secondClassName={"rounded-[12px] py-[7.5px] px-4"}>
+                        계약서 작성
+                    </Button>
+                    {isRegisterAdFilterFocused && <NavBarFilter content={getRegisterMenuOptions} className={"absolute top-10 w-[400px] z-10"}/>}
+                </section>
+            )
+        }
+    }
 
     return (
-        <div className={"fixed top-0 px-[264px] flex flex-col w-full border-b border-gray2 bg-white"}>
-            <div className={"flex justify-between items-end py-5"}>
+        <nav className={"fixed top-0 px-[264px] flex flex-col w-full border-b border-gray2 bg-white"}>
+            <section
+                className={`flex justify-between items-end ${isScrolled ? "opacity-0 pointer-events-none h-0" : "py-5 opacity-100 h-auto"}`}>
                 <div>
-                    <LOGOIcon/>
+                    <LOGOIcon
+                        className={"cursor-pointer"}
+                        onClick={() => {
+                            router.push("/")
+                        }}/>
                 </div>
                 <div className={"py-3 px-4 flex gap-x-2 border border-gray4 rounded-full w-[520px] items-center"}>
                     <div className={"flex items-center w-[24px] h-[24px]"}>
-                        <SearchIcon/>
+                    <SearchIcon/>
                     </div>
-                    <input className={"w-full placeholder:text-black body-md"} placeholder={"어떤 직무와 키워드를 찾으시나요?"}/>
+                    <input
+                        onFocus={() => {
+                        router.push("/search")
+                        }}
+                        className={"w-full placeholder:text-black body-md outline-none"}
+                        placeholder={"어떤 직무와 키워드를 찾으시나요?"}/>
                 </div>
                 <div className={"flex gap-x-5 w-fit"}>
                     <div className={"flex gap-x-3"}>
-                        <div className={"w-[32px] h-[32px]"}>
+                        {/* 언어 */}
+                        <div className={"w-[32px] h-[32px] cursor-pointer"}>
                             <LanguageIcon/>
                         </div>
-                        <div className={"w-[32px] h-[32px]"}>
+                        {/* 알림 */}
+                        <div className={"w-[32px] h-[32px] cursor-pointer"}>
                             <NotificationIcon/>
                         </div>
                     </div>
-                    <div className={"flex gap-x-2 items-center"}>
-                        <Button className={"button-md text-gray4"}>로그인</Button>
-                        <div className={"button-md text-gray4"}>|</div>
-                        <Button className={"button-md text-gray4"}>회원가입</Button>
-                    </div>
+                    {Cookies.get("role") === undefined ? (
+                        <div className={"flex gap-x-2 items-center"}>
+                            <Button
+                                onClick={() => {
+                                    router.push("/login")
+                                }}
+                                className={"button-md text-gray4"}>로그인</Button>
+                            <div className={"button-md text-gray4"}>|</div>
+                            <Button
+                                onClick={() => {
+                                    router.push("/sign-up")
+                                }}
+                                className={"button-md text-gray4"}>회원가입</Button>
+                        </div>
+                    ) : (
+                        <div className={"relative flex items-center"}>
+                            <div
+                                onClick={() => {
+                                    setIsUserMenuOptionFilterFocused(!isUserMenuOptionFilterFocused)
+                                }}
+                                className={"flex gap-x-1 items-center justify-center cursor-pointer"}>
+                                <div className={"button text-gray5"}>{Cookies.get("name")}</div>
+                                <div className={"flex justify-center items-center w-[20px] h-[20px]"}>
+                                    <ArrowDropDownIcon direction={isUserMenuOptionFilterFocused ? "up" : "down"}/>
+                                </div>
+                            </div>
+                            {isUserMenuOptionFilterFocused && (<NavBarFilter content={getUserMenuOptions} className={"absolute top-10 z-10"}/>)}
+                        </div>
+
+                    )}
                 </div>
             </section>
             <section className={"flex justify-between items-center"}>
@@ -80,17 +162,9 @@ const NavBar = (props: Props) => {
                         포트폴리오
                     </button>
                 </div>
-                <div className={"flex gap-x-3"}>
-                    <Button className={"bg-main text-white button-md rounded-full px-4 py-[9.5px]"}>
-                        이력서 등록
-                    </Button>
-                    <Button className={"bg-white text-gray5 border border-gray2 button-md rounded-full px-4 py-[9.5px]"}>
-                        기업 서비스
-                    </Button>
-                </div>
-            </div>
-
-        </div>
+                {renderButtonComponentByRole(Cookies.get("role"))}
+            </section>
+        </nav>
     )
 }
 export default NavBar;
