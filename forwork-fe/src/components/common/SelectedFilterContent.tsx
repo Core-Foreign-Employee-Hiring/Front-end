@@ -11,7 +11,7 @@ interface Props {
     disabled?: boolean;
     className?: string;
     textStyle?: string;
-    element?: () => JSX.Element;
+    element?: () => JSX.Element | false;
 }
 const SelectedFilterContent = (props: Props) => {
     const {placeholder, selectedContent, isFocused, setIsFocused, disabled=false, className, textStyle, element} = props;
