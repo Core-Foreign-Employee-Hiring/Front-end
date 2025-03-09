@@ -8,6 +8,7 @@ import ScheduleIcon from "@/src/assets/home/ScheduleIcon";
 import DayIcon from "@/src/assets/home/DayIcon";
 import Tag from "@/src/components/common/Tag";
 import {formatDateRange} from "@/src/utils/premium";
+import {renderSalaryType} from "@/src/utils/recruit-ad";
 
 const PremiumCard = (props: PremiumContentType) => {
     const {
@@ -90,29 +91,7 @@ const PremiumCard = (props: PremiumContentType) => {
             <section className={"flex justify-between"}>
                 {/* 급여 */}
                 <div className={"flex gap-x-[6px] items-center"}>
-                    <div
-                        className={twMerge("py-[1px] px-[7px] border badge-sm rounded-[8px]",
-                            salaryType === "시급"
-                                ? "border-sub1 text-sub1"
-                                : salaryType === "월급"
-                                    ? "border-sub2 text-sub2"
-                                    : salaryType === "일급"
-                                        ? "border-sub5 text-sub5"
-                                    : salaryType === "주급"
-                                        ? "border-sub3 text-sub3"
-                                        : "border-sub3 text-sub3"
-                        )}>
-                        {salaryType === "시급"
-                            ? "시급"
-                            : salaryType === "월급"
-                                ? "월급"
-                                : salaryType === "일급"
-                                    ? "일급"
-                                    : salaryType === "주급"
-                                        ? "주급"
-                                        : "연봄"
-                        }
-                    </div>
+                    {renderSalaryType(salaryType)}
                     <div className={"subtitle-sm"}>{salary}원</div>
                 </div>
                 <div className={"text-gray5 badge-sm"}>{formatDateRange(recruitPeriod)}</div>

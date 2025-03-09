@@ -1,4 +1,4 @@
-import {AdEnumType, ApplicationMethodEnumType, BusinessFieldEnumType} from "@/src/types/register";
+import {AdEnumType, ApplicationMethodEnumType, BusinessFieldEnumType, SalaryType} from "@/src/types/register";
 
 export interface PremiumContentType  {
     recruitId: number;
@@ -13,7 +13,7 @@ export interface PremiumContentType  {
     workDays: string[];
     workDuration: string[];
     salary: string;
-    salaryType: string;
+    salaryType: SalaryType;
     businessFields: BusinessFieldEnumType[];
     recruitPeriod: string;
     applicationMethods: ApplicationMethodEnumType[];

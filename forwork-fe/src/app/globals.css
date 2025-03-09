@@ -104,4 +104,16 @@ body {
   .bg-gray2-tag {
     @apply bg-gray2 text-gray4
   }
+  .border-sub1-tag {
+    @apply py-[1px] px-[8px] border badge-sm rounded-[8px] border-sub1 text-sub1
+  }
+  .border-sub2-tag {
+    @apply py-[1px] px-[8px] border badge-sm rounded-[8px] border-sub2 text-sub2
+  }
+  .border-sub3-tag {
+    @apply py-[1px] px-[8px] border badge-sm rounded-[8px] border-sub3 text-sub3
+  }
+  .border-sub5-tag {
+    @apply py-[1px] px-[8px] border badge-sm rounded-[8px] border-sub5 text-sub5
+  }
 }

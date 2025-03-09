@@ -14,7 +14,7 @@ const KaKaoMap = ({ address }: Props) => {
             {isLoaded ? (
                 <Map
                     center={{ lat: Number(location.latitude), lng: Number(location.longitude) }}
-                    style={{ width: '100%', height: '400px' }}
+                    style={{ width: '100%', height: '240px' }}
                     level={3}
                 />
             ) : (
