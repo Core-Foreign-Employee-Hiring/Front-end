@@ -1,5 +1,5 @@
 import {
-    ApplicationMethodType, PortfolioFormType, PortfolioFormTypeToKor,
+    ApplicationMethodType, PortfolioFormTypeToKor,
     AdType,
     FileCountType, PortfolioContentType, PortfolioType, PreferredConditionType,
     SalaryType,
@@ -7,7 +7,7 @@ import {
     WeekDaysType,
     WorkDaysType,
     WorkDurationType,
-    WorkTimeType
+    WorkTimeType,
 } from "@/src/types/register";
 import {Dispatch, SetStateAction} from "react";
 
@@ -83,7 +83,7 @@ export const handleSelectList = (selectList:boolean, setSelectList: Dispatch<Set
     }
 };
 
-export const switchKorToEngContent = (selectedPortfolioFormContent: PortfolioContentType) => {
+export const switchKorToEngContent = (selectedPortfolioFormContent: PortfolioContentType) : PortfolioType => {
     switch (selectedPortfolioFormContent) {
         case "장문형":
             return "LONG_TEXT"

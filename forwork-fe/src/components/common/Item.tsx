@@ -8,6 +8,7 @@ interface Props {
     title: string;
     titleRequired?: boolean;
     className?: string;
+    titleRightElement?: () => JSX.Element;
 }
 
 const Item = (props: Props) => {

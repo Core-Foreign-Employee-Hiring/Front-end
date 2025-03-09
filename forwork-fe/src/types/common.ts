@@ -1,5 +1,3 @@
-import {ReviewDataContentType} from "@/src/types/review";
-
 export interface ResponseType<T = any> {
     status: number;
     success: true,

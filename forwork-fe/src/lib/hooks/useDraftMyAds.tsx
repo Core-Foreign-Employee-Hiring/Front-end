@@ -1,6 +1,5 @@
 import useSWR from "swr";
 import {CommonDataType, ResponseType} from "@/src/types/common";
-import {ReviewDataType} from "@/src/types/review";
 import {swrGetFetcher} from "@/src/lib/axios";
 import {MyDraftAdType} from "@/src/types/mypage";
 

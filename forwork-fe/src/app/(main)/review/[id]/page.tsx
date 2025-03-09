@@ -57,7 +57,7 @@ const PostPage = () => {
             </section>
             <section className={"rounded-[32px] border border-gray2 w-full"}>
                 <div className={"flex gap-x-3 p-5"}>
-                    <Input placeholder={"댓글을 등록해주세요."} className={"p-4 border-gray2 w-full"}/>
+                    {/*<Input placeholder={"댓글을 등록해주세요."} className={"p-4 border-gray2 w-full"}/>*/}
                     <Button className={"bg-main-button"} secondClassName={"flex items-center justify-center py-[15.5px] rounded-[16px] w-[100px]"}>등록</Button>
                 </div>
                 <Comment />

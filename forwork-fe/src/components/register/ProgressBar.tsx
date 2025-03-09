@@ -1,7 +1,4 @@
-
-import ArrowForwardIcon from "@/src/assets/common/ArrowForwardIcon";
 import {Dispatch, SetStateAction, useEffect} from "react";
-import Button from "@/src/components/common/Button";
 
 import {SVGProps} from "react";
 import {useAtom} from "jotai/index";
@@ -9,6 +6,7 @@ import {generalRegisterDataAtom} from "@/src/store/register/atom";
 
 
 interface Props {
+    setStep: Dispatch<SetStateAction<"First" | "Second" | "Third">>
     step: "First" | "Second" | "Third";
 }
 const ProgressBar = (props: Props) => {

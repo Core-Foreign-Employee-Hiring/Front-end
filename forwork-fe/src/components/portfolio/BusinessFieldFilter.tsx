@@ -1,10 +1,6 @@
 import Button from "@/src/components/common/Button";
-import {twMerge} from "tailwind-merge";
-import DropDownIcon from "@/src/assets/common/DropDownIcon";
 import CancelIcon from "@/src/assets/common/CancelIcon";
-import {preferredConditions} from "@/src/utils/register";
-import useFilter from "@/src/hooks/useFilter";
-import {JobCategoryType, PreferredConditionType} from "@/src/types/register";
+import {JobCategoryType} from "@/src/types/register";
 import {Dispatch, SetStateAction, useEffect} from "react";
 import {jobCategoryList} from "@/src/utils/common";
 
@@ -35,6 +31,7 @@ const BusinessFieldFilter = (props: Props) => {
     useEffect(() => {
         setJobCategoriesSelectedContent(selectedJobCategories.join(", "))
     }, [selectedJobCategories]);
+
     return (
         <div>
             {isJobCategoriesFilterFocused && (
