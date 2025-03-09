@@ -73,8 +73,6 @@ const PortfolioPage = () => {
                                     {isFocused && (
                                         <BusinessFieldFilter
                                             isJobCategoriesFilterFocused={isFocused}
-                                            jobCategoriesSelectedContent={selectedContent}
-                                            setJobCategoriesSelectedContent={setSelectedContent}
                                             selectedJobCategories={selectedJobCategories}
                                             setSelectedJobCategories={setSelectedJobCategories}
                                             setIsJobCategoriesFilterFocused={setIsFocused}/>
