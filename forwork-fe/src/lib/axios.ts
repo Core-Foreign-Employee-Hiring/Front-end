@@ -24,7 +24,6 @@ client.interceptors.request.use((config) => {
 const setAuthHeader = (token: string) => {
     if (token) {
         client.defaults.headers["Authorization"] = `${token}`;
-        // localStorage.removeItem("accessToken");
     } else {
         delete client.defaults.headers["Authorization"];
     }

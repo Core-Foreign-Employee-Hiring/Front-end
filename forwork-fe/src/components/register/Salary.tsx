@@ -1,6 +1,6 @@
 import SelectedFilterContent from "@/src/components/common/SelectedFilterContent";
 import Input from "../common/Input";
-import {salaryTypeList, timeList} from "@/src/utils/register";
+import {salaryTypeList} from "@/src/utils/register";
 import Button from "@/src/components/common/Button";
 import Filter from "@/src/components/common/Filter";
 import {GeneralRegisterDataType, SalaryType} from "@/src/types/register";

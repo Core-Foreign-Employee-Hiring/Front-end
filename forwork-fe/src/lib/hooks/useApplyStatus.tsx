@@ -1,6 +1,6 @@
 import useSWR from "swr";
 import {CommonDataType, ResponseType} from "@/src/types/common";
-import {ApplicationType, MyDraftAdType} from "@/src/types/mypage";
+import {ApplicationType} from "@/src/types/mypage";
 import {swrGetFetcher} from "@/src/lib/axios";
 
 const useApplyStatus = (page: number, size: number) => {

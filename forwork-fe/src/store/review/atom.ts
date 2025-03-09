@@ -1,5 +1,4 @@
 import {atom} from "jotai/index";
-import {GeneralRegisterDataType} from "@/src/types/register";
 import {ReviewFormType} from "@/src/types/review";
 
 export const generalRegisterDataAtom = atom<ReviewFormType>({

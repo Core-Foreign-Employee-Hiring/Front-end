@@ -1,6 +1,6 @@
 import useSWR from "swr";
 import {CommonDataType, ResponseType} from "@/src/types/common";
-import {ApplyPortfolioType, BasicPortfolioType} from "@/src/types/portfolio";
+import {ApplyPortfolioType} from "@/src/types/portfolio";
 import {swrGetFetcher} from "@/src/lib/axios";
 import {JobCategoryType} from "@/src/types/register";
 import {changeKorToBusinessFieldEnumType} from "@/src/utils/common";

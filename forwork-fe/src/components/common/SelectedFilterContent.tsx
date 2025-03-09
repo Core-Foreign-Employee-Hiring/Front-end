@@ -1,12 +1,13 @@
 import Button from "@/src/components/common/Button";
 import {twMerge} from "tailwind-merge";
 import DropDownIcon from "@/src/assets/common/DropDownIcon";
+import {Dispatch, SetStateAction} from "react";
 
 interface Props {
     placeholder?: string;
     selectedContent: string;
     isFocused?: boolean;
-    setIsFocused?: () => void;
+    setIsFocused?: Dispatch<SetStateAction<boolean>>;
     disabled?: boolean;
     className?: string;
     textStyle?: string;
@@ -17,7 +18,7 @@ const SelectedFilterContent = (props: Props) => {
     return (
         <Button
             onClick={() => {
-                setIsFocused &&  setIsFocused();
+                setIsFocused && setIsFocused(!isFocused);
             }}
             className={disabled ?
                 twMerge("flex justify-between items-center w-full pl-4 pr-3 py-4 rounded-[16px] bg-gray1", className)

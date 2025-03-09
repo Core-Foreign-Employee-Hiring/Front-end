@@ -1,7 +1,3 @@
-
-import {Dispatch, SetStateAction, useState} from "react";
-import ApplicationMethods from "@/src/components/register/ApplicationMethods";
-
 export type AdType = "일반 공고" | "프리미엄 공고";
 
 export type JobCategoryType =
@@ -147,7 +143,7 @@ export interface PremiumRegisterDataType {
     workDays: string[] | null[];
     education: string | null;
     salary: string | null;
-    portfolios: (PortfolioType | null)[];
+    portfolios: (PortfolioFormType | null)[];
     recruitEndDate: string | null; //"2025-02-16"
     workDurationOther: string | null;
     latitude: number | null;
@@ -171,3 +167,5 @@ export interface PortfolioFormType {
     maxFileCount: number | null,
     required: boolean;
 }
+
+export type AdEnumType = "PREMIUM" | "GENERAL";

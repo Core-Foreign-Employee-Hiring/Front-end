@@ -1,6 +1,6 @@
 import useSWR from "swr";
 import {CommonDataType, ResponseType} from "@/src/types/common";
-import {ContractType, ResumeType} from "@/src/types/mypage";
+import {ContractType} from "@/src/types/mypage";
 import {swrGetFetcher} from "@/src/lib/axios";
 
 const useContracts = (page: number, size: number) => {

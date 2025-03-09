@@ -39,7 +39,7 @@ const Comment = (props: Props) => {
             {isReplyInputOpen && (
                 <div>
                     <div className={"flex gap-x-3 p-5"}>
-                        <Input placeholder={"대댓글을 등록해주세요."} className={"p-4 border-gray2 w-full bg-white"}/>
+                        {/*<Input placeholder={"대댓글을 등록해주세요."} className={"p-4 border-gray2 w-full bg-white"}/>*/}
                         <Button className={"bg-main-button"}
                                 secondClassName={"flex items-center justify-center py-[15.5px] rounded-[16px] w-[100px]"}>등록</Button>
                     </div>
