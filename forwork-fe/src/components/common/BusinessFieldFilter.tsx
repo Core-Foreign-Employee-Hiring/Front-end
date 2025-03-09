@@ -30,6 +30,7 @@ const BusinessFieldFilter = (props: Props) => {
             {isJobCategoriesFilterFocused && (
                 <section className={"flex flex-col gap-y-[32px] rounded-[24px] w-full border border-gray2 p-5"}>
                     <section className={"flex flex-col gap-y-4"}>
+                        {/* 이미 선택된 내용들 */}
                         <section className={"flex justify-between items-center"}>
                             <div className={"flex flex-wrap gap-2"}>
                                 {selectedJobCategories.map((selectedJobCategory) => {
