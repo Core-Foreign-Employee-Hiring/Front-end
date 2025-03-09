@@ -46,6 +46,9 @@ export default function LoginPage() {
             if (response && response.status && response.status === 200 && response.data) {
                 Cookies.set("accessToken", response.data.accessToken, { expires: Date.now() + 604800000 });
                 Cookies.set("refreshToken", response.data.refreshToken, { expires: Date.now() + 604800000 });
+                Cookies.set("role", response.data.role, { expires: Date.now() + 604800000 })
+                Cookies.set("name", response.data.name, { expires: Date.now() + 604800000 })
+                Cookies.set("userId", response.data.userId, { expires: Date.now() + 604800000 })
                 setErrorContent(false);
                 router.push("/home")
             }
