@@ -41,13 +41,13 @@ const NavBar = (props: Props) => {
                         <Button className={"button-md text-gray4"}>회원가입</Button>
                     </div>
                 </div>
-            </div>
-            <div className={"flex justify-between items-center"}>
+            </section>
+            <section className={"flex justify-between items-center"}>
                 <div className={"flex gap-x-[52px] py-[18px] subtitle-md"}>
                     <button
-                        className={pathname === "/home" ? "text-main" : "text-black"}
+                        className={pathname === "/" ? "text-main" : "text-black"}
                         onClick={() => {
-                            router.push("/home")
+                            router.push("/")
                         }}>
                         홈
                     </button>
