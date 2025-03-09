@@ -2,7 +2,7 @@
 
 import NavBar from "@/src/components/common/NavBar";
 import Pagination from "@/src/components/common/Pagination";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import SelectedFilterContent from "@/src/components/common/SelectedFilterContent";
 import BusinessFieldFilter from "@/src/components/common/BusinessFieldFilter";
 import useFilter from "@/src/hooks/useFilter";
@@ -18,8 +18,10 @@ import PremiumCard from "@/src/components/home/PremiumCard";
 import Footer from "@/src/components/common/Footer";
 import DetailOptionFilter from "@/src/components/common/DetailOptionFilter";
 import WorkDurationFilter from "@/src/components/common/WorkDurationFilter";
+import useRecruitPremiumSearch from "@/src/lib/hooks/useRecruitPremiumSearch";
 
 const PremiumPage = () => {
+    const [isClient, setIsClient] = useState(false);
     const [pageNumber, setPageNumber] = useState(0);
     {/*업직종*/}
     const [selectedJobCategories, setSelectedJobCategories] = useState<JobCategoryType[]>([]);
@@ -59,7 +61,7 @@ const PremiumPage = () => {
     }
     {/*상세조건*/}
     const [selectedSalaryTypeList, setSelectedSalaryTypeList] = useState<SalaryType[]>([])
-    const [selectedGender, setSelectedGender] = useState<GenderEnumType>()
+    const [selectedGender, setSelectedGender] = useState<GenderEnumType>("")
     const [selectedDetailedConditionContent, setSelectedDetailedConditionContent, isDetailedConditionFilterFocused, setIsDetailedConditionFilterFocused] = useFilter("상세조건");
     const detailOptionCountElement = () => {
         return (
@@ -69,113 +71,127 @@ const PremiumPage = () => {
         )
     }
 
+    const {premiumRecruitData} = useRecruitPremiumSearch(pageNumber, selectedJobCategories, workDurations, workDays, workWeekDays, workTimes, startTime, endTime);
+
+
+    useEffect(() => {
+        setIsClient(true);
+    }, []);
+
+    useEffect(() => {
+        console.log("premiumRecruitData", premiumRecruitData)
+    }, [premiumRecruitData])
+
     return (
-        <div>
-            <NavBar/>
-            <div className={"h-60"} />
-            <main className={"px-[360px]"}>
-                {/* 필터 */}
-                <section>
-                    <div className={"flex flex-col gap-y-2"}>
-                        <section className={"flex gap-x-3"}>
-                            {/* 업직종 필터 */}
-                            <div className={"flex flex-col"}>
-                                <SelectedFilterContent
-                                    element={jobCategoryCountElement}
-                                    selectedContent={selectedJobCategoryContent}
-                                    className={"w-fit h-[45px] border-gray2"}
-                                    textStyle={"button-md placeholder:text-gray4"}
-                                    setIsFocused={() => {
-                                        setIsJobCategoryFilterFocused(!isJobCategoryFilterFocused);
-                                    }}/>
-                            </div>
-                            {/*근무 기간*/}
-                            <div>
-                                <SelectedFilterContent
-                                    element={workDurationCountElement}
-                                    selectedContent={selectedWorkDurationContent}
-                                    className={"w-fit h-[45px] border-gray2"}
-                                    textStyle={"button-md placeholder:text-gray4"}
-                                    setIsFocused={() => {
-                                        setIsWorkDurationFilterFocused(!isWorkDurationFilterFocused);
-                                    }}/>
-                            </div>
-                            {/* 상세 조건 */}
-                            <div>
-                                <SelectedFilterContent
-                                    element={detailOptionCountElement}
-                                    selectedContent={selectedDetailedConditionContent}
-                                    className={"w-fit h-[45px] border-gray2"}
-                                    textStyle={"button-md placeholder:text-gray4"}
-                                    setIsFocused={() => {
-                                        setIsDetailedConditionFilterFocused(!isDetailedConditionFilterFocused)
-                                    }}/>
-                            </div>
+        isClient && (
+            <div>
+                <NavBar/>
+                <div className={"h-60"}/>
+                <main className={"px-[360px]"}>
+                    {/* 필터 */}
+                    <section>
+                        <div className={"flex flex-col gap-y-2"}>
+                            <section className={"flex gap-x-3"}>
+                                {/* 업직종 필터 */}
+                                <div className={"flex flex-col"}>
+                                    <SelectedFilterContent
+                                        element={jobCategoryCountElement}
+                                        selectedContent={selectedJobCategoryContent}
+                                        className={"w-fit h-[45px] border-gray2"}
+                                        textStyle={"button-md placeholder:text-gray4"}
+                                        setIsFocused={() => {
+                                            setIsJobCategoryFilterFocused(!isJobCategoryFilterFocused);
+                                        }}/>
+                                </div>
+                                {/*근무 기간*/}
+                                <div>
+                                    <SelectedFilterContent
+                                        element={workDurationCountElement}
+                                        selectedContent={selectedWorkDurationContent}
+                                        className={"w-fit h-[45px] border-gray2"}
+                                        textStyle={"button-md placeholder:text-gray4"}
+                                        setIsFocused={() => {
+                                            setIsWorkDurationFilterFocused(!isWorkDurationFilterFocused);
+                                        }}/>
+                                </div>
+                                {/* 상세 조건 */}
+                                <div>
+                                    <SelectedFilterContent
+                                        element={detailOptionCountElement}
+                                        selectedContent={selectedDetailedConditionContent}
+                                        className={"w-fit h-[45px] border-gray2"}
+                                        textStyle={"button-md placeholder:text-gray4"}
+                                        setIsFocused={() => {
+                                            setIsDetailedConditionFilterFocused(!isDetailedConditionFilterFocused)
+                                        }}/>
+                                </div>
 
-                        </section>
-                        {isJobCategoryFilterFocused && (
-                            <BusinessFieldFilter
-                                isJobCategoriesFilterFocused={isJobCategoryFilterFocused}
-                                selectedJobCategories={selectedJobCategories}
-                                setSelectedJobCategories={setSelectedJobCategories}
-                                setIsJobCategoriesFilterFocused={setIsJobCategoryFilterFocused}/>
-                        )}
-                        {isDetailedConditionFilterFocused && (
-                            <DetailOptionFilter
-                                selectedGender={selectedGender}
-                                setSelectedGender={setSelectedGender}
-                                setSelectedSalaryTypeList={setSelectedSalaryTypeList}
-                                selectedSalaryTypeList={selectedSalaryTypeList}
-                                setIsDetailedConditionFilterFocused={setIsDetailedConditionFilterFocused}/>
-                        )}
-                        {isWorkDurationFilterFocused && (
-                            <WorkDurationFilter
-                                setIsWorkDurationFilterFocused={setIsWorkDurationFilterFocused}
-                                //근무요일
-                                workDays={workDays}
-                                setWorkDays={setWorkDays}
-                                workWeekDays={workWeekDays}
-                                setWorkWeekDays={setWorkWeekDays}
-                                workDaysSelectList={workDaysSelectList}
-                                setWorkDaysSelectList={setWorkDaysSelectList}
-                                workDaysDirectList={workDaysDirectList}
-                                setWorkDaysDirectList={setWorkDaysDirectList}
-                                //근무 시간
-                                workTimes={workTimes}
-                                setWorkTimes={setWorkTimes}
-                                startTime={startTime}
-                                setStartTime={setStartTime}
-                                endTime={endTime}
-                                setEndTime={setEndTime}
-                                workTimeSelectList={workTimeSelectList}
-                                workTimeDirectList={workTimeDirectList}
-                                setWorkTimeDirectList={setWorkTimeDirectList}
-                                setWorkTimeSelectList={setWorkTimeSelectList}
-                                //근무 기간
-                                setWorkDurations={setWorkDurations}
-                                workDurations={workDurations}
-                                workDuration={workDuration}
-                                setWorkDuration={setWorkDuration}/>
-                        )}
-                    </div>
-                    <div className={"grid grid-cols-3 gap-6 mt-[24px]"}>
-                        <PremiumCard/>
-                        <PremiumCard/>
-                        <PremiumCard/>
-                        <PremiumCard/>
-                        <PremiumCard/>
-                        <PremiumCard/>
-                        <PremiumCard/>
-                        <PremiumCard/>
-                        <PremiumCard/>
-                    </div>
-                    <div></div>
-                </section>
+                            </section>
+                            {isJobCategoryFilterFocused && (
+                                <BusinessFieldFilter
+                                    isJobCategoriesFilterFocused={isJobCategoryFilterFocused}
+                                    selectedJobCategories={selectedJobCategories}
+                                    setSelectedJobCategories={setSelectedJobCategories}
+                                    setIsJobCategoriesFilterFocused={setIsJobCategoryFilterFocused}/>
+                            )}
+                            {isDetailedConditionFilterFocused && (
+                                <DetailOptionFilter
+                                    selectedGender={selectedGender}
+                                    setSelectedGender={setSelectedGender}
+                                    setSelectedSalaryTypeList={setSelectedSalaryTypeList}
+                                    selectedSalaryTypeList={selectedSalaryTypeList}
+                                    setIsDetailedConditionFilterFocused={setIsDetailedConditionFilterFocused}/>
+                            )}
+                            {isWorkDurationFilterFocused && (
+                                <WorkDurationFilter
+                                    setIsWorkDurationFilterFocused={setIsWorkDurationFilterFocused}
+                                    //근무요일
+                                    workDays={workDays}
+                                    setWorkDays={setWorkDays}
+                                    workWeekDays={workWeekDays}
+                                    setWorkWeekDays={setWorkWeekDays}
+                                    workDaysSelectList={workDaysSelectList}
+                                    setWorkDaysSelectList={setWorkDaysSelectList}
+                                    workDaysDirectList={workDaysDirectList}
+                                    setWorkDaysDirectList={setWorkDaysDirectList}
+                                    //근무 시간
+                                    workTimes={workTimes}
+                                    setWorkTimes={setWorkTimes}
+                                    startTime={startTime}
+                                    setStartTime={setStartTime}
+                                    endTime={endTime}
+                                    setEndTime={setEndTime}
+                                    workTimeSelectList={workTimeSelectList}
+                                    workTimeDirectList={workTimeDirectList}
+                                    setWorkTimeDirectList={setWorkTimeDirectList}
+                                    setWorkTimeSelectList={setWorkTimeSelectList}
+                                    //근무 기간
+                                    setWorkDurations={setWorkDurations}
+                                    workDurations={workDurations}
+                                    workDuration={workDuration}
+                                    setWorkDuration={setWorkDuration}/>
+                            )}
+                        </div>
+                        <div className={"grid grid-cols-3 gap-6 mt-[24px]"}>
+                            <PremiumCard/>
+                            <PremiumCard/>
+                            <PremiumCard/>
+                            <PremiumCard/>
+                            <PremiumCard/>
+                            <PremiumCard/>
+                            <PremiumCard/>
+                            <PremiumCard/>
+                            <PremiumCard/>
+                        </div>
+                        <div></div>
+                    </section>
 
-            </main>
-            <Pagination setPageNumber={setPageNumber} pageNumber={pageNumber} className={"my-32"} totalPageNumber={5}/>
-            <Footer/>
-        </div>
+                </main>
+                <Pagination setPageNumber={setPageNumber} pageNumber={pageNumber} className={"my-32"}
+                            totalPageNumber={5}/>
+                <Footer/>
+            </div>
+        )
     )
 }
 export default PremiumPage

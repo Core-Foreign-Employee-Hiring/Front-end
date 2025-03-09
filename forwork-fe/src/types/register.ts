@@ -1,4 +1,5 @@
 export type AdType = "일반 공고" | "프리미엄 공고";
+export type AdEnumType = "PREMIUM" | "GENERAL";
 
 export type JobCategoryType =
     | ""
@@ -170,4 +171,4 @@ export interface PortfolioFormType {
     required: boolean;
 }
 
-export type AdEnumType = "PREMIUM" | "GENERAL";
+

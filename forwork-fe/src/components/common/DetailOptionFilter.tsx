@@ -5,8 +5,8 @@ import {genderList, salaryTypeList, switchEnumToKorGenderType, switchKorToEnumGe
 import CancelIcon from "@/src/assets/common/CancelIcon";
 
 interface Props {
-    selectedGender: GenderEnumType | undefined;
-    setSelectedGender: Dispatch<SetStateAction<GenderEnumType | undefined>>;
+    selectedGender: GenderEnumType;
+    setSelectedGender: Dispatch<SetStateAction<GenderEnumType>>;
     selectedSalaryTypeList: SalaryType[];
     setSelectedSalaryTypeList: Dispatch<SetStateAction<SalaryType[]>>
     setIsDetailedConditionFilterFocused: Dispatch<SetStateAction<boolean>>
