@@ -1,11 +1,10 @@
 import SelectedFilterContent from "@/src/components/common/SelectedFilterContent";
 import DeleteIcon from "@/src/assets/register/DeleteIcon";
-import {PortfolioFormType, PortfolioType} from "@/src/types/register";
+import {PortfolioContentType, PortfolioType} from "@/src/types/register";
 import Filter from "@/src/components/common/Filter";
 import Button from "@/src/components/common/Button";
 import * as React from "react";
 import {
-    maxFileCountList,
     premiumFormTypeList,
     switchEngToKorContent,
     switchKorToEngContent
@@ -16,13 +15,13 @@ import {premiumRegisterDataAtom} from "@/src/store/register/atom";
 
 interface Props {
     index: number;
-    type: PortfolioFormType | null | undefined ;
+    type: PortfolioType | null | undefined ;
     title: string | null | undefined ;
     setTitle: (index: number, value: string) => void;
     enabled: boolean | null | undefined ;
     setEnabled: (index: number) => void;
     maxFileCount?: number | null | undefined;
-    changeFormType: (index: number, type: PortfolioFormType) => void;
+    changeFormType: (index: number, type: PortfolioType) => void;
     isFocusedList: boolean[];
     setIsFocusedList: Dispatch<SetStateAction<boolean[]>>;
     deleteToPortfolioList: (index: number) => void;
@@ -35,7 +34,7 @@ const PortfolioFormat = (props: Props) => {
     const filterTypeContents = () => {
         return (
             <div>
-                {premiumFormTypeList.map((premiumFormType) => {
+                {premiumFormTypeList.map((premiumFormType: PortfolioContentType) => {
                     return (
                         <Button
                             onClick={() => {
@@ -51,7 +50,7 @@ const PortfolioFormat = (props: Props) => {
         )
     }
 
-    const renderType = () => {
+    const renderType = (type: PortfolioType | null | undefined) => {
         switch (type) {
             case "LONG_TEXT":
                 return (
@@ -197,7 +196,7 @@ const PortfolioFormat = (props: Props) => {
                                     <input
                                         className={"outline-none body-md px-4 py-3 rounded-[16px] border border-gray3"}
                                         type={"number"}
-                                        value={premiumRegisterData.portfolios[index]?.maxFileCount}
+                                        value={premiumRegisterData.portfolios[index]?.maxFileCount as number}
                                         onChange={(e) => changeMaxFileCount(index, parseInt(e.target.value))}
                                         max={10}
                                         min={0}/>
@@ -211,7 +210,7 @@ const PortfolioFormat = (props: Props) => {
 
     return (
         <div className={"p-4 rounded-[24px] border border-gray3"}>
-            {renderType()}
+            {renderType(type)}
         </div>
     )
 }

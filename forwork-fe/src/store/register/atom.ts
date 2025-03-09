@@ -1,9 +1,6 @@
 import {atom} from "jotai/index";
-import {EmployerSignUpInfoType} from "@/src/types/sign-up";
 import {
-    ApplicationMethodEnumType,
-    BusinessFieldEnumType,
-    GeneralRegisterDataType, PortfolioType,
+    GeneralRegisterDataType,
     PremiumRegisterDataType
 } from "@/src/types/register";
 

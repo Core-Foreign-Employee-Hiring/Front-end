@@ -36,7 +36,7 @@ const PortfolioFormatCreator = () => {
             setPremiumRegisterData((prevState) => ({
                 ...prevState,
                 portfolios: prevState.portfolios.map((portfolio, i) =>
-                    i === index ? ({ ...portfolio, title: value } as PortfolioType) : portfolio
+                    i === index ? ({ ...portfolio, title: value } as PortfolioFormType) : portfolio
                 ),
             }));
         }
@@ -47,18 +47,18 @@ const PortfolioFormatCreator = () => {
             setPremiumRegisterData((prevState) => ({
                 ...prevState,
                 portfolios: prevState.portfolios.map((portfolio, i) =>
-                    i === index ? ({ ...portfolio, required: !portfolio?.required } as PortfolioType) : portfolio
+                    i === index ? ({ ...portfolio, required: !portfolio?.required } as PortfolioFormType) : portfolio
                 ),
             }));
         }
     };
 
-    const changeFormType = (index: number, type: PortfolioFormType) => {
+    const changeFormType = (index: number, type: PortfolioType) => {
         if (premiumRegisterData.portfolios) {
             setPremiumRegisterData((prevState) => ({
                 ...prevState,
                 portfolios: prevState.portfolios.map((portfolio, i) =>
-                    i === index ? ({ ...portfolio, type: type } as PortfolioType) : portfolio
+                    i === index ? ({ ...portfolio, type: type } as PortfolioFormType) : portfolio
                 ),
             }));
         }
@@ -70,7 +70,7 @@ const PortfolioFormatCreator = () => {
             setPremiumRegisterData((prevState) => ({
                 ...prevState,
                 portfolios: prevState.portfolios.map((portfolio, i) =>
-                    i === index ? ({ ...portfolio, maxFileCount: value } as PortfolioType) : portfolio
+                    i === index ? ({ ...portfolio, maxFileCount: value } as PortfolioFormType) : portfolio
                 ),
             }));
         }

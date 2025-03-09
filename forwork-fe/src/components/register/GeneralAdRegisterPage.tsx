@@ -140,7 +140,7 @@ const GeneralAdRegisterPage = () => {
     return (
         <form className={"mt-[80px] flex flex-col gap-y-[52px] px-[350px]"}>
             {isSubmitModalOpen && <Modal setIsModalOpen={setIsSubmitModalOpen} content={modalContent}/>}
-            <ProgressBar step={step}/>
+            <ProgressBar step={step} setStep={setStep}/>
             {step === "First" && (<GeneralAdRegisterStep1 setStep={setStep} imgRef={imgRef} setSubmitType={setSubmitType} setIsTrigger={setIsTrigger}/>)}
             {step === "Second" && (<GeneralAdRegisterStep2 setStep={setStep} setSubmitType={setSubmitType} setIsTrigger={setIsTrigger}/>)}
             {step === "Third" && (<GeneralAdRegisterStep3 setStep={setStep} setSubmitType={setSubmitType} setIsTrigger={setIsTrigger}/>)}
