@@ -12,7 +12,17 @@ const NavBar = (props: Props) => {
     const {} = props;
     const router = useRouter();
     const pathname = usePathname();
+    const [isScrolled, setIsScrolled] = useState(false);
+    useEffect(() => {
+        const handleScroll = () => {
+            setIsScrolled(window.scrollY > 50); // 50px 이상 스크롤 시 숨김
+        };
 
+        window.addEventListener("scroll", handleScroll);
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+        };
+    }, []);
     const renderButtonComponentByRole = (role: RoleType | string | undefined) => {
         if (role === "EMPLOYEE" || role === "EMPLOYEE_PREMIUM") {
             return (
