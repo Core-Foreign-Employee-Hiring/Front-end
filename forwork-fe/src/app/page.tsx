@@ -52,12 +52,12 @@ const MainPage = () => {
                             <Button className={"text-gray5 button-md"}>더보기</Button>
                         </div>
                         <div className={"grid grid-cols-3 gap-6"}>
-                            <PremiumCard/>
-                            <PremiumCard/>
-                            <PremiumCard/>
-                            <PremiumCard/>
-                            <PremiumCard/>
-                            <PremiumCard/>
+                            {/*<PremiumCard/>*/}
+                            {/*<PremiumCard/>*/}
+                            {/*<PremiumCard/>*/}
+                            {/*<PremiumCard/>*/}
+                            {/*<PremiumCard/>*/}
+                            {/*<PremiumCard/>*/}
                         </div>
                     </section>
 
