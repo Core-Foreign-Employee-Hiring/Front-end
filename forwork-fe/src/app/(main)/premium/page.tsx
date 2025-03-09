@@ -4,10 +4,11 @@ import NavBar from "@/src/components/common/NavBar";
 import Pagination from "@/src/components/common/Pagination";
 import {useEffect, useState} from "react";
 import SelectedFilterContent from "@/src/components/common/SelectedFilterContent";
-import BusinessFieldFilter from "@/src/components/portfolio/BusinessFieldFilter";
+import BusinessFieldFilter from "@/src/components/common/BusinessFieldFilter";
 import useFilter from "@/src/hooks/useFilter";
 import {
     GenderEnumType,
+    JobCategoryType,
     SalaryType,
 } from "@/src/types/register";
 import PremiumCard from "@/src/components/home/PremiumCard";
@@ -19,6 +20,11 @@ const PremiumPage = () => {
     {/*업직종*/}
     const [selectedJobCategories, setSelectedJobCategories] = useState<JobCategoryType[]>([]);
     const [selectedJobCategoryContent, setSelectedJobCategoryContent, isJobCategoryFilterFocused, setIsJobCategoryFilterFocused] = useFilter("업직종");
+    const jobCategoryCountElement = () => {
+        return (
+            <div className={"flex justify-center items-center w-[20px] h-[20px] rounded-full badge-sm bg-main text-white"}>{selectedJobCategories.length}</div>
+        )
+    }
     {/*근무기간*/}
     const [selectedWorkDurations, setSelectedWorkDurations] = useState<WorkDurationType[]>([]);
     const [selectedWorkTimes, setSelectedWorkTimes] = useState<WorkTimeType[]>([]);
@@ -46,12 +52,16 @@ const PremiumPage = () => {
                 <section>
                     <div className={"flex flex-col gap-y-2"}>
                         <section className={"flex gap-x-3"}>
+                            {/* 업직종 필터 */}
                             <div className={"flex flex-col"}>
                                 <SelectedFilterContent
+                                    element={jobCategoryCountElement}
                                     selectedContent={selectedJobCategoryContent}
                                     className={"w-fit h-[45px] border-gray2"}
                                     textStyle={"button-md placeholder:text-gray4"}
-                                    setIsFocused={setIsJobCategoryFilterFocused}/>
+                                    setIsFocused={() => {
+                                        setIsJobCategoryFilterFocused(!isJobCategoryFilterFocused);
+                                    }}/>
                             </div>
                             <div>
                                 <SelectedFilterContent
@@ -78,8 +88,6 @@ const PremiumPage = () => {
                         {isJobCategoryFilterFocused && (
                             <BusinessFieldFilter
                                 isJobCategoriesFilterFocused={isJobCategoryFilterFocused}
-                                jobCategoriesSelectedContent={selectedJobCategoryContent}
-                                setJobCategoriesSelectedContent={setSelectedJobCategoryContent}
                                 selectedJobCategories={selectedJobCategories}
                                 setSelectedJobCategories={setSelectedJobCategories}
                                 setIsJobCategoriesFilterFocused={setIsJobCategoryFilterFocused}/>

@@ -10,7 +10,7 @@ import SelectedFilterContent from "@/src/components/common/SelectedFilterContent
 import useFilter from "@/src/hooks/useFilter";
 import useBasicPortfolios from "@/src/lib/hooks/useBasicPortfolios";
 import useApplyPortfolios from "@/src/lib/hooks/useApplyPortfolios";
-import BusinessFieldFilter from "@/src/components/portfolio/BusinessFieldFilter";
+import BusinessFieldFilter from "@/src/components/common/BusinessFieldFilter";
 import {JobCategoryType} from "@/src/types/register";
 import {useAtom} from "jotai";
 import {portfolioTypeAtom} from "@/src/store/portpolio/atom";

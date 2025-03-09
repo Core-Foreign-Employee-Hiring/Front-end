@@ -9,12 +9,9 @@ interface Props {
     setSelectedJobCategories: Dispatch<SetStateAction<JobCategoryType[]>>
     isJobCategoriesFilterFocused: boolean;
     setIsJobCategoriesFilterFocused: Dispatch<SetStateAction<boolean>>
-    jobCategoriesSelectedContent: string;
-    setJobCategoriesSelectedContent: Dispatch<SetStateAction<string>>;
-
 }
 const BusinessFieldFilter = (props: Props) => {
-    const {selectedJobCategories, setSelectedJobCategories, isJobCategoriesFilterFocused, setIsJobCategoriesFilterFocused, jobCategoriesSelectedContent, setJobCategoriesSelectedContent} = props;
+    const {selectedJobCategories, setSelectedJobCategories, isJobCategoriesFilterFocused, setIsJobCategoriesFilterFocused,} = props;
 
     const togglePreferredCondition = (selectedJobCategory: JobCategoryType) => {
         setSelectedJobCategories((prevState) => {
@@ -23,14 +20,10 @@ const BusinessFieldFilter = (props: Props) => {
                 return prevState.filter((condition) => condition !== selectedJobCategory);
             } else {
                 // 선택되지 않은 경우 추가 (최대 5개 제한)
-                return prevState.length < 5 ? [...prevState, selectedJobCategory] : prevState;
+                return [...prevState, selectedJobCategory];
             }
         });
     };
-
-    useEffect(() => {
-        setJobCategoriesSelectedContent(selectedJobCategories.join(", "))
-    }, [selectedJobCategories]);
 
     return (
         <div>
@@ -84,12 +77,16 @@ const BusinessFieldFilter = (props: Props) => {
                             secondClassName={"flex items-center justify-center w-[120px] py-3"}>초기화</Button>
                         <Button
                             onClick={() => {
-                                setJobCategoriesSelectedContent(selectedJobCategories.join(", "))
                                 setIsJobCategoriesFilterFocused(false)
                             }}
                             className={"bg-main-button"}
                             secondClassName={"flex items-center justify-center w-[120px] py-3"}>
-                            {selectedJobCategories.length} / 5 적용
+                            {selectedJobCategories.length !== 0 && (
+                                <div className={"flex justify-center items-center w-[20px] h-[20px] rounded-full bg-white text-main badge-sm"}>
+                                    <span>{selectedJobCategories.length}</span>
+                                </div>
+                            )}
+                            적용
                         </Button>
                     </section>
                 </section>
