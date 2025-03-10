@@ -63,7 +63,9 @@ const PortfolioDetailPage = () => {
 
                 {!portfolioData?.employeeEvaluationCountDTO ? null : (
                     <Evaluation
+                        type={"employee"}
                         name={portfolioData?.name}
+                        employerReliability={100}
                         noLatenessOrAbsence={portfolioData?.employeeEvaluationCountDTO?.noLatenessOrAbsence ?? 0}
                         politeAndFriendly={portfolioData?.employeeEvaluationCountDTO?.politeAndFriendly ?? 0}
                         goodCustomerService={portfolioData?.employeeEvaluationCountDTO?.goodCustomerService ?? 0}
