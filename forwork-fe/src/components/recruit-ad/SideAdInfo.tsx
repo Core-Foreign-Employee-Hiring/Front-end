@@ -6,9 +6,11 @@ import HeartIcon from "@/src/assets/recruit-ad/HeartIcon";
 import {RecruitAdDetailData} from "@/src/types/recruit-ad";
 import {changeBusinessFieldEnumToKorType} from "@/src/utils/common";
 import {switchEnumToKorGenderType} from "@/src/utils/register";
+import {likeRecruitAdPost} from "@/src/lib/api/recruit-ad";
 
 const SideAdInfo = (props: RecruitAdDetailData) => {
     const {
+        recruitId,
         recruitType,
         recruitStartDate,
         recruitEndDate,
@@ -118,6 +120,7 @@ const SideAdInfo = (props: RecruitAdDetailData) => {
             </article>
             <section className={"flex gap-x-4"}>
                 <Button
+                    onClick={() => likeRecruitAdPost(recruitId)}
                     secondClassName={"flex gap-x-0 px-[21.5px] py-5"}
                     className={"border-gray2-button"}
                     LeftIcon={() => <div className={"flex justify-center items-center w-[24px] h-[24px]"}>
