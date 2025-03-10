@@ -31,7 +31,7 @@ const SideAdInfo = (props: RecruitAdDetailData) => {
     } = props;
 
     return (
-        <section className={"flex flex-col gap-y-6 w-[411px]"}>
+        <section className={"flex flex-col gap-y-6"}>
             <article className={"flex flex-col gap-y-3 rounded-[32px] border border-gray3 p-7"}>
                 {recruitType === "PREMIUM" && (
                     <Tag className={"flex justify-center items-center bg-mainLight-tag"} LeftIcon={() => <Star2Icon/>}>프리미엄

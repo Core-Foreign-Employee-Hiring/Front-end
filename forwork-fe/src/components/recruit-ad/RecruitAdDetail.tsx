@@ -35,10 +35,10 @@ const RecruitAdDetail = () => {
                         companyName={recruitAdDetailData ? recruitAdDetailData.companyName : ""}
                         employerReliability={recruitAdDetailData ? recruitAdDetailData.employerReliability : 0}
                         recruitEndDate={recruitAdDetailData ? recruitAdDetailData.recruitEndDate : ""}
-                        recruitStartDate={recruitAdDetailData ? recruitAdDetailData.recruitStartDate : ""} />
+                        recruitStartDate={recruitAdDetailData ? recruitAdDetailData.recruitStartDate : ""}/>
                     <OfficeInfo
                         businessRegistrationNumber={recruitAdDetailData ? recruitAdDetailData.businessRegistrationNumber : ""}
-                        companyName={recruitAdDetailData ? recruitAdDetailData.companyName: ""}
+                        companyName={recruitAdDetailData ? recruitAdDetailData.companyName : ""}
                         address1={recruitAdDetailData ? recruitAdDetailData.address.address1 : ""}
                         address2={recruitAdDetailData ? recruitAdDetailData.address.address2 : ""}
                         employerContact={recruitAdDetailData ? recruitAdDetailData.employerContact : ""}
@@ -46,7 +46,8 @@ const RecruitAdDetail = () => {
                         representative={recruitAdDetailData ? recruitAdDetailData.representative : ""}
                         zipcode={recruitAdDetailData ? recruitAdDetailData.address.zipcode : ""}/>
                     <RecruitPoster posterImageUrl={recruitAdDetailData ? recruitAdDetailData.posterImageUrl : ""}/>
-                    <ApplyMethod applicationMethods={recruitAdDetailData ? recruitAdDetailData.applicationMethods : []} />
+                    <ApplyMethod
+                        applicationMethods={recruitAdDetailData ? recruitAdDetailData.applicationMethods : []}/>
                     <Evaluation
                         type={"employer"}
                         name={recruitAdDetailData ? recruitAdDetailData.companyName : ""}
@@ -56,9 +57,11 @@ const RecruitAdDetail = () => {
                         respectsEmployees={recruitAdDetailData ? recruitAdDetailData.employerEvaluationCountDTO.respectsEmployees : 0}
                         friendlyBoss={recruitAdDetailData ? recruitAdDetailData.employerEvaluationCountDTO.friendlyBoss : 0}
                         fairWorkload={recruitAdDetailData ? recruitAdDetailData.employerEvaluationCountDTO.fairWorkload : 0}
-                        joinCount={recruitAdDetailData ? recruitAdDetailData.employerEvaluationCountDTO.joinCount : 0} />
+                        joinCount={recruitAdDetailData ? recruitAdDetailData.employerEvaluationCountDTO.joinCount : 0}/>
                 </section>
-                <SideAdInfo { ...recruitAdDetailData as RecruitAdDetailData}/>
+                <aside className={"w-[411px] h-fit sticky top-[100px]"}>
+                    <SideAdInfo {...recruitAdDetailData as RecruitAdDetailData} />
+                </aside>
             </main>
         </div>
     )
