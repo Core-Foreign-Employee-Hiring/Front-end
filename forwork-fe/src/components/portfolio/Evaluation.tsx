@@ -7,6 +7,7 @@ import ClockIcon from "@/src/assets/portfolio/ClockIcon";
 import SmailIcon from "@/src/assets/portfolio/SmailIcon";
 import Star2Icon from "@/src/assets/recruit-ad/Star2Icon";
 import MoneyIcon from "@/src/assets/portfolio/MoneyIcon";
+import DescriptionIcon from "@/src/assets/portfolio/DescriptionIcon";
 
 interface Props extends EmployeeEvaluationCountType, EmployerEvaluationCountType {
     type: "employee" | "employer";
@@ -88,6 +89,8 @@ const Evaluation = (props: Props) => {
                         <div className={"text-gray5 small"}>{`*${joinCount}명이 참여했어요`}</div>
                         <section className={"gap-[24px] flex flex-wrap "}>
                             <EvaluationTag
+                                hoverContent="기업의 고용인 간 계약서 작성 진행률을 나타낸 수치입니다. 해당 뱃지는 진행률 50%가 넘어갈 경우 표시되며, 뱃지가 없는 기업은 진행률이 50% 아래임을 알려드립니다."
+                                rightElement={() => <DescriptionIcon />}
                                 leftElement={() => (
                                     <div className={"flex items-center justify-center w-[20px] h-[20px]"}>
                                         <Star2Icon size={20}/>
