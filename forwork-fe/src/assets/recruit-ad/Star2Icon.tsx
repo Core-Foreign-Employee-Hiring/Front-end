@@ -1,10 +1,16 @@
 import * as React from "react";
 import type { SVGProps } from "react";
-const Star2Icon = (props: SVGProps<SVGSVGElement>) => (
+
+interface Star2IconProps extends SVGProps<SVGSVGElement> {
+    size?: number;
+}
+
+const Star2Icon = ({ size = 17, ...props }: Star2IconProps) => (
     <svg
         xmlns="http://www.w3.org/2000/svg"
-        width={11}
-        height={17}
+        width={size * (11 / 17)}
+        height={size}
+        viewBox="0 0 11 17"
         fill="none"
         {...props}
     >
@@ -14,4 +20,5 @@ const Star2Icon = (props: SVGProps<SVGSVGElement>) => (
         />
     </svg>
 );
+
 export default Star2Icon;

@@ -7,7 +7,7 @@ import {
     WeekDaysType,
     WorkDaysType,
     WorkDurationType,
-    WorkTimeType, GenderEnumType, GenderType,
+    WorkTimeType, GenderEnumType, GenderType, ApplicationMethodEnumType,
 } from "@/src/types/register";
 import {Dispatch, SetStateAction} from "react";
 
@@ -117,13 +117,39 @@ export const switchKorToEnumGenderType = (gender: GenderType) => {
             return ""
     }
 }
-export const switchEnumToKorGenderType = (gender: GenderEnumType | undefined) => {
+export const switchEnumToKorGenderType = (gender: GenderEnumType | undefined | null) => {
     switch (gender) {
-        case "FEMALE":
+        case "female":
             return "여성";
-        case "MALE":
+        case "male":
             return "남성";
-        case "NULL":
+        case "null":
             return "성별 무관";
+    }
+}
+
+export const switchApplicationMethodKorToEnumType = (applicationMethodType: ApplicationMethodType) => {
+    switch (applicationMethodType) {
+        case "온라인 지원":
+            return "ONLINE"
+        case "방문 지원":
+            return "VISIT"
+        case "전화 지원":
+            return "CALL_VISIT"
+        case "문의 지원":
+            return "INQUIRY"
+    }
+}
+
+export const switchApplicationMethodEnumToKorType = (applicationMethodType: ApplicationMethodEnumType) => {
+    switch (applicationMethodType) {
+        case "ONLINE":
+            return "온라인 지원"
+        case "VISIT":
+            return "방문 지원"
+        case "CALL_VISIT":
+            return "전화 지원"
+        case "INQUIRY":
+            return "문의 지원"
     }
 }

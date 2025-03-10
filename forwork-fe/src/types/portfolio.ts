@@ -59,12 +59,21 @@ export interface EmployeePortfolioDTOType {
 }
 
 export interface EmployeeEvaluationCountType {
-    worksDiligently: number | undefined;
-    noLatenessOrAbsence: number | undefined;
-    politeAndFriendly: number | undefined;
-    goodCustomerService: number | undefined;
-    skilledAtWork: number | undefined;
-    joinCount: number | undefined;
+    worksDiligently?: number | undefined;
+    noLatenessOrAbsence?: number | undefined;
+    politeAndFriendly?: number | undefined;
+    goodCustomerService?: number | undefined;
+    skilledAtWork?: number | undefined;
+    joinCount?: number | undefined;
+}
+
+export interface EmployerEvaluationCountType {
+    paysOnTime?: number;
+    keepsContractDates?: number;
+    respectsEmployees?: number;
+    friendlyBoss?: number;
+    fairWorkload?: number;
+    joinCount?: number | undefined;
 }
 
 export interface CertificationType {

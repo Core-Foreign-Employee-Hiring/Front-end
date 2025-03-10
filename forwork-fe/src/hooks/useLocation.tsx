@@ -9,7 +9,7 @@ const useLocation = (address1: string | null | undefined) => {
         console.log("🚀 useEffect 실행됨");
 
         if (typeof window === 'undefined') {
-            console.error("❌ 서버에서 실행 중 - 클라이언트에서만 실행 필요");
+            console.log("❌ 서버에서 실행 중 - 클라이언트에서만 실행 필요");
             return;
         }
 
@@ -17,7 +17,7 @@ const useLocation = (address1: string | null | undefined) => {
 
         const apiKey = process.env.NEXT_PUBLIC_KAKAO_KEY;
         if (!apiKey) {
-            console.error("❌ 카카오 API 키가 설정되지 않았습니다.");
+            console.log("❌ 카카오 API 키가 설정되지 않았습니다.");
             return;
         }
 
@@ -44,12 +44,12 @@ const useLocation = (address1: string | null | undefined) => {
                     setIsLoaded(true);
                 });
             } else {
-                console.error("❌ 카카오 API 로드 실패 - `window.kakao` 없음");
+                console.log("❌ 카카오 API 로드 실패 - `window.kakao` 없음");
             }
         };
 
         script.onerror = () => {
-            console.error("❌ 카카오 API 스크립트 로드 실패");
+            console.log("❌ 카카오 API 스크립트 로드 실패");
         };
 
         return () => {
@@ -61,7 +61,7 @@ const useLocation = (address1: string | null | undefined) => {
     const getAddressCoords = (address: string) => {
         return new Promise((resolve, reject) => {
             if (typeof window === 'undefined' || !window.kakao || !window.kakao.maps || !window.kakao.maps.services) {
-                console.error("❌ 카카오 API가 아직 로드되지 않았습니다.");
+                console.log("❌ 카카오 API가 아직 로드되지 않았습니다.");
                 reject("카카오 API 로드 실패");
                 return;
             }
@@ -75,7 +75,8 @@ const useLocation = (address1: string | null | undefined) => {
                     const { x, y } = result[0];
                     resolve({ latitude: y, longitude: x });
                 } else {
-                    console.error("❌ 주소 변환 실패: 주소를 찾을 수 없습니다.");
+                    console.log("adress", address1)
+                    console.log("❌ 주소 변환 실패: 주소를 찾을 수 없습니다.");
                     reject("주소 변환 실패");
                 }
             });
@@ -83,7 +84,7 @@ const useLocation = (address1: string | null | undefined) => {
     };
 
     useEffect(() => {
-        if (!isLoaded || !address1) return;
+        if (!isLoaded || !address1 || address1 === "") return;
 
         getAddressCoords(address1)
             .then((coords: any) => {
@@ -91,7 +92,7 @@ const useLocation = (address1: string | null | undefined) => {
                 setLocation(coords);
             })
             .catch((err) => {
-                console.error("❌ 좌표 변환 오류:", err);
+                console.log("❌ 좌표 변환 오류:", err);
             });
     }, [address1, isLoaded]);
 

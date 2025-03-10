@@ -27,7 +27,7 @@ export type WeekDaysType = "" | "월요일" | "화요일" | "수요일" | "목�
 export type PortfolioType = "LONG_TEXT" | "SHORT_TEXT" | "FILE_UPLOAD"
 export type PortfolioContentType = "장문형" | "단답형" | "파일 업로드"
 export type FileCountType = "파일 개수" | "1" | "5" | "10";
-export type GenderEnumType = "" | "FEMALE" | "MALE" | "NULL"
+export type GenderEnumType = "" | "FEMALE" | "MALE" | "NULL" | "female" | "male" | "null"
 export type GenderType = "" | "여성" | "남성" | "성별 무관"
 
 export type TimeType =
