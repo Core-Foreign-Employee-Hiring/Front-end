@@ -9,19 +9,30 @@ import ApplyMethod from "@/src/components/recruit-ad/ApplyMethod";
 import Evaluation from "@/src/components/portfolio/Evaluation";
 import useRecruitAdDetail from "@/src/lib/hooks/useRecruitAdDetail";
 import {useParams} from "next/navigation";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import {RecruitAdDetailData} from "@/src/types/recruit-ad";
+import Modal from "@/src/components/common/Modal";
 
 const RecruitAdDetail = () => {
     const params = useParams();
     const {recruitAdDetailData} = useRecruitAdDetail(params.recruitId);
+    const [isApplyModalOpen, setIsApplyModalOpen] = useState(false);
 
     useEffect(() => {
         console.log("recruitAdDetailData", recruitAdDetailData);
     }, [recruitAdDetailData])
 
+    const modalContent = () => {
+        return (
+            <div className={"subtitle-lg"}>
+                고용주는 지원할 수 없어요.
+            </div>
+        )
+    }
+
     return (
         <div>
+            {isApplyModalOpen && (<Modal setIsModalOpen={setIsApplyModalOpen} content={modalContent}/>)}
             <NavBar/>
             <div className={"h-[158px]"}/>
             <main className={"flex gap-x-[40px] justify-center mt-[80px]"}>
@@ -60,7 +71,7 @@ const RecruitAdDetail = () => {
                         joinCount={recruitAdDetailData ? recruitAdDetailData.employerEvaluationCountDTO.joinCount : 0}/>
                 </section>
                 <aside className={"w-[411px] h-fit sticky top-[100px]"}>
-                    <SideAdInfo {...recruitAdDetailData as RecruitAdDetailData} />
+                    <SideAdInfo setIsApplyModalOpen={setIsApplyModalOpen} {...recruitAdDetailData as RecruitAdDetailData} />
                 </aside>
             </main>
         </div>

@@ -13,6 +13,7 @@ const ApplyMethod = (props: Props) => {
                 {applicationMethods.map((applicationMethod, index) => {
                     return (
                         <div
+                            key={applicationMethod}
                             className={
                             index === applicationMethods.length-1
                                 ? "w-[148px] px-[19px]"

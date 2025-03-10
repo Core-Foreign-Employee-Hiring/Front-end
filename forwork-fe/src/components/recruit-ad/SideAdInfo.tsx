@@ -7,9 +7,18 @@ import {RecruitAdDetailData} from "@/src/types/recruit-ad";
 import {changeBusinessFieldEnumToKorType} from "@/src/utils/common";
 import {switchEnumToKorGenderType} from "@/src/utils/register";
 import {likeRecruitAdPost} from "@/src/lib/api/recruit-ad";
+import {Dispatch, SetStateAction} from "react";
+import Cookies from "js-cookie";
+import {useRouter} from "next/navigation";
 
-const SideAdInfo = (props: RecruitAdDetailData) => {
+interface Props extends RecruitAdDetailData{
+    setIsApplyModalOpen: Dispatch<SetStateAction<boolean>>
+}
+
+const SideAdInfo = (props: Props) => {
+    const router = useRouter();
     const {
+        setIsApplyModalOpen,
         recruitId,
         recruitType,
         recruitStartDate,
@@ -128,7 +137,16 @@ const SideAdInfo = (props: RecruitAdDetailData) => {
                     </div>}>
                     찜
                 </Button>
-                <Button className={"bg-main-button"} secondClassName={"flex justify-center items-center w-full subtitle-md"}>지원하기</Button>
+                <Button
+                    onClick={() => {
+                        Cookies.get("role") === "EMPLOYER_PREMIUM" || Cookies.get("role") === "EMPLOYER"
+                            ? setIsApplyModalOpen(true)
+                            : router.push("/apply")
+                    }}
+                    className={"bg-main-button"}
+                    secondClassName={"flex justify-center items-center w-full subtitle-md"}>
+                    지원하기
+                </Button>
             </section>
         </section>
     )
