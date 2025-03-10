@@ -90,7 +90,7 @@ const ApplyDetailPage = () => {
             <NavBar/>
             <div className={"h-60"}/>
             <main className={"px-[360px]"}>
-                <SummaryAd />
+                {/*<SummaryAd />*/}
                 <section className={"flex justify-between mt-[40px] mb-[16px]"}>
                     <div className={"flex justify-between w-full"}>
                         <Input setInputValue={setInputValue} inputValue={inputValue}
