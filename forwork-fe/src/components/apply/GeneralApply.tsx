@@ -7,11 +7,14 @@ import {RecruitPreviewType} from "@/src/types/recruit-ad";
 import Button from "@/src/components/common/Button";
 import SummaryAd from "@/src/components/common/SummaryAd";
 import UnCheckIcon from "@/src/assets/common/UnCheckIcon";
+import {applyGeneralAd} from "@/src/lib/api/recruit-ad";
+import {useEffect} from "react";
+import {string} from "postcss-selector-parser";
 
 const GeneralApply = () => {
     const router = useRouter();
     const params = useParams();
-    const recruitId = useAtomValue(recruitIdAtom)
+    const [recruitId, setRecruitId] = useAtom(recruitIdAtom)
     const recruitType = useAtomValue(recruitTypeAtom)
 
     // 공고 미리보기 데이터 불러오기
@@ -19,9 +22,14 @@ const GeneralApply = () => {
     // 일반 채용 공고 지원하기 post 요청 값
     const [generalApplyData, setGeneralApplyData] = useAtom(generalApplyDataAtom)
 
+    useEffect(() => {
+        setRecruitId(parseInt(params.id as string))
+    }, [])
+
     return (
         <main className={"flex flex-col justify-center items-center mt-[40px]"}>
             <section className={"flex flex-col gap-y-[40px] w-[1200px]"}>
+
                 {/* 공고 요약 보기 */}
                 <section className={"flex flex-col gap-y-[12px]"}>
                     <section className={"flex justify-between items-center"}>
@@ -42,6 +50,7 @@ const GeneralApply = () => {
                         <SummaryAd {...recruitPreview as RecruitPreviewType} />
                     )}
                 </section>
+
                 <section className={"flex gap-x-[40px] flex-shrink-0 w-full"}>
                     {/* 기본 이력서 */}
                     <section className={"flex flex-col gap-y-[12px]"}>
@@ -76,6 +85,7 @@ const GeneralApply = () => {
                         </div>
                     </section>
                 </section>
+
                 {/* 버튼 */}
                 <section className={"flex flex-col justify-center items-center gap-y-[20px]"}>
                     <div className={"flex gap-x-2"}>
@@ -96,11 +106,19 @@ const GeneralApply = () => {
                         </div>
                     </div>
                     <Button
+                        onClick={() => {
+                            applyGeneralAd(recruitId, generalApplyData).then((r) => {
+                                console.log(r)
+                                //TODO: 지원 완료되었다는 모달창 open
+                            })
+                        }}
                         disabled={!generalApplyData.thirdPartyConsent}
                         className={!generalApplyData.thirdPartyConsent ? "bg-gray2-button" : "bg-main-button cursor-pointer"}
                         secondClassName={"flex justify-center items-center w-full"}>지원하기</Button>
                 </section>
+
             </section>
-        </main>)
+        </main>
+    )
 }
 export default GeneralApply;
