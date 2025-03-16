@@ -1,29 +1,22 @@
 'use client'
 
 import NavBar from "@/src/components/common/NavBar";
-import SummaryAd from "@/src/components/common/SummaryAd";
 import Pagination from "@/src/components/common/Pagination";
 import {useEffect, useState} from "react";
 import ApplicationUserProfile from "@/src/components/mypage/employer/ApplicationUserProfile";
-import useResumes from "@/src/lib/hooks/useResumes";
 import {useParams} from "next/navigation";
 import {
     ContractStatusContentType,
-    ContractStatusType,
     RecruitmentStatusContentType,
-    RecruitmentStatusType
 } from "@/src/types/mypage";
 import Input from "@/src/components/common/Input";
 import SearchIcon from "@/src/assets/common/SearchIcon";
 import SelectedFilterContent from "@/src/components/common/SelectedFilterContent";
 import useFilter from "@/src/hooks/useFilter";
 import Filter from "@/src/components/common/Filter";
-import {portfolioContents} from "@/src/utils/register";
 import {
     contractStatusContents,
     recruitmentStatusContents,
-    switchContractStatusToEnum,
-    switchRecruitmentStatusToEnum
 } from "@/src/utils/mypage";
 
 const ApplyDetailPage = () => {

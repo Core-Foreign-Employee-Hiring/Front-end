@@ -1,28 +1,33 @@
-import Tag from "@/src/components/common/Tag";
-import Star2Icon from "@/src/assets/recruit-ad/Star2Icon";
-import {renderSalaryType} from "@/src/utils/recruit-ad";
-import Button from "@/src/components/common/Button";
-import HeartIcon from "@/src/assets/recruit-ad/HeartIcon";
-import {RecruitAdDetailData} from "@/src/types/recruit-ad";
-import {changeBusinessFieldEnumToKorType} from "@/src/utils/common";
-import {switchEnumToKorGenderType} from "@/src/utils/register";
-import {likeRecruitAdPost} from "@/src/lib/api/recruit-ad";
 import {Dispatch, SetStateAction} from "react";
 import Cookies from "js-cookie";
 import {useRouter} from "next/navigation";
 
+import {RecruitAdDetailData} from "@/src/types/recruit-ad";
+import {renderSalaryType} from "@/src/utils/recruit-ad";
+import {changeBusinessFieldEnumToKorType} from "@/src/utils/common";
+import {switchEnumToKorGenderType} from "@/src/utils/register";
+import {likeRecruitAdPost} from "@/src/lib/api/recruit-ad";
+import useRecruitAdDetail from "@/src/lib/hooks/useRecruitAdDetail";
+import Tag from "@/src/components/common/Tag";
+import Star2Icon from "@/src/assets/recruit-ad/Star2Icon";
+import Button from "@/src/components/common/Button";
+import HeartIcon from "@/src/assets/recruit-ad/HeartIcon";
+
 interface Props extends RecruitAdDetailData{
-    setIsApplyModalOpen: Dispatch<SetStateAction<boolean>>
+    setIsApplyModalOpen: Dispatch<SetStateAction<boolean>>;
+    setEmployeeApplyModalOpen: Dispatch<SetStateAction<boolean>>;
 }
 
 const SideAdInfo = (props: Props) => {
-    const router = useRouter();
+
     const {
         setIsApplyModalOpen,
+        setEmployeeApplyModalOpen,
         recruitId,
         recruitType,
         recruitStartDate,
         recruitEndDate,
+        recruitCount,
         gender,
         preferredConditions,
         education,
@@ -37,7 +42,10 @@ const SideAdInfo = (props: Props) => {
         workTimeOther,
         workDays,
         workDaysOther,
+        liked,
     } = props;
+
+    const {recruitAdDetailDataMutate} = useRecruitAdDetail(recruitId);
 
     return (
         <section className={"flex flex-col gap-y-6"}>
@@ -57,7 +65,7 @@ const SideAdInfo = (props: Props) => {
                             </div>
                             <div className={"flex gap-x-5"}>
                                 <div className={"w-[100px] subtitle-md text-gray5"}>모집인원</div>
-                                <div className={"body-sm"}>{}</div>
+                                <div className={"body-sm"}>{recruitCount}</div>
                             </div>
                             <div className={"flex gap-x-5"}>
                                 <div className={"w-[100px] subtitle-md text-gray5"}>성별</div>
@@ -128,23 +136,39 @@ const SideAdInfo = (props: Props) => {
                 </section>
             </article>
             <section className={"flex gap-x-4"}>
-                <Button
-                    onClick={() => likeRecruitAdPost(recruitId)}
-                    secondClassName={"flex gap-x-0 px-[21.5px] py-5"}
-                    className={"border-gray2-button"}
-                    LeftIcon={() => <div className={"flex justify-center items-center w-[24px] h-[24px]"}>
-                        <HeartIcon/>
-                    </div>}>
-                    찜
-                </Button>
+                {liked ? (
+                    <Button
+                        onClick={() => likeRecruitAdPost(recruitId).then(() => {
+                            recruitAdDetailDataMutate()
+                        })}
+                        secondClassName={"flex gap-x-1 px-6 py-4 flex-shrink-0"}
+                        className={"border-gray2-button"}
+                        LeftIcon={() => <div className={"flex justify-center items-center"}>
+                            <HeartIcon/>
+                        </div>}>
+                        찜 하기
+                    </Button>
+                ) : (
+                    <Button
+                        onClick={() => likeRecruitAdPost(recruitId).then(() => {
+                            recruitAdDetailDataMutate()
+                        })}
+                        secondClassName={"flex gap-x-1 px-6 py-4 flex-shrink-0"}
+                        className={"border-main-bg-lightMain-button"}
+                        LeftIcon={() => <div className={"flex justify-center items-center"}>
+                            <HeartIcon/>
+                        </div>}>
+                        찜 취소
+                    </Button>
+                )}
                 <Button
                     onClick={() => {
                         Cookies.get("role") === "EMPLOYER_PREMIUM" || Cookies.get("role") === "EMPLOYER"
                             ? setIsApplyModalOpen(true)
-                            : router.push("/apply")
+                            : setEmployeeApplyModalOpen(true)
                     }}
-                    className={"bg-main-button"}
-                    secondClassName={"flex justify-center items-center w-full subtitle-md"}>
+                    className={"bg-main-button flex-1 "}
+                    secondClassName={"flex justify-center items-center subtitle-md "}>
                     지원하기
                 </Button>
             </section>

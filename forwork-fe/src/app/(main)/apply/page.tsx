@@ -1,8 +1,12 @@
-const AdApply = () => {
-    return (
-        <div>
+"use client";
 
-        </div>
+const AdApply = () => {
+
+
+    return (
+        <>
+        </>
+
     )
 }
 export default AdApply;
