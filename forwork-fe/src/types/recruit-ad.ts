@@ -71,3 +71,17 @@ export interface ApplyGeneralAdType {
     thirdPartyConsent: boolean;
     applyMethod: ApplicationMethodEnumType;
 }
+
+// 프리미엄 채용 공고 지원하기 post 요청 값
+export interface ApplyPremiumAdType {
+    generalResumeRequestDTO: ApplyGeneralAdType;
+    resumePortfolios: ResumePortfolioType[];
+    public: boolean;
+}
+
+export interface ResumePortfolioType {
+    portfolioId: number;
+    title: string;
+    content: string;
+}
+
