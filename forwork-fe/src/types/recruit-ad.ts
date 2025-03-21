@@ -1,7 +1,7 @@
 import {
     AdEnumType,
     ApplicationMethodEnumType,
-    BusinessFieldEnumType,
+    BusinessFieldEnumType, PortfolioType,
     SalaryType
 } from "@/src/types/register";
 import {EmployerEvaluationCountType} from "@/src/types/portfolio";
@@ -76,12 +76,20 @@ export interface ApplyGeneralAdType {
 export interface ApplyPremiumAdType {
     generalResumeRequestDTO: ApplyGeneralAdType;
     resumePortfolios: ResumePortfolioType[];
-    public: boolean;
+    portfolioPublic: boolean;
 }
 
+//사장님이 만든 포트폴리오 형식 값 get
 export interface ResumePortfolioType {
     portfolioId: number;
-    title: string;
     content: string;
 }
 
+//사장님이 만든 포폴 형식 타입
+export interface CreatedPortfolioFormType {
+    portfolioId: number;
+    title: string;
+    portfolioType: PortfolioType;
+    required: boolean;
+    maxFileCount: number;
+}
