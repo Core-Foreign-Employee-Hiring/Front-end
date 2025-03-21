@@ -1,7 +1,14 @@
+import {useSetAtom} from "jotai";
+
 import {CreatedPortfolioFormType} from "@/src/types/recruit-ad";
+import {premiumApplyDataAtom} from "@/src/store/recruit-ad/atom";
 
 const LongText = (props: CreatedPortfolioFormType) => {
-    const {title, required} = props;
+    const {title, required, portfolioId} = props;
+
+    // 프리미엄 채용 공고 지원하기 post 요청 값
+    const setPremiumApplyData = useSetAtom(premiumApplyDataAtom)
+
     return (
         <section className={"flex flex-col gap-y-[12px]"}>
             <h2 className={"title-md"}>
@@ -13,7 +20,13 @@ const LongText = (props: CreatedPortfolioFormType) => {
             <div className={"py-6 px-7 rounded-[24px] border border-gray3"}>
                 <textarea
                     onChange={(e) => {
-                        //TODO: 지원 post
+                        setPremiumApplyData((prev) => ({
+                            ...prev,
+                            resumePortfolios: [{
+                                content: e.target.value,
+                                portfolioId: portfolioId,
+                            }]
+                        }))
                     }}
                     className={"outline-none w-full h-[200px]"}/>
             </div>

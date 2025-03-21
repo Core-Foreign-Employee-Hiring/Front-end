@@ -1,9 +1,13 @@
+import {useSetAtom} from "jotai";
+
 import {CreatedPortfolioFormType} from "@/src/types/recruit-ad";
-import Button from "@/src/components/common/Button";
-import UpLoadIcon from "@/src/assets/common/UploadIcon";
+import {premiumApplyDataAtom} from "@/src/store/recruit-ad/atom";
 
 const ShortText = (props: CreatedPortfolioFormType) => {
-    const {title, required, } = props;
+    const {title, required, portfolioId} = props;
+
+    // 프리미엄 채용 공고 지원하기 post 요청 값
+    const setPremiumApplyData = useSetAtom(premiumApplyDataAtom)
 
     return (
         <section className={"flex flex-col gap-y-[12px]"}>
@@ -13,7 +17,17 @@ const ShortText = (props: CreatedPortfolioFormType) => {
                     <span className={"text-main"}>*</span>
                 )}
             </h2>
-            <div></div>
+            <input
+                onChange={(e) => {
+                    setPremiumApplyData((prev) => ({
+                        ...prev,
+                        resumePortfolios: [{
+                            content: e.target.value,
+                            portfolioId: portfolioId,
+                        }]
+                    }))
+                }}
+                className={"w-full outline-none border border-gray2 rounded-[16px] p-4"} />
         </section>
     )
 }
