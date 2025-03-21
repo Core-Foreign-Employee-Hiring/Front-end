@@ -93,3 +93,9 @@ export interface CreatedPortfolioFormType {
     required: boolean;
     maxFileCount: number;
 }
+
+//파일 업로드 형식
+export interface FileUpLoadType {
+    file: File;
+    imgUrl?: string;
+}

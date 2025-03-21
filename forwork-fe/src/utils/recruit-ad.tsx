@@ -15,3 +15,14 @@ export const renderSalaryType = (salaryType: SalaryType) => {
             return <Tag className={"border-sub2-tag"}>연봉</Tag>
     }
 }
+
+export function formatFileSize(bytes: number): string {
+    const units = ['Byte', 'KB', 'MB', 'GB', 'TB', 'PB'];
+    if (bytes === 0) return '0 Byte';
+
+    const unitIndex = Math.floor(Math.log(bytes) / Math.log(1024));
+    const size = bytes / Math.pow(1024, unitIndex);
+
+    // 소수점 한 자리까지 표시
+    return `${size.toFixed(1)} ${units[unitIndex]}`;
+}
