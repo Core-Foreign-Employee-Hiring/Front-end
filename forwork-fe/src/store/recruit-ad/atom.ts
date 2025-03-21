@@ -19,5 +19,5 @@ export const premiumApplyDataAtom = atom<ApplyPremiumAdType>({
         applyMethod: "ONLINE",
     },
     resumePortfolios: [],
-    public: false,
+    portfolioPublic: false,
 })
