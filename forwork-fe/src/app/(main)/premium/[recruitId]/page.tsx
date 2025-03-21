@@ -9,6 +9,7 @@ const PremiumRecruitDetailPage = () => {
     useEffect(() => {
         setIsClient(true);
     }, []);
+
     return (
         isClient && (
             <main >
