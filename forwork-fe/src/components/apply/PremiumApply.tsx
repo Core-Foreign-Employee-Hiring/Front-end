@@ -1,13 +1,14 @@
 import {useParams, useRouter} from "next/navigation";
 import {useAtom, useAtomValue} from "jotai/index";
-import {generalApplyDataAtom, premiumApplyDataAtom, recruitIdAtom, recruitTypeAtom} from "@/src/store/recruit-ad/atom";
+import {premiumApplyDataAtom, recruitIdAtom, recruitTypeAtom} from "@/src/store/recruit-ad/atom";
 import useRecruitPreview from "@/src/lib/hooks/useRecruitPreview";
 import Button from "@/src/components/common/Button";
 import SummaryAd from "@/src/components/common/SummaryAd";
 import {RecruitPreviewType} from "@/src/types/recruit-ad";
 import UnCheckIcon from "@/src/assets/common/UnCheckIcon";
-import {handleSelectList} from "@/src/utils/register";
 import {useEffect} from "react";
+import useCreatedPortfolioForm from "@/src/lib/hooks/useCreatedPortfolioForm";
+import CreatedPortfolioForm from "@/src/components/recruit-ad/CreatedPortfolioForm";
 
 const PremiumApply = () => {
     const router = useRouter();
@@ -18,12 +19,15 @@ const PremiumApply = () => {
     // 공고 미리보기 데이터 불러오기
     const {recruitPreview} = useRecruitPreview(params.id);
 
-    // 일반 채용 공고 지원하기 post 요청 값
+    // 프리미엄 채용 공고 지원하기 post 요청 값
     const [premiumApplyData, setPremiumApplyData] = useAtom(premiumApplyDataAtom)
 
+    //사장님이 만든 포트폴리오 형식들 -> 실제 지원파트
+    const {portfolioFormData} = useCreatedPortfolioForm(recruitId)
+
     useEffect(() => {
-        console.log("premiumApplyData", premiumApplyData)
-    }, [premiumApplyData])
+        console.log("portfolioFormData", portfolioFormData)
+    }, [portfolioFormData])
 
     return (
         <main className={"flex flex-col justify-center items-center mt-[40px]"}>
@@ -32,7 +36,7 @@ const PremiumApply = () => {
                 {/* 공고 요약 보기 */}
                 <section className={"flex flex-col gap-y-[12px]"}>
                     <section className={"flex justify-between items-center"}>
-                        <h1 className={"title-md"}>지원 알바</h1>
+                        <h2 className={"title-md"}>지원 알바</h2>
                         <Button
                             className={"button-md text-gray5 py-[7.5px] px-4"}
                             onClick={() => {
@@ -53,7 +57,7 @@ const PremiumApply = () => {
                 {/* 기본 이력서 */}
                 <section className={"flex flex-col gap-y-[12px]"}>
                     <div className={"flex justify-between items-center"}>
-                        <div className={"title-md"}>내 이력서 <span className={"text-main"}>*</span></div>
+                        <h2 className={"title-md"}>내 이력서 <span className={"text-main"}>*</span></h2>
                         <Button
                             className={"button-md py-[7.5px] px-4"}
                             onClick={() => {
@@ -66,7 +70,7 @@ const PremiumApply = () => {
                 {/* 포트폴리오 */}
                 <section className={"flex flex-col gap-y-[12px]"}>
                     <div className={"flex justify-between items-center"}>
-                        <div className={"title-md"}>포트폴리오 <span className={"text-main"}>*</span></div>
+                        <h2 className={"title-md"}>포트폴리오 <span className={"text-main"}>*</span></h2>
                         <Button
                             className={"button-md py-[7.5px] px-4"}
                             onClick={() => {
@@ -77,18 +81,7 @@ const PremiumApply = () => {
                 </section>
 
                 {/* 실제 지원 */}
-                <section className={"flex flex-col gap-y-[12px]"}>
-                    <div className={"flex justify-between items-center"}>
-                        <div className={"title-md"}>타이틀 <span className={"text-main"}>*</span></div>
-                        <Button
-                            className={"button-md py-[7.5px] px-4"}
-                            onClick={() => {
-                                router.push(`/mypage/employee`)
-                            }}>수정하기</Button>
-                    </div>
-                    {/* TODO: 나중에 현호오빠 기본 이력서 불러와서 붙이기 */}
-                </section>
-
+                {portfolioFormData && portfolioFormData.data && (<CreatedPortfolioForm portfolioForms={portfolioFormData.data}/>)}
 
                 {/* 사장님께 한마디 */}
                 <section className={"flex flex-col gap-y-3 flex-shrink-0"}>
@@ -98,10 +91,13 @@ const PremiumApply = () => {
                     <div className={"py-6 px-7 rounded-[24px] border border-gray3"}>
                             <textarea
                                 onChange={(e) => {
-                                    // setPremiumApplyData((prev) => ({
-                                    //     ...prev,
-                                    //     messageToEmployer: e.target.value,
-                                    // }))
+                                    setPremiumApplyData((prev) => ({
+                                        ...prev,
+                                        generalResumeRequestDTO: {
+                                            ...prev.generalResumeRequestDTO,
+                                            messageToEmployer: e.target.value,
+                                        }
+                                    }))
                                 }}
                                 className={"outline-none w-full h-[200px]"}
                                 placeholder={"지원동기나 각오를 간단하게 작성해주세요"}
@@ -124,13 +120,13 @@ const PremiumApply = () => {
                                 onClick={() => {
                                     setPremiumApplyData((prev) => ({
                                         ...prev,
-                                        public: false,
+                                        portfolioPublic: false,
                                     }))
                                 }}
-                                className={!premiumApplyData.public
+                                className={!premiumApplyData.portfolioPublic
                                     ? "flex justify-center items-center w-[20px] h-[20px] rounded-full bg-main"
                                     : "flex justify-center items-center w-[20px] h-[20px] rounded-full border-[1.6px] border-gray3"}>
-                                {!premiumApplyData.public && (
+                                {!premiumApplyData.portfolioPublic && (
                                     <div className={"w-[10px] h-[10px] rounded-full bg-white"}/>)}
                             </button>
                             <div className={"button-md text-gray5"}>비공개</div>
@@ -142,13 +138,13 @@ const PremiumApply = () => {
                                 onClick={() => {
                                     setPremiumApplyData((prev) => ({
                                         ...prev,
-                                        public: true,
+                                        portfolioPublic: true,
                                     }))
                                 }}
-                                className={premiumApplyData.public
+                                className={premiumApplyData.portfolioPublic
                                     ? "flex justify-center items-center w-[20px] h-[20px] rounded-full bg-main"
                                     : "flex justify-center items-center w-[20px] h-[20px] rounded-full border-[1.6px] border-gray3"}>
-                                {premiumApplyData.public && (
+                                {premiumApplyData.portfolioPublic && (
                                     <div className={"w-[10px] h-[10px] rounded-full bg-white"}/>)}
                             </button>
                             <div className={"button-md text-gray5"}>공개</div>
